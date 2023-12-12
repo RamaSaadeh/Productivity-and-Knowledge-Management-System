@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+
+  <!-- Include FontAwesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
+  <!-- font for header -->
+  <link href="https://db.onlinewebfonts.com/c/77009ab521bc15b6e38fcc22dd5270f4?family=Churchward+Design+Bold" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  
+  <link rel="stylesheet" href="Admin Dashboard.css" />
+</head> 
+
+  
+
+<body>
+    <div id="allContent">
+        <nav class="myNav" style="height:90px">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="#" "Make-it-all">
+				<h1 class="logo-text">Make-It-All</h1>
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" id="dashboard" href="#">Dashboard</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Posts
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="all-posts.html">All Posts</a>
+							<a class="dropdown-item" href="create-post.html">Create Post</a>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="btnInviteUser" onclick="openForm()" href="#">Invite User</a>
+					</li>
+					<li class="nav-item dropdown" id="accountBox">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span id="profileIcon" class="material-symbols-outlined">
+							account_circle
+						</span>    Account</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="profile.html">My Profile</a>
+							<a class="dropdown-item logout" href="standard_index.html">Logout</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</nav>
+
+	<div class="popup-background" id="inviteuseropaquebg">
+		<form class="inviteuser-form" action="javascript:getData()" method="get">
+			<h1>Invite User</h1>
+
+			<label for="email"><b>Email</b></label>
+			<input type="text" placeholder="Enter Email" id="email" name="email">
+			<label id="emailError" style="color: red; display: none">Email address is not valid</label>
+
+			<button type="submit" class="btn" onclick="sendInvite()">Send Invite Link</button>
+			<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+		</form>
+	</div>
+        <!--end of header -->
+
+        <!--main content -->
+        <div class="mainContent">
+            <!-- Total height 76vh -->
+            <div id="adminButtons">
+                <span id="staffBttn" onclick="staffClicked()">Staff</span>
+                <span id="projectsBttn" onclick="projectsClicked()">Projects</span>
+                <span id="toDoBttn" onclick="toDoClicked()">To-Do</span>
+            </div>
+
+            <div id="adminInfoContainer">
+
+                <div id="staffToDoContainer" style="display: none;">
+                    <div id="toDoList" >
+                        <div id="toDoHeader">
+                        <h2>To Do List</h2>
+                        <input type="text" id="toDoInput" placeholder="New item..."></textarea>
+                        <span onclick="newElement()" id="toDoAddBtn">Add</span>
+                        </div>
+                        
+                        <ul id="toDoUL">
+                        <li><p>Send out meeting notes</p></li>
+                        <li class="checked"><p>Book time off</p></li>
+                        <li><p>Organize mentor meeting</p></li>
+                        <li><p>Order printing ink</p></li>
+                        <li><p>Set up meeting with client</p></li>
+                        <li><p>Book team dinner</p></li>
+                        </ul>
+                        </div>
+                </div>
+
+
+<!--projects option-->
+
+
+
+ <!--for add projects pop up-->
+ <div id="projectsWindow" class="projectsWindow">
+    <div class="projectsWindowContent">
+      <span class="closeProj">&times;</span>
+      <h2>Add Project</h2>
+      <p>Project Name:</p>
+      <input  required type="text" class="projInputField">
+      <p>Manager Name:</p>
+      <input required type="text">
+      <p>Manager Email:</p>
+      <input required type="text" class="projInputField">
+      <p>Team Leader Name:</p>
+      <input required type="text" class="projInputField">
+      <p>Leader Email:</p>
+      <input required type="text" class="projInputField">
+      <button id="projSubmitButton">Submit</button>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+<div id="staffProjectsContainer" style="display: block;">
+    <div class="staffHeader">
+        <h2>Projects
+        <input type="text" id="projectsSearch" onkeyup="projectsSearch()" placeholder="Search through projects" title="Search through projects">
+        <input type="button" id="projectsAdd" class="adminAddBttn" onclick="showProject()" value="+">
+        
+        <label>Sort By:</label>
+        <select class="sortOption" id="projectSort">
+            <option value="deadline">Deadline</option>
+            <option value="alphabet">Alphabetical</option>
+            
+            <option value="progress">Progress</option>
+        </select>	
+    
+        </h2>
+    </div>
+                
+
+
+    <div class="staffTableContainer">
+        <div class="staffContainer">
+            
+            <table id="projectsInfo">
+                <tr class="project">
+                    <th class="projectName">Project Name</th>
+                    <th class="projectId">Project ID</th>
+                    <th class="teamManager">Manager Email</th>
+                    <th class="managerId">Manager ID</th>
+                    <th class="teamLeader">Team Leader</th>
+                    <th class="leaderId">Leader ID</th>
+                    <th class="deadline">Project Deadline</th>
+                    <th class="projectProgress">Project Progress</th>
+                    <th class="totalTasks">Total Tasks</th>
+                    <th class="editProject">Edit Project</th>
+                    <th class="deleteProject">Delete Project</th>
+                </tr>
+    
+                <tr class="project">
+                    <td class="projectId">User Dashboard Creation</td>
+                    <td class="projectId">#0001</td>
+                    <td class="teamManager">king@make-it-all.co.uk</td>
+                    <td class="managerId">#0001</td>
+                    <td class="teamLeader">johndoe@make-it-all.co.uk</td>
+                    <td class="leaderId">#0003</td>
+                    <td class="deadline">20/11/23</td>
+                    <td class="projectProgress">80%</td>
+                    <td class="totalStaff">16</td>
+                    <td class="editProject">
+                        <button id="editProjectBttn1" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                            &#x270E;
+                        </button>
+                    </td>
+                    <td class="deleteProject">
+                        <button id="deleteProjectBttn1" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                            &#x2718;
+                        </button>
+                    </td>
+                    
+                </tr>
+
+                <tr class="project">
+                    <td class="projectId">Tech audit 1</td>
+                    <td class="projectId">#0002</td>
+                    <td class="teamManager">Jeremy Doe</td>
+                    <td class="managerId">#0001</td>
+                    <td class="teamLeader">Gareth Den</td>
+                    <td class="leaderId">#0002</td>
+                    <td class="deadline">21/11/23</td>
+                    <td class="projectProgress">75%</td>
+                    <td class="totalStaff">5</td>
+                    <td class="editProject">
+                        <button id="editProjectBttn2" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                            &#x270E;
+                        </button>
+                    </td>
+                    <td class="deleteProject">
+                        <button id="deleteProjectBttn2" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                            &#x2718;
+                        </button>
+                    </td>
+                </tr>
+
+                <tr class="project">
+                    <td class="projectId">Tech Summer Intern Recruitment</td>
+                    <td class="projectId">#0004</td>
+                    <td class="teamManager">Jeremy Dean</td>
+                    <td class="managerId">#0006</td>
+                    <td class="teamLeader">#Mary Jones</td>
+                    <td class="leaderId">#0015</td>
+                    <td class="deadline">29/11/23</td>
+                    <td class="projectProgress">20%</td>
+                    <td class="totalStaff">13</td>
+                    <td class="editProject">
+                        <button id="editProjectBttn3" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                            &#x270E;
+                        </button>
+                    </td>
+                    <td class="deleteProject">
+                        <button id="deleteProjectBttn3" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                            &#x2718;
+                        </button>
+                    </td>
+                </tr>
+
+                <tr class="project">
+                    <td class="projectId">Tech audit 2</td>
+                    <td class="projectId">#0014</td>
+                    <td class="teamManager">Henry Smith</td>
+                    <td class="managerId">#0018</td>
+                    <td class="teamLeader">Gareth Den</td>
+                    <td class="leaderId">#0002</td>
+                    <td class="deadline">02/12/23</td>
+                    <td class="projectProgress">81%</td>
+                    <td class="totalStaff">12</td>
+                    <td class="editProject">
+                        <button id="editProjectBttn4" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                            &#x270E;
+                        </button>
+                    </td>
+                    <td class="deleteProject">
+                        <button id="deleteProjectBttn4" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                            &#x2718;
+                        </button>
+                    </td>
+                </tr>
+
+                <tr class="project">
+                    <td class="projectId">Tech audit 3</td>
+                    <td class="projectId">#0017</td>
+                    <td class="teamManager">Jeremy Doe</td>
+                    <td class="managerId">#0001</td>
+                    <td class="teamLeader">Gareth Den</td>
+                    <td class="leaderId">#0002</td>
+                    <td class="deadline">03/12/23</td>
+                    <td class="projectProgress">50%</td>
+                    <td class="totalStaff">11</td>
+                    <td class="editProject">
+                        <button id="editProjectBttn5" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                            &#x270E;
+                        </button>
+                    </td>
+                    <td class="deleteProject">
+                        <button id="deleteProjectBttn5" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                            &#x2718;
+                        </button>
+                    </td>
+                </tr>
+
+                <tr class="project">
+                    <td class="projectId">Tech audit 4</td>
+                    <td class="projectId">#0016</td>
+                    <td class="teamManager">Jeremy Doe</td>
+                    <td class="managerId">#0001</td>
+                    <td class="teamLeader">Gareth Den</td>
+                    <td class="leaderId">#0002</td>
+                    <td class="deadline">04/12/23</td>
+                    <td class="projectProgress">78%</td>
+                    <td class="totalStaff">8</td>
+                    <td class="editProject">
+                        <button id="editProjectBttn6" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                            &#x270E;
+                        </button>
+                    </td>
+                    <td class="deleteProject">
+                        <button id="deleteProjectBttn6" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                            &#x2718;
+                        </button>
+                    </td>
+                </tr>
+
+                <tr class="project">
+                    <td class="projectId">Tech audit 5</td>
+                    <td class="projectId">#0019</td>
+                    <td class="teamManager">Jeremy Doe</td>
+                    <td class="managerId">#0001</td>
+                    <td class="teamLeader">Gareth Den</td>
+                    <td class="leaderId">#0002</td>
+                    <td class="deadline">05/12/23</td>
+                    <td class="projectProgress">20%</td>
+                    <td class="totalStaff">6</td>
+                    <td class="editProject">
+                        <button id="editProjectBttn7" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                            &#x270E;
+                        </button>
+                    </td>
+                    <td class="deleteProject">
+                        <button id="deleteProjectBttn7" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                            &#x2718;
+                        </button>
+                    </td>
+                </tr>
+
+                <tr class="project">
+                    <td class="projectId">Tech audit 6</td>
+                    <td class="projectId">#0011</td>
+                    <td class="teamManager">Jeremy Doe</td>
+                    <td class="managerId">#0001</td>
+                    <td class="teamLeader">Gareth Den</td>
+                    <td class="leaderId">#0002</td>
+                    <td class="deadline">07/12/23</td>
+                    <td class="projectProgress">12%</td>
+                    <td class="totalStaff">3</td>
+                    <td class="editProject">
+                        <button id="editProjectBttn8" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                            &#x270E;
+                        </button>
+                    </td>
+                    <td class="deleteProject">
+                        <button id="deleteProjectBttn8" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                            &#x2718;
+                        </button>
+                    </td>
+                </tr>
+
+                <tr class="project">
+                    <td class="projectId">Tech audit 9</td>
+                    <td class="projectId">#0015</td>
+                    <td class="teamManager">Jeremy Doe</td>
+                    <td class="managerId">#0001</td>
+                    <td class="teamLeader">Gareth Den</td>
+                    <td class="leaderId">#0002</td>
+                    <td class="deadline">10/12/23</td>
+                    <td class="projectProgress">10%</td>
+                    <td class="totalStaff">4</td>
+                    <td class="editProject">
+                        <button id="editProjectBttn9" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
+                            &#x270E;
+                        </button>
+                    </td>
+                    <td class="deleteProject">
+                        <button id="deleteProjectBttn9" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                            &#x2718;
+                        </button>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<!-- staff list option -->
+                <div id="staffInfoContainer" style="display: none">
+                    <div class="staffHeader">
+                        <h2>Staff List
+                            <input type="text" id="staffSearch" onkeyup="staffSearch()" placeholder="Search for staff" title="Type in a staff name">
+                           </h2>
+                    </div>
+                    <div class="staffTableContainer">
+                        <div class="staffContainer">
+                            <table id="staffInfo">
+                                <tr class="staffMember">
+                                    <th class="fullName">Full Name</th>
+                                    <th class="staffId">User ID</th>
+                                    <th class="userLevel">User Level</th>
+                                    <th class="email">User Email</th>
+                                    <th class="teamMembership">Team Membership</th>
+                                    <th class="teamLeading">Team(s) Leading</th>
+                                    <th class="teamManaging">Team(s) Managing</th>
+                                    <th class="enrolmentDate">Enrolment Date</th>
+                                    <th class="invitedBy">Invited By</th>
+                                    <th class="editUser">Edit</th>
+                                    <th class="deleteUser">Delete</th>
+                                </tr>
+                    
+                                <tr class="staffMember">
+                                    <td class="fullName">John Doe</td>
+                                    <td class="staffId">#0011</td>
+                                    <td class="userLevel">Team Leader</td>
+                                    <td class="email">johndoe@make-it-all.co.uk</td>
+                                    <td class="teamMembership">#3 #7 #13</td>
+                                    <td class="teamLeading">#7</td>
+                                    <td class="teamManaging"> </td>
+                                    <td class="enrolmentDate">05/10/23</td>
+                                    <td class="invitedBy">#0001</td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn1" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn1" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <tr class="staffMember">
+                                    <td class="fullName">King</td>
+                                    <td class="staffId">#0001</td>
+                                    <td class="userLevel">Manager</td>
+                                    <td class="email">king@make-it-all.co.uk</td>
+                                    <td class="teamMembership">#1</td>
+                                    <td class="teamLeading"> </td>
+                                    <td class="teamManaging">#1</td>
+                                    <td class="enrolmentDate">05/10/23</td>
+                                    <td class="invitedBy">#0001</td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn2" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn2" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <tr class="staffMember">
+                                    <td class="fullName">Kari Eden</td>
+                                    <td class="staffId">#0004</td>
+                                    <td class="userLevel">Team Leader</td>
+                                    <td class="email">karieden@make-it-all.co.uk</td>
+                                    <td class="teamMembership">#4</td>
+                                    <td class="teamLeading">#4</td>
+                                    <td class="teamManaging"> </td>
+                                    <td class="enrolmentDate">07/10/23</td>
+                                    <td class="invitedBy">#0001</td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn3" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn3" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+                    
+                                <tr class="staffMember">
+                                    <td class="fullName">Len Valentina</td>
+                                    <td class="staffId">#0007</td>
+                                    <td class="userLevel">Manager</td>
+                                    <td class="email">lenvalentina@make-it-all.co.uk</td>
+                                    <td class="teamMembership">#4</td>
+                                    <td class="teamLeading"> </td>
+                                    <td class="teamManaging">#4</td>
+                                    <td class="enrolmentDate">05/10/23</td>
+                                    <td class="invitedBy">#0001</td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn4" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn4" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <tr class="staffMember">
+                                    <td class="fullName">Jimmie Duncan</td>
+                                    <td class="staffId">#0010</td>
+                                    <td class="userLevel">Team Leader</td>
+                                    <td class="email">jimmieduncan@make-it-all.co.uk</td>
+                                    <td class="teamMembership">#7 #13</td>
+                                    <td class="teamLeading"> </td>
+                                    <td class="teamManaging">#7 #13</td>
+                                    <td class="enrolmentDate">06/10/23</td>
+                                    <td class="invitedBy">#0001</td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn5" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn5" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <tr class="staffMember">
+                                    <td class="fullName">Maria Chrissy</td>
+                                    <td class="staffId">#0009</td>
+                                    <td class="userLevel">Team Member</td>
+                                    <td class="email">mariachrissy@make-it-all.co.uk</td>
+                                    <td class="teamMembership">#3 #7</td>
+                                    <td class="teamLeading"> </td>
+                                    <td class="teamManaging"> </td>
+                                    <td class="enrolmentDate">08/10/23</td>
+                                    <td class="invitedBy">#0004</td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn6" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn6" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <tr class="staffMember">
+                                    <td class="fullName">Zach Page</td>
+                                    <td class="staffId">#0013</td>
+                                    <td class="userLevel">Team Member</td>
+                                    <td class="email">zachpage@make-it-all.co.uk</td>
+                                    <td class="teamMembership">#4</td>
+                                    <td class="teamLeading"> </td>
+                                    <td class="teamManaging"> </td>
+                                    <td class="enrolmentDate">10/10/23</td>
+                                    <td class="invitedBy">#0009</td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn7" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn7" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+                    
+                                <tr class="staffMember">
+                                    <td class="fullName">Teddie Garrick</td>
+                                    <td class="staffId">#0012</td>
+                                    <td class="userLevel">Team Member</td>
+                                    <td class="email">teddiegarrick@make-it-all.co.uk</td>
+                                    <td class="teamMembership">#1 #7</td>
+                                    <td class="teamLeading"> </td>
+                                    <td class="teamManaging"> </td>
+                                    <td class="enrolmentDate">09/10/23</td>
+                                    <td class="invitedBy">#0011</td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn8" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn8" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <tr class="staffMember">
+                                    <td class="fullName">Max Dylan</td>
+                                    <td class="staffId">#0014</td>
+                                    <td class="userLevel">Team Member</td>
+                                    <td class="email">maxdylan@make-it-all.co.uk</td>
+                                    <td class="teamMembership">#4 #13</td>
+                                    <td class="teamLeading"> </td>
+                                    <td class="teamManaging"> </td>
+                                    <td class="enrolmentDate">11/10/23</td>
+                                    <td class="invitedBy">#0009</td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn9" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn9" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <tr class="staffMember">
+                                    <td class="fullName">wilfordlindsey</td>
+                                    <td class="staffId">#0016</td>
+                                    <td class="userLevel">Team Member</td>
+                                    <td class="email">wilfordlindsey@make-it-all.co.uk</td>
+                                    <td class="teamMembership">#3 </td>
+                                    <td class="teamLeading"> </td>
+                                    <td class="teamManaging"> </td>
+                                    <td class="enrolmentDate">18/10/23</td>
+                                    <td class="invitedBy">#0009</td>
+                                    <td class="editUser">
+                                        <button id="editUserBttn10" class="editUserBttn" onclick="confirm('Do you want to edit this project?')">
+                                            &#x270E;
+                                        </button>
+                                    </td>
+                                    <td class="deleteUser">
+                                        <button id="deleteUserBttn10" class="deleteUserBttn" onclick="confirm('Are you sure you want to delete this user?')">
+                                            &#x2718;
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                
+
+ 
+
+            </div>
+
+    <!-- end of main content -->
+    </div>
+
+        <footer class="myFooter">
+            <!-- footer -->
+
+        <div class = "footer">
+            <div class = "footer-content">
+                <div class = "footer-section about">
+                
+                    <h1 class ="footer-title"> Make-It-All</h1>
+
+                    <div class="contact-details">
+                        <span><i class="fas fa-phone"></i> &nbsp; 01509 888999</span>
+                        <span><i class="fas fa-envelope"></i> &nbsp; king@make‐it‐all.co.uk</span>
+                
+                
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </footer>
+    </div>
+    
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+<script src="Admin Dashboard.js"></script>
+<script>projectsClicked()</script>
+
+
+</body>
+</html>
