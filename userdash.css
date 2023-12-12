@@ -234,9 +234,8 @@ section.toDo{
 
 .navbar-brand {
     margin-left: 13px; /* or whatever size you want */
-    padding-top: 15px; /* this will push it down */
-    padding-bottom: 15px; /* this can give more space at the bottom */
-    font-family: 'Churchward Design Bold';
+    padding-top: 7px; /* this will push it down */
+    padding-bottom: 7px; /* this can give more space at the bottom */
 }
 
 
