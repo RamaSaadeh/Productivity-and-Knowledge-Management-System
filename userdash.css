@@ -236,6 +236,7 @@ section.toDo{
     margin-left: 13px; /* or whatever size you want */
     padding-top: 7px; /* this will push it down */
     padding-bottom: 7px; /* this can give more space at the bottom */
+    display: flex;
 }
 
 
