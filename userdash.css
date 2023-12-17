@@ -316,6 +316,7 @@ section.toDo{
     height: inherit;
     margin-left: 1em;
     color: white;
+    display: flex;
     
     
 }
