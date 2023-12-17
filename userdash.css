@@ -169,6 +169,7 @@ section.toDo{
     background-color: #faf9f9;
     width: 100%;
     background-color: #be6b25;
+    overflow: visible
     
 }
 
@@ -254,8 +255,8 @@ section.toDo{
     font-size: 1.2em;
     text-decoration: none;
     padding: 23px 30px; /* Keep padding between elements on the nav bar horizontally and vertically*/
-	height: 90px;
-	padding-top: 30px;
+	  height: 90px;
+	  padding-top: 30px;
     background-color: #be6b25;
 
 
