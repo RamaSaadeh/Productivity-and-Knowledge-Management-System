@@ -334,12 +334,8 @@ font-size: 38px;
 vertical-align: middle;
 }
 
-/*End of css for navbar*/
-
-
-
 .logo{
-  /* want the image to stretch to larger than original size? */
+  /* want the image to stretch to larger than original size */
   max-width: 100%; 
   height: auto;
   max-height: fit-content;
@@ -350,6 +346,7 @@ vertical-align: middle;
   margin-right: auto;
 }
 
+/*End of css for navbar*/
 
 /*current page button is orange */
 #homeBttn{
