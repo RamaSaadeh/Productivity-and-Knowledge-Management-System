@@ -193,9 +193,9 @@ body {
   }
   
   #logo {
-  max-width: 1000px; /* Set a maximum width for the logo */
+  max-width: 50px; /* Set a maximum width for the logo */
   height: auto; /* Maintain the aspect ratio */
-  margin-right: -1000px; /* Add some margin to separate the logo from text */
+  margin-right: -50px; /* Add some margin to separate the logo from text */
   }
   
   .navbar-collapse {
