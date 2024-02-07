@@ -16,17 +16,15 @@ body {
 }
 
 #top {
-	height: 80px;
+	height: 125px;
 	border-bottom: 5px solid black;
 	padding: 1%;
 }
 
 #logo {
-	float: right;
-	height: 65%;
-	width: auto;
-	margin-top: 4.9%;
-	margin-right: -5px;
+	height: auto;
+	width: 315px;
+	margin-bottom: -10px;
 }
 
 #main {
@@ -80,15 +78,11 @@ p {
 	padding: 2% 4%;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 892px) {
 	#content {
 		max-width: 40%;
 	}
 }
-
-/*
-	register media min-width: 898px
-*/
 
 @media (pointer:fine) {
 	#submit, #register {
@@ -105,6 +99,15 @@ p {
 		width: 30%;
 	}	
 	#register {
-		width: 42%;
+		width: 40%;
+	}
+	#logo {
+		width: 90%;
+	}
+	#top {
+		height: 160px;
+	}
+	.details {
+		width: 60%;
 	}
 }
