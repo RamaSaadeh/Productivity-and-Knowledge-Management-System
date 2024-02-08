@@ -48,7 +48,7 @@ body {
   grid-area: myNav;
   background-color: #faf9f9;
   width: 100%;
-  background-color: #d3d3d3;
+  background-color: #efbf1a;
   overflow: visible
   
 }
@@ -132,7 +132,7 @@ margin-right: -1000px; /* Add some margin to separate the logo from text */
 }
 
 .navbar.navbar-expand-lg.navbar-dark.bg-dark {
-  background-color: #d3d3d3 !important;
+  background-color: #efbf1a !important;
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -142,7 +142,7 @@ margin-right: -1000px; /* Add some margin to separate the logo from text */
   padding: 23px 30px; /* Keep padding between elements on the nav bar horizontally and vertically*/
   height: 90px;
   padding-top: 30px;
-  background-color: #d3d3d3;
+  background-color: #efbf1a;
 
 
 }
@@ -151,7 +151,7 @@ margin-right: -1000px; /* Add some margin to separate the logo from text */
 
 
 .navbar-dark .navbar-nav .nav-link:hover {
-  background-color: #ffa200; /* Background color on hover */
+  background-color: #f6dc80; /* Background color on hover */
   color: black; /* Text color on hover */
 }
 
@@ -186,7 +186,7 @@ margin-right: -1000px; /* Add some margin to separate the logo from text */
 
 /* Style the dropdown menu links on hover */
 .navbar-dark .navbar-nav .nav-item.dropdown:hover .dropdown-menu .dropdown-item:hover {
-  background-color: #ffd200; /* Background color on hover */
+  background-color: #f6dc80;; /* Background color on hover */
   color: black; /* Text color on hover */
 }
 
