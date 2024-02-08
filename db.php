@@ -1,6 +1,6 @@
 <?php
 //database credentials
-$servername = "34.147.139.6"; 
+$servername = "part2-part2"; 
 $username = "host"; //updated username
 $password = 'Team017FTW!';
 $dbname = "makeitall"; //updated database name
