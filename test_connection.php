@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-$servername = "1";
+$servername = "part2-part2";
 $username = "host";
 $password = "Team017FTW!"; // Replace with the actual password
 $dbname = "makeitall";
