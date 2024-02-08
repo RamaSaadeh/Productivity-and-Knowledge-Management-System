@@ -159,23 +159,26 @@
 
 
     <div class="staffTableContainer">
-        <div class="staffContainer">
+        <div class="staffContainer table-responsive">
             
-            <table id="projectsInfo">
+            <table id="projectsInfo" class="table table-hover">
+                <caption>List of Projects and Information</caption> <!--for screen reader accessibility-->
+                <thead>
                 <tr class="project">
-                    <th class="projectName">Project Name</th>
-                    <th class="projectId">Project ID</th>
-                    <th class="teamManager">Manager Email</th>
-                    <th class="managerId">Manager ID</th>
-                    <th class="teamLeader">Team Leader</th>
-                    <th class="leaderId">Leader ID</th>
-                    <th class="deadline">Project Deadline</th>
-                    <th class="projectProgress">Project Progress</th>
-                    <th class="totalTasks">Total Tasks</th>
-                    <th class="editProject">Edit Project</th>
-                    <th class="deleteProject">Delete Project</th>
+                    <th scope="col" class="projectName">Project Name</th>
+                    <th scope="col" class="projectId">Project ID</th>
+                    <th scope="col" class="teamManager">Manager Email</th>
+                    <th scope="col" class="managerId">Manager ID</th>
+                    <th scope="col" class="teamLeader">Team Leader</th>
+                    <th scope="col" class="leaderId">Leader ID</th>
+                    <th scope="col" class="deadline">Project Deadline</th>
+                    <th scope="col" class="projectProgress">Project Progress</th>
+                    <th scope="col" class="totalTasks">Total Tasks</th>
+                    <th scope="col" class="editProject">Edit Project</th>
+                    <th scope="col" class="deleteProject">Delete Project</th>
                 </tr>
-    
+                </thead>
+                <tbody></tbody>
                 <tr class="project">
                     <td class="projectId">User Dashboard Creation</td>
                     <td class="projectId">#0001</td>
@@ -374,7 +377,7 @@
                         </button>
                     </td>
                 </tr>
-
+            </tbody>
             </table>
         </div>
     </div>
