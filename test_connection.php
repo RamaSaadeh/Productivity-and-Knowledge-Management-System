@@ -1,19 +1,16 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+echo "COB290 Database Connection";
 
-$servername = "vm2";
+$servername = "v2";
 $username = "host";
-$password = "Team017FTW!"; // Replace with the actual password
-$dbname = "makeitall";
+$password = "Team017FTW!";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Create connection
+$conn = new mysqli($servername, $username, $password);
 
+// Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+  die("Connection failed: " . $conn->connect_error);
 }
 echo "Connected successfully";
-
-
-$conn->close();
 ?>
