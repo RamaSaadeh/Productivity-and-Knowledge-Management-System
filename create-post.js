@@ -155,49 +155,53 @@ $(document).ready(function() {
             return;
         }
 
-        if (currentEditingDraft) {
-            currentEditingDraft.find('.draft-title').val(postTitle);
-            currentEditingDraft.find('.draft-topic').val(postTopic);
-            currentEditingDraft.find('.draft-body').val(postBody);
-            currentEditingDraft = null;  // Reset after updating
-        } else {
-			 const draftHtml = `
-			  <div class="media draft">
-				<div class="media-body draft-content">
-				  <label for="draft-title-${draftCounter}" class="label">Title</label>
-				  <input type="text" id="draft-title-${draftCounter}" class="draft-title" value="${postTitle}" maxlength="40"/>
-				  
-				  <label for="draft-topic-${draftCounter}" class="label">Topic</label>
-				  <input type="text" id="draft-topic-${draftCounter}" class="draft-topic" value="${postTopic}" maxlength="40"/>
-				  
-				  <label for="draft-body-${draftCounter}" class="label">Content</label>
-				  <textarea id="draft-body-${draftCounter}" class="draft-body" maxlength="1500">${postBody}</textarea>
-				</div>
-				<div class="draft-actions">
-				  <button class="post-draft">Post</button>
-				  <button class="save-draft">Save</button>
-				  <button class="delete-draft">Delete</button>				  
-				</div>
-				<div class="draft-date">Last modified: <span class="draft-last-modified">${dateString}</span></div>
-			  </div>
-			`;
-			
-            $('.drafts-container').append(draftHtml);
-            draftCounter++;
-        }
+    // AJAX call to save the draft
+	$.ajax({
+	        type: "POST",
+	        url: "create-post.php", //go to php script
+	        data: {
+	            title: postTitle,
+	            topic: postTopic,
+	            body: postBody,
+	            isDraft: 1 //indicating this submission is a draft
+	        },
+	        success: function(response) {
+	            //display a success message
+	            successMessage.text('Draft saved successfully!').addClass('show');
+	            setTimeout(() => { successMessage.removeClass('show'); }, 5000);
+	
+	            //add the draft to the UI
+	            appendDraftToUI(postTitle, postTopic, postBody);
+	
+	            //reset the form fields
+	            $('#post-title').val('');
+	            $('#post-topic').val('');
+	            $('#post-body').val('');
+	        },
+	        error: function(xhr, status, error) {
+	            //display an error message
+	            errorMessage.text(`Error saving draft: ${error}`).addClass('show');
+	            setTimeout(() => { errorMessage.removeClass('show'); }, 5000);
+	        }
+	    });
+	});
 
-        $('#post-title').val('');
-        $('#post-topic').val('');
-        $('#post-body').val('');
-        $('#character-count').text('1500');
+	function appendDraftToUI(title, topic, content) {
+	    const draftHTML = `
+	        <div class="media draft-preview">
+	            <div class="media-body">
+	                <h5>${title} (Draft)</h5>
+	                <p>${content}</p>
+	                <em>Topic: ${topic}</em>
+	            </div>
+	        </div>
+	    `;
+	    //append the draft HTML to a container in your page
+	    $('#drafts-container').append(draftHTML);
+	    draftCounter++; //increment draft counter
+	}
 
-        successMessage.text('Draft created successfully!');
-        successMessage.addClass('show');
-        setTimeout(function() {
-            successMessage.removeClass('show');
-        }, 5000);
-    });
-
+	
 	$(document).on('click', '.delete-draft', function() {
 		var draftToDelete = $(this).closest('.draft');
 		confirmAction('delete', 'Are you sure you want to delete this draft?', function() {
