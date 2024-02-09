@@ -159,222 +159,168 @@
 
 
     <div class="staffTableContainer">
-        <div class="staffContainer">
+        <div class="staffContainer table-responsive">
             
-            <table id="projectsInfo">
+            <table id="projectsInfo" class="table table-hover">
+                <caption>List of Projects and Information</caption> <!--for screen reader accessibility-->
+                <thead>
                 <tr class="project">
-                    <th class="projectName">Project Name</th>
-                    <th class="projectId">Project ID</th>
-                    <th class="teamManager">Manager Email</th>
-                    <th class="managerId">Manager ID</th>
-                    <th class="teamLeader">Team Leader</th>
-                    <th class="leaderId">Leader ID</th>
-                    <th class="deadline">Project Deadline</th>
-                    <th class="projectProgress">Project Progress</th>
-                    <th class="totalTasks">Total Tasks</th>
-                    <th class="editProject">Edit Project</th>
-                    <th class="deleteProject">Delete Project</th>
+                    <th scope="col" class="projectName">Project Name</th>
+                    <th scope="col" class="projectId">ID</th>
+                    <th scope="col" class="teamManager">Manager</th>
+                    <th scope="col" class="teamLeader">Leader</th>
+                    <th scope="col" class="deadline">Deadline</th>
+                    <th scope="col" class="projectProgress">Progress(hrs)</th>
+                    <th scope="col" class="totalTasks">Tasks</th>
+                    <th scope="col" class="editProject">Edit</th>
                 </tr>
-    
+                </thead>
+                <tbody></tbody>
                 <tr class="project">
                     <td class="projectId">User Dashboard Creation</td>
                     <td class="projectId">#0001</td>
                     <td class="teamManager">king@make-it-all.co.uk</td>
-                    <td class="managerId">#0001</td>
                     <td class="teamLeader">johndoe@make-it-all.co.uk</td>
-                    <td class="leaderId">#0003</td>
                     <td class="deadline">20/11/23</td>
-                    <td class="projectProgress">80%</td>
+                    <td class="projectProgress">8</td>
                     <td class="totalStaff">16</td>
                     <td class="editProject">
                         <button id="editProjectBttn1" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
                             &#x270E;
                         </button>
                     </td>
-                    <td class="deleteProject">
-                        <button id="deleteProjectBttn1" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
-                            &#x2718;
-                        </button>
-                    </td>
+                    
                     
                 </tr>
 
                 <tr class="project">
                     <td class="projectId">Tech audit 1</td>
                     <td class="projectId">#0002</td>
-                    <td class="teamManager">Jeremy Doe</td>
-                    <td class="managerId">#0001</td>
-                    <td class="teamLeader">Gareth Den</td>
-                    <td class="leaderId">#0002</td>
+                    <td class="teamManager">jeremydoe@make-it-all.co.uk</td>
+                    <td class="teamLeader">garethden@make-it-all.co.uk</td>
                     <td class="deadline">21/11/23</td>
-                    <td class="projectProgress">75%</td>
+                    <td class="projectProgress">7</td>
                     <td class="totalStaff">5</td>
                     <td class="editProject">
                         <button id="editProjectBttn2" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
                             &#x270E;
                         </button>
                     </td>
-                    <td class="deleteProject">
-                        <button id="deleteProjectBttn2" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
-                            &#x2718;
-                        </button>
-                    </td>
+                    
                 </tr>
 
                 <tr class="project">
                     <td class="projectId">Tech Summer Intern Recruitment</td>
                     <td class="projectId">#0004</td>
-                    <td class="teamManager">Jeremy Dean</td>
-                    <td class="managerId">#0006</td>
-                    <td class="teamLeader">#Mary Jones</td>
-                    <td class="leaderId">#0015</td>
+                    <td class="teamManager">jeremydean@make-it-all.co.uk</td>
+                    <td class="teamLeader">maryjones@make-it-all.co.uk</td>
                     <td class="deadline">29/11/23</td>
-                    <td class="projectProgress">20%</td>
+                    <td class="projectProgress">22</td>
                     <td class="totalStaff">13</td>
                     <td class="editProject">
                         <button id="editProjectBttn3" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
                             &#x270E;
                         </button>
                     </td>
-                    <td class="deleteProject">
-                        <button id="deleteProjectBttn3" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
-                            &#x2718;
-                        </button>
-                    </td>
+                    
                 </tr>
 
                 <tr class="project">
                     <td class="projectId">Tech audit 2</td>
                     <td class="projectId">#0014</td>
-                    <td class="teamManager">Henry Smith</td>
-                    <td class="managerId">#0018</td>
-                    <td class="teamLeader">Gareth Den</td>
-                    <td class="leaderId">#0002</td>
+                    <td class="teamManager">henrysmith@make-it-all.co.uk</td>
+                    <td class="teamLeader">garethden@make-it-all.co.uk</td>
                     <td class="deadline">02/12/23</td>
-                    <td class="projectProgress">81%</td>
+                    <td class="projectProgress">18</td>
                     <td class="totalStaff">12</td>
                     <td class="editProject">
                         <button id="editProjectBttn4" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
                             &#x270E;
                         </button>
                     </td>
-                    <td class="deleteProject">
-                        <button id="deleteProjectBttn4" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
-                            &#x2718;
-                        </button>
-                    </td>
+                    
                 </tr>
 
                 <tr class="project">
                     <td class="projectId">Tech audit 3</td>
                     <td class="projectId">#0017</td>
-                    <td class="teamManager">Jeremy Doe</td>
-                    <td class="managerId">#0001</td>
-                    <td class="teamLeader">Gareth Den</td>
-                    <td class="leaderId">#0002</td>
+                    <td class="teamManager">jeremydoe@make-it-all.co.uk</td>
+                    <td class="teamLeader">garethden@make-it-all.co.uk</td>
                     <td class="deadline">03/12/23</td>
-                    <td class="projectProgress">50%</td>
+                    <td class="projectProgress">21</td>
                     <td class="totalStaff">11</td>
                     <td class="editProject">
                         <button id="editProjectBttn5" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
                             &#x270E;
                         </button>
                     </td>
-                    <td class="deleteProject">
-                        <button id="deleteProjectBttn5" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
-                            &#x2718;
-                        </button>
-                    </td>
+                   
                 </tr>
 
                 <tr class="project">
                     <td class="projectId">Tech audit 4</td>
                     <td class="projectId">#0016</td>
-                    <td class="teamManager">Jeremy Doe</td>
-                    <td class="managerId">#0001</td>
-                    <td class="teamLeader">Gareth Den</td>
-                    <td class="leaderId">#0002</td>
+                    <td class="teamManager">jeremydoe@make-it-all.co.uk</td>
+                    <td class="teamLeader">garethden@make-it-all.co.uk</td>
                     <td class="deadline">04/12/23</td>
-                    <td class="projectProgress">78%</td>
+                    <td class="projectProgress">9</td>
                     <td class="totalStaff">8</td>
                     <td class="editProject">
                         <button id="editProjectBttn6" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
                             &#x270E;
                         </button>
                     </td>
-                    <td class="deleteProject">
-                        <button id="deleteProjectBttn6" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
-                            &#x2718;
-                        </button>
-                    </td>
+                    
                 </tr>
 
                 <tr class="project">
                     <td class="projectId">Tech audit 5</td>
                     <td class="projectId">#0019</td>
-                    <td class="teamManager">Jeremy Doe</td>
-                    <td class="managerId">#0001</td>
-                    <td class="teamLeader">Gareth Den</td>
-                    <td class="leaderId">#0002</td>
+                    <td class="teamManager">jeremydoe@make-it-all.co.uk</td>
+                    <td class="teamLeader">garethden@make-it-all.co.uk</td>
                     <td class="deadline">05/12/23</td>
-                    <td class="projectProgress">20%</td>
+                    <td class="projectProgress">12</td>
                     <td class="totalStaff">6</td>
                     <td class="editProject">
                         <button id="editProjectBttn7" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
                             &#x270E;
                         </button>
                     </td>
-                    <td class="deleteProject">
-                        <button id="deleteProjectBttn7" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
-                            &#x2718;
-                        </button>
-                    </td>
+                   
                 </tr>
 
                 <tr class="project">
                     <td class="projectId">Tech audit 6</td>
                     <td class="projectId">#0011</td>
-                    <td class="teamManager">Jeremy Doe</td>
-                    <td class="managerId">#0001</td>
-                    <td class="teamLeader">Gareth Den</td>
-                    <td class="leaderId">#0002</td>
+                    <td class="teamManager">jeremydoe@make-it-all.co.uk</td>
+                    <td class="teamLeader">garethden@make-it-all.co.uk</td>
                     <td class="deadline">07/12/23</td>
-                    <td class="projectProgress">12%</td>
+                    <td class="projectProgress">7</td>
                     <td class="totalStaff">3</td>
                     <td class="editProject">
                         <button id="editProjectBttn8" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
                             &#x270E;
                         </button>
                     </td>
-                    <td class="deleteProject">
-                        <button id="deleteProjectBttn8" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
-                            &#x2718;
-                        </button>
-                    </td>
+                    
                 </tr>
 
                 <tr class="project">
                     <td class="projectId">Tech audit 9</td>
                     <td class="projectId">#0015</td>
-                    <td class="teamManager">Jeremy Doe</td>
-                    <td class="managerId">#0001</td>
-                    <td class="teamLeader">Gareth Den</td>
-                    <td class="leaderId">#0002</td>
+                    <td class="teamManager">jeremydoe@make-it-all.co.uk</td>
+                    <td class="teamLeader">garethden@make-it-all.co.uk</td>
                     <td class="deadline">10/12/23</td>
-                    <td class="projectProgress">10%</td>
+                    <td class="projectProgress">16</td>
                     <td class="totalStaff">4</td>
                     <td class="editProject">
                         <button id="editProjectBttn9" class="editProjectBttn" onclick="confirm('Do you want to edit this project?')">
                             &#x270E;
                         </button>
                     </td>
-                    <td class="deleteProject">
-                        <button id="deleteProjectBttn9" class="deleteProjectBttn" onclick="confirm('Are you sure you want to delete this user?')">
-                            &#x2718;
-                        </button>
-                    </td>
+                    
                 </tr>
-
+            </tbody>
             </table>
         </div>
     </div>

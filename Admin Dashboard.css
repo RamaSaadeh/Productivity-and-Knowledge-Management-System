@@ -297,26 +297,7 @@
       width: 100vw;
   }
   
-  .staffTableContainer{
-      background-color: white;
-      height: 54vh;
-      margin-left: 5vw;
-      margin-right: 5vw;
-  }
-  
-  .staffContainer{
-      width: 100%;
-      height: 100%;
-      overflow-x: auto;
-      overflow-y: auto;
-      min-width: 100%;
-  }
-  
-  .staffContainer tr{
-      th:nth-child(even),td:nth-child(even) {
-      background-color: rgba(150, 212, 212, 0.4);
-  }
-  }
+
   
   #staffInfo td{
 
@@ -479,7 +460,7 @@
   
   .staffContainer tr{
       th:nth-child(even),td:nth-child(even) {
-      background-color: rgba(150, 212, 212, 0.4);
+      background-color: rgb(254, 248, 248);
   }
   }
   
@@ -494,7 +475,7 @@
 
 
   #projectsInfo{
-      margin-bottom: 8%;
+     
       padding-left: 10%;
       padding-right: 10%;
       margin-right: 3%;
@@ -504,25 +485,19 @@
   
   
   #projectsInfo td{
-      padding-left: 2%;
+    
       text-align: left;
       font-size: 1.5vw;;
-      padding-right: 3%;
+      padding-right: 2%;
       
   }
   
   #projectsInfo th {
       text-align: left;
       font-size: 100%;
-      padding-left: 2%;
-      font-size: 2vw;
       
   }
-  
-  
-  
-  
-  
+
   
   /*styling thr to-do list*/
   /* styling the to do list */
