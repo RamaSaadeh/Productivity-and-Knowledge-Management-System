@@ -66,7 +66,7 @@ $(document).ready(function() {
         const postTitle = $('#post-title').val();
         const postBody = $('#post-body').val();
         //for testing purposes
-        const isDraft = $('#isDraft').is(':checked') ? 1 : 0; // Adjust based on your form
+
         
         const errorMessage = $('#error-message');
         const successMessage = $('#success-message');
@@ -92,14 +92,13 @@ $(document).ready(function() {
                 topic: postTopic,
                 title: postTitle,
                 body: postBody,
-                isDraft: isDraft
+                isDraft: 0
             },
             success: function(response) {
                 //reset form fields after successful submission
                 $('#post-title').val('');
                 $('#post-body').val('');
                 $('#post-topic').val('');
-                $('#isDraft').prop('checked', false); // Uncheck the draft checkbox if needed
                 $('#character-count').text('1500');
                 
                 //display success message
