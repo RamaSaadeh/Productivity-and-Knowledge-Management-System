@@ -1,15 +1,17 @@
 <?php
-//database credentials
-$servername = "part2-part2"; 
-$username = "host"; //updated username
-$password = 'Team017FTW!';
-$dbname = "makeitall"; //updated database name
+echo "COB290 Database Connection";
+
+$servername = "v2";
+$username = "host";
+$password = "Team017FTW!";
+$dbname = "makeitall";
 
 //create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 //check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+  die("Connection failed: " . $conn->connect_error);
 }
+echo "Connected successfully";
 ?>
