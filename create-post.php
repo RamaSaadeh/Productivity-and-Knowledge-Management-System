@@ -25,5 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->close();
     $conn->close();
+	 //test comment
 }
 ?>
