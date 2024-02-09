@@ -57,53 +57,64 @@ $(document).ready(function() {
 	
 	
     
+$(document).ready(function() {
     $('#post-form').submit(function(e) {
         e.preventDefault();
-		
-		//get relevant topic title and body 
-
+        
+        //retrieve values from form fields
         const postTopic = $('#post-topic').val();
         const postTitle = $('#post-title').val();
         const postBody = $('#post-body').val();
+        //for testing purposes
+        const isDraft = $('#isDraft').is(':checked') ? 1 : 0; // Adjust based on your form
         
         const errorMessage = $('#error-message');
         const successMessage = $('#success-message');
-
-        errorMessage.removeClass('show');
-        successMessage.removeClass('show');
-		
-		
-		//validation
+        
+        //validation ensuring fields have values
         if (!postTopic || !postTitle || !postBody) {
-            errorMessage.text('Please fill in all fields');
-            errorMessage.addClass('show');
-            setTimeout(function() {
-                errorMessage.removeClass('show');
-            }, 5000);
+            errorMessage.text('Please fill in all fields').addClass('show');
+            setTimeout(() => { errorMessage.removeClass('show'); }, 5000);
             return;
         }
-		
-		//no longer than 1500 characters
+        
         if (postBody.length > 1500) {
-            errorMessage.text('Character limit exceeded (1500 characters max)');
-            errorMessage.addClass('show');
-            setTimeout(function() {
-                errorMessage.removeClass('show');
-            }, 5000);
+            errorMessage.text('Character limit exceeded (1500 characters max)').addClass('show');
+            setTimeout(() => { errorMessage.removeClass('show'); }, 5000);
             return;
         }
-
-        successMessage.text('Success!');
-        successMessage.addClass('show');
-        setTimeout(function() {
-            successMessage.removeClass('show');
-        }, 5000);
-
-        $('#post-title').val('');
-        $('#post-body').val('');
-        $('#post-topic').val('');
-        $('#character-count').text('1500');
+        
+        //AJAX call to send data to create-post.php
+        $.ajax({
+            type: "POST",
+            url: "create-post.php",
+            data: {
+                topic: postTopic,
+                title: postTitle,
+                body: postBody,
+                isDraft: isDraft
+            },
+            success: function(response) {
+                //reset form fields after successful submission
+                $('#post-title').val('');
+                $('#post-body').val('');
+                $('#post-topic').val('');
+                $('#isDraft').prop('checked', false); // Uncheck the draft checkbox if needed
+                $('#character-count').text('1500');
+                
+                //display success message
+                successMessage.text('Post added successfully!').addClass('show');
+                setTimeout(() => { successMessage.removeClass('show'); }, 5000);
+            },
+            error: function(xhr, status, error) {
+                //display error message
+                errorMessage.text(`Error adding post: ${error}`).addClass('show');
+                setTimeout(() => { errorMessage.removeClass('show'); }, 5000);
+            }
+        });
     });
+});
+
 	
 	//when saving a draft
 
