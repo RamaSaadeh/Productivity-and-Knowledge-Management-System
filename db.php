@@ -1,7 +1,7 @@
 <?php
 echo "COB290 Database Connection";
 
-$servername = "v2";
+$servername = "localhost";
 $username = "host";
 $password = "Team017FTW!";
 $dbname = "makeitall";
