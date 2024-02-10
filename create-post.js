@@ -373,7 +373,69 @@ function appendDraftToUI(title, topic, content) {
       const characterCount = 1500 - $(this).val().length;
       $('#character-count').text(characterCount);
     });
-  
+
+//function to fetch drafts from the server and display them in the sidebar
+function fetchAndDisplayDrafts() {
+    $.ajax({
+	type: "GET",
+	url: "fetch-drafts.php", 
+	dataType: "json",
+	success: function(response) {
+	    //check if drafts were retrieved successfully
+	    if (response && response.drafts) {
+		// Clear existing drafts in the sidebar
+		$('.drafts-container').empty();
+
+		//loop through each draft and append it to the sidebar
+		response.drafts.forEach(function(draft) {
+		    appendDraftToSidebar(draft);
+		});
+	    } else {
+		console.log('No drafts found.');
+	    }
+	},
+	error: function(xhr, status, error) {
+	    console.error('Error fetching drafts:', error);
+	}
+    });
+}
+
+//function to append a single draft to the sidebar
+function appendDraftToSidebar(draft) {
+    //construct HTML for the draft
+    var draftHTML = `
+	<div class="media draft">
+	    <div class="media-body draft-content">
+		<label for="post-topic" class="label">Topic</label>
+		<input type="text" class="draft-topic" value="${draft.topic}" maxlength="40">
+		<label for="post-title" class="label">Title</label>
+		<input type="text" class="draft-title" value="${draft.title}" maxlength="40">
+		<label for="post-body" class="label">Body</label>
+		<textarea class="draft-body" maxlength="1500">${draft.body}</textarea>
+	    </div>
+	    <div class="draft-footer">
+		<div class="draft-actions">
+		    <button class="post-draft">Post</button>
+		    <button class="save-draft">Save</button>
+		    <button class="delete-draft">Delete</button>
+		</div>
+		<div class="draft-date">
+		    Last Modified: <span class="draft-last-modified">${draft.lastModified}</span>
+		</div>
+	    </div>
+	</div>
+    `;
+
+    //append the draft HTML to the drafts container in the sidebar
+    $('.drafts-container').append(draftHTML);
+}
+
+	
+	//call the fetchAndDisplayDrafts function when the page is ready
+    $(document).ready(function() {
+        fetchAndDisplayDrafts();
+    });
+	
 	var $buttonElement = $("#someButtonId");
 	const $draftContainer = $buttonElement.closest('.media.draft');
   
