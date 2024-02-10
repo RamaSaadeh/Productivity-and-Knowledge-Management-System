@@ -198,7 +198,7 @@ function saveDraft(postTitle, postTopic, postBody) {
             //handle success
             successMessage.text('Draft saved successfully!').addClass('show');
             setTimeout(() => { successMessage.removeClass('show'); }, 5000);
-            appendDraftToUI(postTitle, postTopic, postBody);
+            fetchAndDisplayDrafts();
             $('#post-title').val('');
             $('#post-topic').val('');
             $('#post-body').val('');
@@ -211,24 +211,9 @@ function saveDraft(postTitle, postTopic, postBody) {
     });
 }
 
-function appendDraftToUI(title, topic, content) {
-    const draftHTML = `
-        <div class="media draft-preview">
-            <div class="media-body">
-                <h5>${title} (Draft)</h5>
-                <p>${content}</p>
-                <em>Topic: ${topic}</em>
-            </div>
-        </div>
-    `;
-    //append the draft HTML to a container in your page
-    $('#drafts-container').append(draftHTML);
-    draftCounter++; //increment draft counter
-}
 
 
 	
-
 
 	//event listener for delete draft button
 	$(document).on('click', '.delete-draft', function() {
