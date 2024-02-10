@@ -7,7 +7,7 @@ include 'db.php';
 $userId = 1;
 
 //SQL query to fetch drafts for the specified user
-$sql = "SELECT Title, Content, DateCreated FROM Posts WHERE UserID = ? AND IsDraft = 1";
+$sql = "SELECT Title, Content, DateCreated, Topic FROM Posts WHERE UserID = ? AND IsDraft = 1";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $userId);
 $stmt->execute();
@@ -22,6 +22,7 @@ while ($row = $result->fetch_assoc()) {
     $drafts[] = array(
         'title' => $row['Title'],
         'body' => $row['Content'],
+        'topic' => $row['Topic'], 
         'lastModified' => $row['DateCreated'] 
     );
 }
