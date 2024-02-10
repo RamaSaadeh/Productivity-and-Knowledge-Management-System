@@ -117,89 +117,111 @@ $(document).ready(function() {
 	
 	//when saving a draft
 
-    $('#draftButton').click(function() {
-        const postTitle = $('#post-title').val();
-        const postTopic = $('#post-topic').val();
-        const postBody = $('#post-body').val();
-        const errorMessage = $('#error-message');
-        const successMessage = $('#success-message');
+$('#draftButton').click(function() {
+    const postTitle = $('#post-title').val();
+    const postTopic = $('#post-topic').val();
+    const postBody = $('#post-body').val();
+    const errorMessage = $('#error-message');
+    const successMessage = $('#success-message');
 
-        errorMessage.removeClass('show');
-        successMessage.removeClass('show');
-	
-		const currentDate = new Date();
-		const dateString = currentDate.toLocaleDateString(undefined, {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric',
-			hour: '2-digit',
-			minute: '2-digit',
-		});
+    errorMessage.removeClass('show');
+    successMessage.removeClass('show');
 
+    const currentDate = new Date();
+    const dateString = currentDate.toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    });
 
-        if (!postTitle || !postTopic || !postBody) {
-            errorMessage.text('Please fill in all fields');
-            errorMessage.addClass('show');
-            setTimeout(function() {
-                errorMessage.removeClass('show');
-            }, 5000);
-            return;
+    if (!postTitle || !postTopic || !postBody) {
+        errorMessage.text('Please fill in all fields');
+        errorMessage.addClass('show');
+        setTimeout(function() {
+            errorMessage.removeClass('show');
+        }, 5000);
+        return;
+    }
+
+    if (draftCounter >= 2) {
+        errorMessage.text("Max 2 saved drafts allowed.");
+        errorMessage.addClass('show');
+        setTimeout(function() {
+            errorMessage.removeClass('show');
+        }, 5000);
+        return;
+    }
+
+    //AJAX call to check the number of drafts
+    $.ajax({
+        type: "GET",
+        url: "check-drafts.php",
+        dataType: "json",
+        success: function(response) {
+            //test log
+            console.log(response);
+            
+            if (response && response.draftCount && response.draftCount >= 2) {
+                errorMessage.text("Maximum of 2 saved drafts allowed.");
+                errorMessage.addClass('show');
+                setTimeout(() => { errorMessage.removeClass('show'); }, 5000);
+            } else {
+                //proceed to save the draft
+                saveDraft(postTitle, postTopic, postBody);
+            }
+        },
+        error: function(xhr, status, error) {
+            errorMessage.text(`Error checking drafts: ${error}`).addClass('show');
+            setTimeout(() => { errorMessage.removeClass('show'); }, 5000);
         }
+    });
+});
 
-        if (draftCounter >= 2) {
-            errorMessage.text("Max 2 saved drafts allowed.");
-            errorMessage.addClass('show');
-            setTimeout(function() {
-                errorMessage.removeClass('show');
-            }, 5000);
-            return;
+function saveDraft(postTitle, postTopic, postBody) {
+    //AJAX call to save the draft
+    $.ajax({
+        type: "POST",
+        url: "create-post.php",
+        data: {
+            title: postTitle,
+            topic: postTopic,
+            body: postBody,
+            isDraft: 1 //indicating this is a draft
+        },
+        success: function(response) {
+            //handle success
+            successMessage.text('Draft saved successfully!').addClass('show');
+            setTimeout(() => { successMessage.removeClass('show'); }, 5000);
+            appendDraftToUI(postTitle, postTopic, postBody);
+            $('#post-title').val('');
+            $('#post-topic').val('');
+            $('#post-body').val('');
+        },
+        error: function(xhr, status, error) {
+            //handle error
+            errorMessage.text(`Error saving draft: ${error}`).addClass('show');
+            setTimeout(() => { errorMessage.removeClass('show'); }, 5000);
         }
+    });
+}
 
-    // AJAX call to save the draft
-	$.ajax({
-	        type: "POST",
-	        url: "create-post.php", //go to php script
-	        data: {
-	            title: postTitle,
-	            topic: postTopic,
-	            body: postBody,
-	            isDraft: 1 //indicating this submission is a draft
-	        },
-	        success: function(response) {
-	            //display a success message
-	            successMessage.text('Draft saved successfully!').addClass('show');
-	            setTimeout(() => { successMessage.removeClass('show'); }, 5000);
-	
-	            //add the draft to the UI
-	            appendDraftToUI(postTitle, postTopic, postBody);
-	
-	            //reset the form fields
-	            $('#post-title').val('');
-	            $('#post-topic').val('');
-	            $('#post-body').val('');
-	        },
-	        error: function(xhr, status, error) {
-	            //display an error message
-	            errorMessage.text(`Error saving draft: ${error}`).addClass('show');
-	            setTimeout(() => { errorMessage.removeClass('show'); }, 5000);
-	        }
-	    });
-	});
+function appendDraftToUI(title, topic, content) {
+    const draftHTML = `
+        <div class="media draft-preview">
+            <div class="media-body">
+                <h5>${title} (Draft)</h5>
+                <p>${content}</p>
+                <em>Topic: ${topic}</em>
+            </div>
+        </div>
+    `;
+    //append the draft HTML to a container in your page
+    $('#drafts-container').append(draftHTML);
+    draftCounter++; //increment draft counter
+}
 
-	function appendDraftToUI(title, topic, content) {
-	    const draftHTML = `
-	        <div class="media draft-preview">
-	            <div class="media-body">
-	                <h5>${title} (Draft)</h5>
-	                <p>${content}</p>
-	                <em>Topic: ${topic}</em>
-	            </div>
-	        </div>
-	    `;
-	    //append the draft HTML to a container in your page
-	    $('#drafts-container').append(draftHTML);
-	    draftCounter++; //increment draft counter
-	}
 
 	
 	$(document).on('click', '.delete-draft', function() {
