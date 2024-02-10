@@ -224,12 +224,16 @@ function appendDraftToUI(title, topic, content) {
 
 
 	
+	//event listener for delete draft button
 	$(document).on('click', '.delete-draft', function() {
-		var draftToDelete = $(this).closest('.draft');
-		confirmAction('delete', 'Are you sure you want to delete this draft?', function() {
-			deleteDraft(draftToDelete);
-			displayPopup('Draft deleted successfully!');
-		});
+	    var draftToDelete = $(this).closest('.draft');
+	    var postID = draftToDelete.data('index'); //retrieve the index from data attribute
+	
+	    //confirm deletion with user
+	    confirmAction('delete', 'Are you sure you want to delete this draft?', function() {
+	        //call deleteDraft function with the postID and the draft element
+	        deleteDraft(postID, draftToDelete);
+	    });
 	});
 
 	//get the button that was clicked as a jQuery object
@@ -460,12 +464,30 @@ function appendDraftToSidebar(draft) {
   
 
 
-    function deleteDraft($buttonElement) {
-      const $draftContainer = $buttonElement.closest('.draft');
-      $draftContainer.remove();
-	  draftCounter--;
-
-    }
+//function to delete a draft
+function deleteDraft(postID, $draftContainer) {
+    $.ajax({
+        type: "POST",
+        url: "delete-draft.php",
+        data: { postID: postID }, //pass the postID to delete-draft.php
+        dataType: "json",
+        success: function(response) {
+            if (response.success) {
+                //draft deleted successfully, remove it from the sidebar
+                $draftContainer.remove();
+                displayPopup('Draft deleted successfully!');
+            } else {
+                //error deleting draft
+                console.error('Error deleting draft:', response.message);
+                displayPopup('Error deleting draft. Please try again later.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error deleting draft:', error);
+            displayPopup('Error deleting draft. Please try again later.');
+        }
+    });
+}
 
     function postDraft($buttonElement) {
       const $draftContainer = $buttonElement.closest('.draft');
