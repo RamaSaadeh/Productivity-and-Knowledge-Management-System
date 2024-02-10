@@ -181,6 +181,10 @@ $('#draftButton').click(function() {
 
 function saveDraft(postTitle, postTopic, postBody) {
     //AJAX call to save the draft
+
+    const errorMessage = $('#error-message');
+    const successMessage = $('#success-message');
+	
     $.ajax({
         type: "POST",
         url: "create-post.php",
@@ -194,7 +198,7 @@ function saveDraft(postTitle, postTopic, postBody) {
             //handle success
             successMessage.text('Draft saved successfully!').addClass('show');
             setTimeout(() => { successMessage.removeClass('show'); }, 5000);
-            appendDraftToUI(postTitle, postTopic, postBody);
+            fetchAndDisplayDrafts();
             $('#post-title').val('');
             $('#post-topic').val('');
             $('#post-body').val('');
@@ -207,75 +211,89 @@ function saveDraft(postTitle, postTopic, postBody) {
     });
 }
 
-function appendDraftToUI(title, topic, content) {
-    const draftHTML = `
-        <div class="media draft-preview">
-            <div class="media-body">
-                <h5>${title} (Draft)</h5>
-                <p>${content}</p>
-                <em>Topic: ${topic}</em>
-            </div>
-        </div>
-    `;
-    //append the draft HTML to a container in your page
-    $('#drafts-container').append(draftHTML);
-    draftCounter++; //increment draft counter
-}
 
 
 	
+
+	//event listener for delete draft button
 	$(document).on('click', '.delete-draft', function() {
-		var draftToDelete = $(this).closest('.draft');
-		confirmAction('delete', 'Are you sure you want to delete this draft?', function() {
-			deleteDraft(draftToDelete);
-			displayPopup('Draft deleted successfully!');
-		});
+	    var draftToDelete = $(this).closest('.draft');
+	    var postID = draftToDelete.data('post-id'); //retrieve the postID from data attribute
+	    console.log('Post ID:', postID); //log the postID value
+	
+	    //confirm deletion with the user
+	    confirmAction('delete', 'Are you sure you want to delete this draft?', function() {
+	        //call deleteDraft function with the postID and the draft element
+	        deleteDraft(postID, draftToDelete);
+	    });
 	});
-
-	//get the button that was clicked as a jQuery object
-	$(document).on('click', '.post-draft', function() {
-	  currentDraftToPost = $(this); 
-	  confirmAction('post', 'Are you sure you want to post this draft?', function() {
-		postDraft(currentDraftToPost); 
-		displayPopup('Draft posted successfully!');
-	  });
-	});
-
-
-
-
-	$(document).on('click', '.save-draft', function() {
-		var draftElement = $(this).closest('.draft');
 
 	
-		var confirmSaveAction = function() {
-			const title = draftElement.find('.draft-title').val();
-			const topic = draftElement.find('.draft-topic').val();
-			const body = draftElement.find('.draft-body').val();
-
-			if (title.length > 20 || topic.length > 20 || body.length > 1500) {
-				displayPopup('Character limit exceeded!');
-				return;
-			}
-
-			//update the last modified date
-			const currentDate = new Date();
-			const dateString = currentDate.toLocaleDateString(undefined, {
-				year: 'numeric',
-				month: 'long',
-				day: 'numeric',
-				hour: '2-digit',
-				minute: '2-digit'
-			});
-			draftElement.find('.draft-last-modified').text(dateString);
-
-			displayPopup('Draft saved successfully!');
-		};
-
-		//prompt the user for confirmation before saving
-		confirmAction('save', 'Are you sure you want to save this draft?', confirmSaveAction);
+	//event listener for the "Post" button on drafts
+	$(document).on('click', '.post-draft', function() {
+	    var currentDraftToPost = $(this);
+	    confirmAction('post', 'Are you sure you want to post this draft?', function() {
+	        postDraft(currentDraftToPost);
+	    });
 	});
 
+
+	//event listener for save draft button
+	$(document).on('click', '.save-draft', function() {
+	    var draftElement = $(this).closest('.draft');
+	
+	    //function to handle confirmation and save action
+	    var confirmSaveAction = function() {
+	        const postID = draftElement.data('post-id'); // get the post ID of specific draft
+	        const title = draftElement.find('.draft-title').val();
+	        const topic = draftElement.find('.draft-topic').val();
+	        const body = draftElement.find('.draft-body').val();
+		    
+		//validation to ensure correct lengths of data fields
+	        if (title.length > 40 || topic.length > 40 || body.length > 1500) {
+	            displayPopup('Character limit exceeded!');
+	            return;
+	        }
+	
+	        //update the last modified date
+	        const currentDate = new Date();
+	        const dateString = currentDate.toLocaleDateString(undefined, {
+	            year: 'numeric',
+	            month: 'long',
+	            day: 'numeric',
+	            hour: '2-digit',
+	            minute: '2-digit'
+	        });
+	        draftElement.find('.draft-last-modified').text(dateString);
+	
+	        //send AJAX request to update the draft contents in database
+	        $.ajax({
+	            type: "POST",
+	            url: "update-draft.php",
+	            data: {
+	                postID: postID,
+	                title: title,
+	                topic: topic,
+	                body: body
+	            },
+	            dataType: "json",
+	            success: function(response) {
+	                if (response.success) {
+	                    displayPopup('Draft saved successfully!');
+	                } else {
+	                    displayPopup('Error saving draft. Please try again later.');
+	                }
+	            },
+	            error: function(xhr, status, error) {
+	                console.error('Error updating draft:', error);
+	                displayPopup('Error saving draft. Please try again later.');
+	            }
+	        });
+	    };
+	
+	    //prompt  user for confirmation before saving
+	    confirmAction('save', 'Are you sure you want to save this draft?', confirmSaveAction);
+	});
 
 
 
@@ -442,6 +460,7 @@ function appendDraftToSidebar(draft) {
   
 	function editDraft($buttonElement) {
 		const $draftContainer = $buttonElement.closest('.draft');
+		const postID = $draftContainer.data('post-id');
 		const title = $draftContainer.find('.draft-title').text();
 		const topic = $draftContainer.find('.draft-topic').text();
 		const body = $draftContainer.find('.draft-body').text();
@@ -450,9 +469,8 @@ function appendDraftToSidebar(draft) {
 		$('#post-title').val(title);
 		$('#post-topic').val(topic);
 		$('#post-body').val(body);
-
-	//remove the draft from the sidebar
-		$draftContainer.remove();
+		
+		//store the current editing draft
 		currentEditingDraft = $draftContainer;
 
 	}
@@ -460,22 +478,60 @@ function appendDraftToSidebar(draft) {
   
 
 
-    function deleteDraft($buttonElement) {
-      const $draftContainer = $buttonElement.closest('.draft');
-      $draftContainer.remove();
-	  draftCounter--;
+//function to delete a draft
+function deleteDraft(postID, $draftContainer) {
+    $.ajax({
+        type: "POST",
+        url: "delete-draft.php",
+        data: { postID: postID }, //pass the postID to delete-draft.php
+        dataType: "json",
+        success: function(response) {
+            if (response.success) {
+                //draft deleted successfully, remove it from the sidebar
+                $draftContainer.remove();
+                displayPopup('Draft deleted successfully!');
+            } else {
+                //error deleting draft
+                console.error('Error deleting draft:', response.message);
+                displayPopup('Error deleting draft. Please try again later.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error deleting draft:', error);
+            displayPopup('Error deleting draft. Please try again later.');
+        }
+    });
+}
 
-    }
-
-    function postDraft($buttonElement) {
-      const $draftContainer = $buttonElement.closest('.draft');
-
-      $draftContainer.remove();
-	  
-	  draftCounter--;
-    }
+	//function to post a specific draft
+	function postDraft($buttonElement) {
+	    const $draftContainer = $buttonElement.closest('.draft');
+	    const postID = $draftContainer.data('post-id');
 	
-	
+	    //AJAX request to post the draft
+	    $.ajax({
+	        type: "POST",
+	        url: "post-draft.php",
+	        data: { postID: postID }, //pass the postID to post-draft.php
+	        dataType: "json",
+	        success: function(response) {
+	            if (response.success) {
+	                //draft posted successfully, remove it from the UI
+	                $draftContainer.remove();
+	                displayPopup('Draft posted successfully!');
+	            } else {
+	                //error posting draft
+	                console.error('Error posting draft:', response.message);
+	                displayPopup('Error posting draft. Please try again later.');
+	            }
+	        },
+	        error: function(xhr, status, error) {
+	            console.error('Error posting draft:', error);
+	            displayPopup('Error posting draft. Please try again later.');
+	        }
+	    });
+	}
+		
 
 
 });
