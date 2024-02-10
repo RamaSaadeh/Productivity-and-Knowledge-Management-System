@@ -404,7 +404,7 @@ function fetchAndDisplayDrafts() {
 function appendDraftToSidebar(draft) {
     //construct HTML for the draft
     var draftHTML = `
-	<div class="media draft">
+	<div class="media draft" data-post-id="${draft.postID}">
 	    <div class="media-body draft-content">
 		<label for="post-topic" class="label">Topic</label>
 		<input type="text" class="draft-topic" value="${draft.topic}" maxlength="40">
