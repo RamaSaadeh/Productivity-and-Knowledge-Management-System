@@ -224,12 +224,15 @@ function appendDraftToUI(title, topic, content) {
 
 
 	
+
+
 	//event listener for delete draft button
 	$(document).on('click', '.delete-draft', function() {
 	    var draftToDelete = $(this).closest('.draft');
-	    var postID = draftToDelete.data('index'); //retrieve the index from data attribute
+	    var postID = draftToDelete.data('post-id'); //retrieve the postID from data attribute
+	    console.log('Post ID:', postID); //log the postID value
 	
-	    //confirm deletion with user
+	    //confirm deletion with the user
 	    confirmAction('delete', 'Are you sure you want to delete this draft?', function() {
 	        //call deleteDraft function with the postID and the draft element
 	        deleteDraft(postID, draftToDelete);
