@@ -333,30 +333,33 @@
 
 
 
-<!-- staff list option -->
+<!-- staff information tab -->
                 <div id="staffInfoContainer" style="display: none">
                     <div class="staffHeader">
                         <h2>Staff List
                             <input type="text" id="staffSearch" onkeyup="staffSearch()" placeholder="Search for staff" title="Type in a staff name">
                            </h2>
                     </div>
+
                     <div class="staffTableContainer">
-                        <div class="staffContainer">
-                            <table id="staffInfo">
-                                <tr class="staffMember">
-                                    <th class="fullName">Full Name</th>
-                                    <th class="staffId">User ID</th>
-                                    <th class="userLevel">User Level</th>
-                                    <th class="email">User Email</th>
-                                    <th class="teamMembership">Team Membership</th>
-                                    <th class="teamLeading">Team(s) Leading</th>
-                                    <th class="teamManaging">Team(s) Managing</th>
-                                    <th class="enrolmentDate">Enrolment Date</th>
-                                    <th class="invitedBy">Invited By</th>
-                                    <th class="editUser">Edit</th>
-                                    <th class="deleteUser">Delete</th>
+                        <div class="staffContainer table-responsive">
+                            <table id="staffInfo" class="table table-hover">
+                                <caption>Staff Information Table</caption>
+                                <thead>
+                                <tr scope ="col" class="staffMember">
+                                    <th scope ="col" class="fullName">Full Name</th>
+                                    <th scope ="col" class="staffId">User ID</th>
+                                    <th scope ="col" class="userLevel">User Level</th>
+                                    <th scope ="col" class="email">User Email</th>
+                                    <th scope ="col" class="teamMembership">Team Membership</th>
+                                    <th scope ="col" class="teamLeading">Team(s) Leading</th>
+                                    <th scope ="col" class="teamManaging">Team(s) Managing</th>
+                                    <th scope ="col" class="enrolmentDate">Enrolment Date</th>
+                                    <th scope ="col" class="invitedBy">Invited By</th>
+                                    <th scope ="col" class="editUser">Edit</th>
+                                    <th scope ="col" class="deleteUser">Delete</th>
                                 </tr>
-                    
+                                </thead>
                                 <tr class="staffMember">
                                     <td class="fullName">John Doe</td>
                                     <td class="staffId">#0011</td>
