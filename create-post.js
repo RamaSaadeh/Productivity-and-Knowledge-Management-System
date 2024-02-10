@@ -255,38 +255,62 @@ function appendDraftToUI(title, topic, content) {
 
 
 
+	//event listener for save draft button
 	$(document).on('click', '.save-draft', function() {
-		var draftElement = $(this).closest('.draft');
-
+	    var draftElement = $(this).closest('.draft');
 	
-		var confirmSaveAction = function() {
-			const title = draftElement.find('.draft-title').val();
-			const topic = draftElement.find('.draft-topic').val();
-			const body = draftElement.find('.draft-body').val();
-
-			if (title.length > 20 || topic.length > 20 || body.length > 1500) {
-				displayPopup('Character limit exceeded!');
-				return;
-			}
-
-			//update the last modified date
-			const currentDate = new Date();
-			const dateString = currentDate.toLocaleDateString(undefined, {
-				year: 'numeric',
-				month: 'long',
-				day: 'numeric',
-				hour: '2-digit',
-				minute: '2-digit'
-			});
-			draftElement.find('.draft-last-modified').text(dateString);
-
-			displayPopup('Draft saved successfully!');
-		};
-
-		//prompt the user for confirmation before saving
-		confirmAction('save', 'Are you sure you want to save this draft?', confirmSaveAction);
+	    //function to handle confirmation and save action
+	    var confirmSaveAction = function() {
+	        const postID = draftElement.data('post-id'); // get the post ID of specific draft
+	        const title = draftElement.find('.draft-title').val();
+	        const topic = draftElement.find('.draft-topic').val();
+	        const body = draftElement.find('.draft-body').val();
+		    
+		//validation to ensure correct lengths of data fields
+	        if (title.length > 40 || topic.length > 40 || body.length > 1500) {
+	            displayPopup('Character limit exceeded!');
+	            return;
+	        }
+	
+	        //update the last modified date
+	        const currentDate = new Date();
+	        const dateString = currentDate.toLocaleDateString(undefined, {
+	            year: 'numeric',
+	            month: 'long',
+	            day: 'numeric',
+	            hour: '2-digit',
+	            minute: '2-digit'
+	        });
+	        draftElement.find('.draft-last-modified').text(dateString);
+	
+	        //send AJAX request to update the draft contents in database
+	        $.ajax({
+	            type: "POST",
+	            url: "update-draft.php",
+	            data: {
+	                postID: postID,
+	                title: title,
+	                topic: topic,
+	                body: body
+	            },
+	            dataType: "json",
+	            success: function(response) {
+	                if (response.success) {
+	                    displayPopup('Draft saved successfully!');
+	                } else {
+	                    displayPopup('Error saving draft. Please try again later.');
+	                }
+	            },
+	            error: function(xhr, status, error) {
+	                console.error('Error updating draft:', error);
+	                displayPopup('Error saving draft. Please try again later.');
+	            }
+	        });
+	    };
+	
+	    //prompt  user for confirmation before saving
+	    confirmAction('save', 'Are you sure you want to save this draft?', confirmSaveAction);
 	});
-
 
 
 
@@ -453,6 +477,7 @@ function appendDraftToSidebar(draft) {
   
 	function editDraft($buttonElement) {
 		const $draftContainer = $buttonElement.closest('.draft');
+		const postID = $draftContainer.data('post-id');
 		const title = $draftContainer.find('.draft-title').text();
 		const topic = $draftContainer.find('.draft-topic').text();
 		const body = $draftContainer.find('.draft-body').text();
@@ -461,9 +486,8 @@ function appendDraftToSidebar(draft) {
 		$('#post-title').val(title);
 		$('#post-topic').val(topic);
 		$('#post-body').val(body);
-
-	//remove the draft from the sidebar
-		$draftContainer.remove();
+		
+		//store the current editing draft
 		currentEditingDraft = $draftContainer;
 
 	}
