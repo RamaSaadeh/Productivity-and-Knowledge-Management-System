@@ -243,16 +243,14 @@ function appendDraftToUI(title, topic, content) {
 	    });
 	});
 
-	//get the button that was clicked as a jQuery object
+	
+	//event listener for the "Post" button on drafts
 	$(document).on('click', '.post-draft', function() {
-	  currentDraftToPost = $(this); 
-	  confirmAction('post', 'Are you sure you want to post this draft?', function() {
-		postDraft(currentDraftToPost); 
-		displayPopup('Draft posted successfully!');
-	  });
+	    var currentDraftToPost = $(this);
+	    confirmAction('post', 'Are you sure you want to post this draft?', function() {
+	        postDraft(currentDraftToPost);
+	    });
 	});
-
-
 
 
 	//event listener for save draft button
@@ -520,15 +518,35 @@ function deleteDraft(postID, $draftContainer) {
     });
 }
 
-    function postDraft($buttonElement) {
-      const $draftContainer = $buttonElement.closest('.draft');
-
-      $draftContainer.remove();
-	  
-	  draftCounter--;
-    }
+	//function to post a specific draft
+	function postDraft($buttonElement) {
+	    const $draftContainer = $buttonElement.closest('.draft');
+	    const postID = $draftContainer.data('post-id');
 	
-	
+	    //AJAX request to post the draft
+	    $.ajax({
+	        type: "POST",
+	        url: "post-draft.php",
+	        data: { postID: postID }, //pass the postID to post-draft.php
+	        dataType: "json",
+	        success: function(response) {
+	            if (response.success) {
+	                //draft posted successfully, remove it from the UI
+	                $draftContainer.remove();
+	                displayPopup('Draft posted successfully!');
+	            } else {
+	                //error posting draft
+	                console.error('Error posting draft:', response.message);
+	                displayPopup('Error posting draft. Please try again later.');
+	            }
+	        },
+	        error: function(xhr, status, error) {
+	            console.error('Error posting draft:', error);
+	            displayPopup('Error posting draft. Please try again later.');
+	        }
+	    });
+	}
+		
 
 
 });
