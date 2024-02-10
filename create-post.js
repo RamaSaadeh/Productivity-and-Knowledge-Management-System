@@ -181,6 +181,10 @@ $('#draftButton').click(function() {
 
 function saveDraft(postTitle, postTopic, postBody) {
     //AJAX call to save the draft
+
+    const errorMessage = $('#error-message');
+    const successMessage = $('#success-message');
+	
     $.ajax({
         type: "POST",
         url: "create-post.php",
