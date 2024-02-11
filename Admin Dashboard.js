@@ -173,7 +173,7 @@
   // bootstrap for table sorting
   $(document).ready(function () {
     $('#projectsInfo').DataTable({
-        "paging": false , searching: false// disable pagination and additional search
+        "paging": false , searching: false, info: false// disable pagination, search, page info
       });
     $('.dataTables_length').addClass('bs-select');
   });
