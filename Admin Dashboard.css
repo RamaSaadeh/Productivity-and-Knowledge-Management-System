@@ -353,13 +353,7 @@
   
   
   
-  .adminAddBttn{
-      width: 5%;
-      font-size: 100%;
-      padding-left: 3%;
-      padding-right: 4%;
-  
-  }
+
   
   .sortOption{
       width: 20%;
@@ -379,10 +373,7 @@
   /* for projects pop up*/
   /* proj pop up*/
 
-#projectsAdd{
-    height: 3vh;
-    width: 2vw;
-}
+
 
   .projectsWindow {
                       display: none;
