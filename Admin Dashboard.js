@@ -152,57 +152,6 @@
 
 
 
-    function staffSearch() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("staffSearch");
-        
-        filter = input.value.toUpperCase();
-        table = document.getElementById("staffInfo");
-        tr = table.getElementsByTagName("tr");
-        
-    
-        for (i = 1; i < tr.length; i++) {
-            
-    
-            fullName = tr[i].getElementsByClassName("fullName")[0];
-            fullName = (fullName.textContent || fullName.innerText).toUpperCase().indexOf(filter) > -1;
-            userLevel = tr[i].getElementsByClassName("userLevel")[0];
-            userLevel = (userLevel.textContent || userLevel.innerText).toUpperCase().indexOf(filter) > -1;
-            staffId = tr[i].getElementsByClassName("staffId")[0];
-            staffId = (staffId.textContent || staffId.innerText).toUpperCase().indexOf(filter) > -1;
-            teamMem = tr[i].getElementsByClassName("teamMembership")[0];
-            teamMem = (teamMem.textContent || teamMem.innerText).toUpperCase().indexOf(filter) > -1;
-            teamLead = tr[i].getElementsByClassName("teamLeading")[0];
-            teamLead = (teamLead.textContent || teamLead.innerText).toUpperCase().indexOf(filter) > -1;
-            teamMan = tr[i].getElementsByClassName("teamManaging")[0];
-            teamMan = (teamMan.textContent || teamMan.innerText).toUpperCase().indexOf(filter) > -1;
-            invitedBy = tr[i].getElementsByClassName("invitedBy")[0];
-            invitedBy = (invitedBy.textContent || invitedBy.innerText).toUpperCase().indexOf(filter) > -1;
-    
-    
-            if (fullName){
-                tr[i].style.display = "";
-            } else if (userLevel){
-                tr[i].style.display = "";
-            } else if (staffId){
-                tr[i].style.display = "";
-            } else if (teamMem){
-                tr[i].style.display = "";
-            } else if (teamLead){
-                tr[i].style.display = "";
-            } else if (teamMan){
-                tr[i].style.display = "";
-            } else if (invitedBy){
-                tr[i].style.display = "";
-            } else{
-                tr[i].style.display = "none";
-            }
-            
-        }
-        
-    } 
-    
-    
     
     
     
@@ -240,7 +189,7 @@
             document.getElementById("staffProjectsContainer").style.display = "block";
         }
     
-    
+    x
         // setting projects as the initial display
         projectsClicked();
         
