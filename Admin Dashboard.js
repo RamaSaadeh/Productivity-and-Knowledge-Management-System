@@ -178,7 +178,14 @@
     $('.dataTables_length').addClass('bs-select');
   });
 
-    
+
+  $(document).ready(function () {
+    $('#staffInfo').DataTable({
+        "paging": false , searching: false// disable pagination and additional search
+      });
+    $('.dataTables_length').addClass('bs-select');
+  });
+
     
     
     
