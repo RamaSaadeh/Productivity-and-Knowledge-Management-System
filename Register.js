@@ -60,7 +60,7 @@ function submitClick() {
 	else {
 		$.ajax({
 			type: "POST",
-			url: "Register.php",
+			url: "register.php",
 			data: {
 				action: "check_email",
 				email: email
@@ -75,7 +75,7 @@ function submitClick() {
 				else {
 					$.ajax({
 						type: "POST",
-						url: "Register.php",
+						url: "register.php",
 						data: {
 							action: "register_user",
 							firstName: firstName,
