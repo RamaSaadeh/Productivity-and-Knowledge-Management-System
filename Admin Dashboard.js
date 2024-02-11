@@ -189,7 +189,7 @@
             document.getElementById("staffProjectsContainer").style.display = "block";
         }
     
-    x
+    
         // setting projects as the initial display
         projectsClicked();
         
