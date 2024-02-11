@@ -10,7 +10,7 @@ if (isset($_POST['postID'], $_POST['title'], $_POST['topic'], $_POST['body'])) {
     $body = $_POST['body'];
 
     //SQL statement to update the specific draft in Posts table
-    $sql = "UPDATE Posts SET Title = ?, Topic = ?, Body = ? WHERE PostID = ?";
+    $sql = "UPDATE Posts SET Title = ?, Topic = ?, Content = ? WHERE PostID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssi", $title, $topic, $body, $postID);
 
