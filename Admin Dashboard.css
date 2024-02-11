@@ -305,29 +305,24 @@
 
   
   #staffInfo td{
-
       text-align: left;
-      font-size: 1.5vw;
-      padding-right: 0.5vw;
-
+      font-size: 1.5vw;;
+      padding-right: 2%;
       
   }
 
 
   #staffInfo{
-    margin-bottom: 8vh;
+   
       padding-left: 10%;
-      padding-bottom: 1vh;
       padding-right: 10%;
       margin-right: 3%;
       padding-right: 5%;
   }
   
   #staffInfo th {
-      text-align: left;
-      font-size: 10%;
-      padding-left: 0.5vw;
-      font-size: 2vw;
+    text-align: left;
+    font-size: 100%;
       
   }
   
@@ -465,7 +460,7 @@
   
   .staffContainer tr{
       th:nth-child(even),td:nth-child(even) {
-      background-color: rgb(254, 248, 248);
+      background-color: rgb(243, 243, 243);
   }
   }
   
