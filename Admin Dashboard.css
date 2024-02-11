@@ -348,20 +348,7 @@
       text-align: left;
   }
   
-  
-  
-  
-  
-  
 
-  
-  .sortOption{
-      width: 20%;
-      font-size: 100%;
-      margin-top: 1%;
-      margin-bottom: 1%
-  }
-  
   
   
   /*end of staff content*/
@@ -409,7 +396,7 @@
   
   
   
-  /* end of pop up*/
+  /* end of pop up */
   #projectsSearch {
     background-position: 2% 3%;
     background-repeat: no-repeat;
@@ -423,6 +410,20 @@
   }
   
   
+/* bootstrap css for projects table sort */
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+  bottom: .5em;
+}
+
   
   #staffProjectsContainer{
     width: 100%;
@@ -455,15 +456,6 @@
       background-color: rgb(243, 243, 243);
   }
   }
-  
-
-
-#projectSort{
-    height: 3.5vh;
-    font-size: 1.5vh;
-    width: 30vw;
-    
-}
 
 
   #projectsInfo{

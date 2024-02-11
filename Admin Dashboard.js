@@ -1,10 +1,4 @@
-   
-    
-    
-    
-    
-    
-    
+
     
     // Get the modal and close button
     var modal = document.getElementById("projectsWindow");
@@ -184,7 +178,13 @@
         
     }
 
-
+  // bootstrap for table sorting
+  $(document).ready(function () {
+    $('#projectsInfo').DataTable({
+        "paging": false , searching: false// disable pagination and additional search
+      });
+    $('.dataTables_length').addClass('bs-select');
+  });
 
     
     

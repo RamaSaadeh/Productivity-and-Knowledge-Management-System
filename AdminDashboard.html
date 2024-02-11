@@ -9,6 +9,11 @@
   <!-- Include FontAwesome CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
   <!-- font for header -->
   <link href="https://db.onlinewebfonts.com/c/77009ab521bc15b6e38fcc22dd5270f4?family=Churchward+Design+Bold" rel="stylesheet">
@@ -145,13 +150,7 @@
         <input type="text" id="projectsSearch" onkeyup="projectsSearch()" placeholder="Search through projects" title="Search through projects">
        
         
-        <label>Sort By:</label>
-        <select class="sortOption" id="projectSort">
-            <option value="deadline">Deadline</option>
-            <option value="alphabet">Alphabetical</option>
-            
-            <option value="progress">Progress</option>
-        </select>	
+        	
     
         </h2>
     </div>
@@ -607,8 +606,7 @@
     </footer>
     </div>
     
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+
 <script src="Admin Dashboard.js"></script>
 <script>projectsClicked()</script>
 
