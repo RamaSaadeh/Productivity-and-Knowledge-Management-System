@@ -1,10 +1,4 @@
-   
-    
-    
-    
-    
-    
-    
+
     
     // Get the modal and close button
     var modal = document.getElementById("projectsWindow");
@@ -120,34 +114,20 @@
             
     
             fullName = tr[i].getElementsByClassName("fullName")[0];
-            fullName = (fullName.textContent || fullName.innerText).toUpperCase().indexOf(filter) > -1;
             userLevel = tr[i].getElementsByClassName("userLevel")[0];
-            userLevel = (userLevel.textContent || userLevel.innerText).toUpperCase().indexOf(filter) > -1;
             staffId = tr[i].getElementsByClassName("staffId")[0];
-            staffId = (staffId.textContent || staffId.innerText).toUpperCase().indexOf(filter) > -1;
-            teamMem = tr[i].getElementsByClassName("teamMembership")[0];
-            teamMem = (teamMem.textContent || teamMem.innerText).toUpperCase().indexOf(filter) > -1;
             teamLead = tr[i].getElementsByClassName("teamLeading")[0];
-            teamLead = (teamLead.textContent || teamLead.innerText).toUpperCase().indexOf(filter) > -1;
             teamMan = tr[i].getElementsByClassName("teamManaging")[0];
-            teamMan = (teamMan.textContent || teamMan.innerText).toUpperCase().indexOf(filter) > -1;
-            invitedBy = tr[i].getElementsByClassName("invitedBy")[0];
-            invitedBy = (invitedBy.textContent || invitedBy.innerText).toUpperCase().indexOf(filter) > -1;
-    
-    
-            if (fullName){
+            
+            if (fullName && fullName.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (userLevel){
+            } else if (userLevel && userLevel.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (staffId){
+            } else if (staffId && staffId.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (teamMem){
+            } else if (teamLead && teamLead.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (teamLead){
-                tr[i].style.display = "";
-            } else if (teamMan){
-                tr[i].style.display = "";
-            } else if (invitedBy){
+            } else if (teamMan && teamMan.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
             } else{
                 tr[i].style.display = "none";
@@ -157,51 +137,30 @@
         
     }
 
-
-
-
-
-    function staffSearch() {
+    function projectsSearch() {
         var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("staffSearch");
+        input = document.getElementById("projectsSearch");
         
-        filter = input.value.toUpperCase();
-        table = document.getElementById("staffInfo");
+        filter = input.value.toUpperCase().trim();
+        table = document.getElementById("projectsInfo");
         tr = table.getElementsByTagName("tr");
         
     
         for (i = 1; i < tr.length; i++) {
             
     
-            fullName = tr[i].getElementsByClassName("fullName")[0];
-            fullName = (fullName.textContent || fullName.innerText).toUpperCase().indexOf(filter) > -1;
-            userLevel = tr[i].getElementsByClassName("userLevel")[0];
-            userLevel = (userLevel.textContent || userLevel.innerText).toUpperCase().indexOf(filter) > -1;
-            staffId = tr[i].getElementsByClassName("staffId")[0];
-            staffId = (staffId.textContent || staffId.innerText).toUpperCase().indexOf(filter) > -1;
-            teamMem = tr[i].getElementsByClassName("teamMembership")[0];
-            teamMem = (teamMem.textContent || teamMem.innerText).toUpperCase().indexOf(filter) > -1;
-            teamLead = tr[i].getElementsByClassName("teamLeading")[0];
-            teamLead = (teamLead.textContent || teamLead.innerText).toUpperCase().indexOf(filter) > -1;
-            teamMan = tr[i].getElementsByClassName("teamManaging")[0];
-            teamMan = (teamMan.textContent || teamMan.innerText).toUpperCase().indexOf(filter) > -1;
-            invitedBy = tr[i].getElementsByClassName("invitedBy")[0];
-            invitedBy = (invitedBy.textContent || invitedBy.innerText).toUpperCase().indexOf(filter) > -1;
-    
-    
-            if (fullName){
+            var projectName = tr[i].getElementsByClassName("projectName")[0];
+            var projectId = tr[i].getElementsByClassName("projectId")[0];
+            var teamManager = tr[i].getElementsByClassName("teamManager")[0];
+            var teamLeader = tr[i].getElementsByClassName("teamLeader")[0];
+            
+            if (projectName && projectName.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (userLevel){
+            } else if (projectId && projectId.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (staffId){
+            } else if (teamManager && teamManager.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (teamMem){
-                tr[i].style.display = "";
-            } else if (teamLead){
-                tr[i].style.display = "";
-            } else if (teamMan){
-                tr[i].style.display = "";
-            } else if (invitedBy){
+            } else if (teamLeader && teamLeader.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
             } else{
                 tr[i].style.display = "none";
@@ -209,10 +168,24 @@
             
         }
         
-    } 
-    
-    
-    
+    }
+
+  // bootstrap for table sorting
+  $(document).ready(function () {
+    $('#projectsInfo').DataTable({
+        "paging": false , searching: false, info: false // disable pagination, search, page info
+      });
+    $('.dataTables_length').addClass('bs-select');
+  });
+
+
+  $(document).ready(function () {
+    $('#staffInfo').DataTable({
+        "paging": false , searching: false, info: false // disable pagination, search, page info
+      });
+    $('.dataTables_length').addClass('bs-select');
+  });
+
     
     
     

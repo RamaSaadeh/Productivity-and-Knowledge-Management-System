@@ -109,7 +109,12 @@
       font-family: 'Churchward Design Bold';
   }
   
-  
+  #logo {
+    max-width: 350px; /* Set a maximum width for the logo */
+    height: auto; /* Maintain the aspect ratio */
+    margin-right: -1000px; /* Add some margin to separate the logo from text */
+}
+
   .navbar-collapse {
       position: relative;  /* Ensure it's positioned */
       z-index: 1000;       /* Any high number to ensure it's on top of other page elements */
@@ -300,29 +305,31 @@
 
   
   #staffInfo td{
-
       text-align: left;
-      font-size: 1.5vw;
-      padding-right: 0.5vw;
-
+      font-size: 1.5vw;;
+      padding-right: 2%;
       
   }
 
+  #staffInfoContainer{
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    min-width: 100%;
+  }
 
   #staffInfo{
-    margin-bottom: 8vh;
-      padding-left: 10%;
-      padding-bottom: 1vh;
-      padding-right: 10%;
-      margin-right: 3%;
-      padding-right: 5%;
+   
+    padding-left: 4%;
+    padding-right: 10%;
+    margin-right: 3%;
+    padding-right: 2%;
   }
   
   #staffInfo th {
-      text-align: left;
-      font-size: 10%;
-      padding-left: 0.5vw;
-      font-size: 2vw;
+    text-align: left;
+    font-size: 100%;
       
   }
   
@@ -348,26 +355,7 @@
       text-align: left;
   }
   
-  
-  
-  
-  
-  
-  .adminAddBttn{
-      width: 5%;
-      font-size: 100%;
-      padding-left: 3%;
-      padding-right: 4%;
-  
-  }
-  
-  .sortOption{
-      width: 20%;
-      font-size: 100%;
-      margin-top: 1%;
-      margin-bottom: 1%
-  }
-  
+
   
   
   /*end of staff content*/
@@ -379,39 +367,35 @@
   /* for projects pop up*/
   /* proj pop up*/
 
-#projectsAdd{
-    height: 3vh;
-    width: 2vw;
+
+.projectsWindow {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+                    
+.projectsWindowContent {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
 }
 
-  .projectsWindow {
-                      display: none;
-                      position: fixed;
-                      z-index: 1;
-                      left: 0;
-                      top: 0;
-                      width: 100%;
-                      height: 100%;
-                      overflow: auto;
-                      background-color: rgba(0, 0, 0, 0.4);
-                    }
-                    
-                    .projectsWindowContent {
-                      background-color: #fefefe;
-                      margin: 15% auto;
-                      padding: 20px;
-                      border: 1px solid #888;
-                      width: 80%;
-                      max-width: 400px;
-                    }
-                    
-                    .closeProj {
-                      color: #aaa;
-                      float: right;
-                      font-size: 28px;
-                      font-weight: bold;
-                      cursor: pointer;
-                    }
+.closeProj {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
   
   
   
@@ -419,18 +403,34 @@
   
   
   
-  /* end of pop up*/
+  /* end of pop up */
   #projectsSearch {
     background-position: 2% 3%;
     background-repeat: no-repeat;
-    width: 30vw;
+    width: 40vw;
     font-size: 100%;
     border: 1% solid #ddd;
-    margin-left: 1vw;
-    height: 3vh;
+    margin-left: 5vw;
+    height: 5vh;
+    margin-right: 5vw;
+
   }
   
   
+/* bootstrap css for projects table sort */
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+  bottom: .5em;
+}
+
   
   #staffProjectsContainer{
     width: 100%;
@@ -443,8 +443,8 @@
   .staffTableContainer{
       background-color: white;
       height: 54vh;
-      margin-left: 5vw;
-      margin-right: 5vw;
+      
+      
   }
   
 
@@ -460,26 +460,17 @@
   
   .staffContainer tr{
       th:nth-child(even),td:nth-child(even) {
-      background-color: rgb(254, 248, 248);
+      background-color: rgb(243, 243, 243);
   }
   }
-  
-
-
-#projectSort{
-    height: 2vh;
-    font-size: 1.5vh;
-    width: 30vw;
-    
-}
 
 
   #projectsInfo{
      
-      padding-left: 10%;
+      padding-left: 4%;
       padding-right: 10%;
       margin-right: 3%;
-      padding-right: 5%;
+      padding-right: 2%;
       
   }
   
