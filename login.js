@@ -16,7 +16,23 @@ async function getData() {
 			}
 			else {
 				a.style.display = "none";
-				sessionStorage.setItem(response);
+				var array = response.split("/");
+				switch (array[1]) {
+					case 'Admin':
+						array[1] = 'a';
+						window.location.replace("AdminDashboard.html");
+						break;
+					case 'General':
+						array[1] = 'g';
+						window.location.replace("userdash.html");
+						break;
+					case 'Manager':
+						array[1] = 'm';
+						window.location.replace("accessproject.html");
+						break;
+				}
+				let obj = { id: array[0], role: array[1] };
+				sessionStorage.setItem("user", JSON.stringify(obj));
 			}
 		}
 	});	

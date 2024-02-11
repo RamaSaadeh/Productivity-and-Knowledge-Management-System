@@ -20,11 +20,12 @@
 		echo "invalid";
 	}
 	else {
-		$stmt = $conn->prepare("SELECT user_id FROM `users` WHERE email = ? AND password = ?");
+		$stmt = $conn->prepare("SELECT user_id, role FROM `users` WHERE email = ? AND password = ?");
 		$stmt->bind_param("ss", $email, $password);
 		$stmt->execute();
-		$stmt->bind_result($user_id2);
+		$stmt->bind_result($user_id2, $role);
 		$stmt->fetch();
 		$stmt->close();
+		echo "$user_id2/$role";
 	}
 ?>
