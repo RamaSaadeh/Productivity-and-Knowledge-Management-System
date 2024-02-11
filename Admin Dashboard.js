@@ -114,25 +114,20 @@
             
     
             fullName = tr[i].getElementsByClassName("fullName")[0];
-            fullName = (fullName.textContent || fullName.innerText).toUpperCase().indexOf(filter) > -1;
             userLevel = tr[i].getElementsByClassName("userLevel")[0];
-            userLevel = (userLevel.textContent || userLevel.innerText).toUpperCase().indexOf(filter) > -1;
             staffId = tr[i].getElementsByClassName("staffId")[0];
-            staffId = (staffId.textContent || staffId.innerText).toUpperCase().indexOf(filter) > -1;
             teamLead = tr[i].getElementsByClassName("teamLeading")[0];
-            teamLead = (teamLead.textContent || teamLead.innerText).toUpperCase().indexOf(filter) > -1;
             teamMan = tr[i].getElementsByClassName("teamManaging")[0];
-            teamMan = (teamMan.textContent || teamMan.innerText).toUpperCase().indexOf(filter) > -1;
-    
-            if (fullName){
+            
+            if (fullName && fullName.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (userLevel){
+            } else if (userLevel && userLevel.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (staffId){
+            } else if (staffId && staffId.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (teamLead){
+            } else if (teamLead && teamLead.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (teamMan){
+            } else if (teamMan && teamMan.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
             } else{
                 tr[i].style.display = "none";
