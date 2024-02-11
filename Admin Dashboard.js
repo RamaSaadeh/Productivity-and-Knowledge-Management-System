@@ -148,7 +148,41 @@
         
     }
 
-
+    function projectsSearch() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("projectsSearch");
+        
+        filter = input.value.toUpperCase().trim();
+        table = document.getElementById("projectsInfo");
+        tr = table.getElementsByTagName("tr");
+        
+    
+        for (i = 1; i < tr.length; i++) {
+            
+    
+            var projectName = tr[i].getElementsByClassName("projectName")[0];
+            var projectId = tr[i].getElementsByClassName("projectId")[0];
+            projectId = (projectId.textContent || projectId.innerText).toUpperCase().indexOf(filter) > -1;
+            var teamManager = tr[i].getElementsByClassName("teamManager")[0];
+            teamManager = (teamManager.textContent || teamManager.innerText).toUpperCase().indexOf(filter) > -1;
+            var teamLeader = tr[i].getElementsByClassName("teamLeader")[0];
+            teamLeader = (teamLeader.textContent || teamLeader.innerText).toUpperCase().indexOf(filter) > -1;
+    
+            if (projectName && projectName.textContent.toUpperCase().trim().indexOf(filter) > -1){
+                tr[i].style.display = "";
+            } else if (projectId){
+                tr[i].style.display = "";
+            } else if (teamManager){
+                tr[i].style.display = "";
+            } else if (teamLeader){
+                tr[i].style.display = "";
+            } else{
+                tr[i].style.display = "none";
+            }
+            
+        }
+        
+    }
 
 
 
