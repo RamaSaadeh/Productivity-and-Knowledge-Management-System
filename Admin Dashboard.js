@@ -156,19 +156,16 @@
     
             var projectName = tr[i].getElementsByClassName("projectName")[0];
             var projectId = tr[i].getElementsByClassName("projectId")[0];
-            projectId = (projectId.textContent || projectId.innerText).toUpperCase().indexOf(filter) > -1;
             var teamManager = tr[i].getElementsByClassName("teamManager")[0];
-            teamManager = (teamManager.textContent || teamManager.innerText).toUpperCase().indexOf(filter) > -1;
             var teamLeader = tr[i].getElementsByClassName("teamLeader")[0];
-            teamLeader = (teamLeader.textContent || teamLeader.innerText).toUpperCase().indexOf(filter) > -1;
-    
+            
             if (projectName && projectName.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (projectId){
+            } else if (projectId && projectId.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (teamManager){
+            } else if (teamManager && teamManager.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (teamLeader){
+            } else if (teamLeader && teamLeader.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
             } else{
                 tr[i].style.display = "none";
