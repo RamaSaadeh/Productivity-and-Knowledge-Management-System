@@ -106,6 +106,58 @@ document.addEventListener("DOMContentLoaded", function () {
 	    });
 	});
 
+
+	$(document).ready(function() {
+	    //extract postID from the URL parameters
+	    const urlParams = new URLSearchParams(window.location.search);
+	
+	    const postID = urlParams.get('id');
+	
+	
+		    //function to fetch comments for a post
+		    function fetchComments(postID) {
+		        $.ajax({
+		            url: "fetch-comments.php",
+		            type: "GET",
+		            dataType: "json",
+		            data: { id: postID },
+		            success: function(comments) {
+		                //clear previous comments
+		                $('#previousComments').empty();
+		
+		                //loop through comments and append each to the sidebar
+		                comments.forEach(function(comment) {
+		                    $('#previousComments').append(`
+		                        <div class="media comment" data-comment-id="${comment.CommentID}">
+		                            <div class="media-body comment-content">${comment.CommentContent}</div>
+		                            <div class="comment-metadata">
+		                                <div class="comment-user-date">
+		                                    <i class="far fa-user">${comment.AuthorName}</i>
+		                                    &nbsp;
+		                                    <i class="far fa-calendar">${comment.LastModified}</i>
+		                                    <span class="comment-edited" style="display: none;">(edited)</span>
+		                                </div>
+		                                <div class="comment-actions">
+		                                    <i class="fas fa-edit edit-comment" title="Edit"></i>
+		                                    <i class="fas fa-trash-alt delete-comment" title="Delete"></i>
+		                                    <i class="fas fa-thumbs-up like-comment" title="Like"></i>
+		                                    <span class="like-count">${comment.Likes}</span>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    `);
+		                });
+		            },
+		            error: function(xhr, status, error) {
+		                console.error("Error fetching comments: " + error);
+		            }
+		        });
+		    }
+		
+		    //fetch comments when the page loads
+		    fetchComments(postID);
+		});
+
  
     commentForm.addEventListener('submit', function(event) {
         event.preventDefault(); // Stop the form from submitting the usual way
