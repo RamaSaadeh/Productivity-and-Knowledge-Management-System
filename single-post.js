@@ -80,6 +80,32 @@ document.addEventListener("DOMContentLoaded", function () {
       
     };
 	
+	$(document).ready(function() {
+	    //xxtract postID from the URL parameters
+	    const urlParams = new URLSearchParams(window.location.search);
+	    const postID = urlParams.get('id'); 
+	
+	    //AJAX request to fetch the single post based on postID
+	    $.ajax({
+		url: "fetch-single-post.php",
+		type: "GET",
+		dataType: "json",
+		data: { id: postID }, //send 'id' as a parameter
+		success: function(post) {
+		    //populate HTML elements with post details
+		    $('#postTopic').text(post.Topic);
+		    $('#postTitle').text(post.Title);
+		    $('#postContent').text(post.Content);
+		    $('#authorName').text(post.AuthorName);
+		    $('#postDate').text(post.DatePublished);
+		    $('#likeCount').text(post.LikesCount);
+		},
+		error: function(xhr, status, error) {
+		    console.error("Error fetching single post: " + error);
+		}
+	    });
+	});
+
  
     commentForm.addEventListener('submit', function(event) {
         event.preventDefault(); // Stop the form from submitting the usual way
