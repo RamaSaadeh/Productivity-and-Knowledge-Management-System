@@ -66,7 +66,31 @@ function submitClick() {
 	var complete = passwordComplete();
 	var a = document.getElementById("success");
 	a.style.display = "none";
+	var b = document.getElementById("success");
+	b.style.display = "none";
 	if (!complete) return;
+	var details = sessionStorage.getItem("user");
+	var id = JSON.parse(details).id;
+	//check if new password == old password
+	$.ajax({
+		type: "POST",
+		url: "profile.php",
+		data: {
+			id: id,
+			password: document.getElementById("password").value
+		},
+		success: function (response) {
+			alert(response);
+			if (response == "invalid") {
+				b.style.display = "block";
+				return;
+			}
+		},
+		error: function () {
+			alert("error");
+		}
+	});
+
 	$("#passwordDetails").slideUp();
 	a.style.display = "block";
 }

@@ -31,7 +31,7 @@ async function getData() {
 						window.location.replace("accessproject.html");
 						break;
 				}
-				let obj = { id: array[0], role: array[1] };
+				let obj = { id: array[0], role: array[1], email: array[2]};
 				sessionStorage.setItem("user", JSON.stringify(obj));
 			}
 		}
