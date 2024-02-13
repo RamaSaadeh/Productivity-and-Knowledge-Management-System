@@ -16,7 +16,10 @@ dashboard.addEventListener("click", function () {
 			a.href = "#";
 	}
 });
-		
+
+var currentSearchTerm = '';
+var currentTopic = 'all'; // signifies empty top initially
+
 var inviteForm = document.getElementById("inviteuseropaquebg");
 	
 function openForm() {
@@ -45,51 +48,103 @@ function sendInvite() {
 }
 
 $(document).ready(function() {
+    //display dynamic posts from the database
+    $.ajax({
+        url: "fetch-posts.php",
+        type: "GET",
+        dataType: "json", //this ensures jQuery treats the response as JSON.
+        success: function(posts) {
+            posts.forEach(function(post) {
+                var postClass = post.Topic.toLowerCase().replace(/\s+/g, '-');
+                var postHTML = `
+                    <div class="post ${postClass}">
+                        <div class="media-body">
+                            <h3 class="post-topic">${post.Topic}</h3>
+                            <h2 class="post-title">${post.Title}</h2>
+                            <p class="preview-text">${post.Content}</p>
+                            <div class="post-read-more">
+                                <a href="single-post.html?id=${post.PostID}" class="btn">More</a>
+                            </div>
+                        </div>
+                        <div class="comment-metadata">
+                            <div class="comment-user-date">
+                                <i class="far fa-user">${post.AuthorName}</i> &nbsp;
+                                <i class="far fa-calendar">${post.DateCreated}</i>
+                            </div>
+                            <div class="comment-actions">
+                                <i class="fas fa-thumbs-up like-comment" title="Like" data-liked="false"></i>
+                                <span class="like-count" data-likes="${post.LikesCount}">${post.LikesCount}</span>
+                            </div>
+                        </div>
+                    </div>`;
+                $('.all-content').append(postHTML);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching posts: " + error);
+        }
+    });
 
-  
-  $('.section.topics a#show-all-topics').addClass('active');
+    
+    $(document).on('click', '.topic-filter', function(e) {
+        e.preventDefault(); 
 
-  //variables to hold the current state of filters
-  var currentSearchTerm = '';
-  var currentTopic = 'show-all-topics'; //default to showing all topics
+        var selectedTopic = $(this).text();
+        console.log("Selected topic:", selectedTopic);
 
-  //function to filter posts by topic and search term
-  function filterPosts() {
-	var $allPosts = $('.all-content .post'); //target all posts outside the slider
+        //highlight the selected topic
+        $('.topic-filter').removeClass('active');
+        $(this).addClass('active');
 
-	//initially hide all posts
-	$allPosts.hide();
+        //update currentTopic based on the selected topic
+        currentTopic = selectedTopic === 'Show all topics' ? 'all' : selectedTopic.toLowerCase().replace(/\s+/g, '-');
 
-	//If "Show All Posts" is not selected, filter by topic
-	var $filteredPosts = currentTopic !== 'show-all-topics' ? 
-						 $allPosts.filter('.' + currentTopic) : $allPosts;
+        //call filterPosts to apply both the topic and search term filters
+        filterPosts();
+    });
 
-	//Further filter by search term if there is one
-	if (currentSearchTerm) {
-	  $filteredPosts = $filteredPosts.filter(function() {
-		var title = $(this).find('.post-title').text().toLowerCase().trim();
-		return title.startsWith(currentSearchTerm);
-	  });
-	}
+    //function to filter posts by topic and search term
+    function filterPosts() {
+        console.log("Filtering with search term: " + currentSearchTerm + " and topic: " + currentTopic);
+        var $allPosts = $('.all-content .post'); //target all posts
 
-	//Show the filtered posts
-	$filteredPosts.show();
-  }
+        $allPosts.each(function() {
+            var $post = $(this);
+            var title = $post.find('.post-title').text().toLowerCase();
+            var postClass = $post.attr('class').split(/\s+/).find(function(cl) {
+                return cl !== 'post';
+            });
 
-  //event listener for topic links in the sidebar
-  $('.section.topics a').click(function(e) {
-	e.preventDefault();
+            //determine if the post matches the current search term
+            var matchesSearch = !currentSearchTerm || title.startsWith(currentSearchTerm);
 
-	//remove .active class from all topic links and add to the clicked one
-	$('.section.topics a').removeClass('active');
-	$(this).addClass('active');
+            //determine if the post matches the current topic
+            var matchesTopic = currentTopic === 'all' || postClass === currentTopic;
 
-	//update the current topic based on the clicked link
-	currentTopic = $(this).attr('id');
+            if (matchesSearch && matchesTopic) {
+                $post.show();
+            } else {
+                $post.hide();
+            }
+        });
+    };
 
-	// Apply filters
-	filterPosts();
-  });
+
+
+
+$('.section.topics').on('click', 'a', function(e) {
+    e.preventDefault();
+
+    var topicText = $(this).text();
+    $('.section.topics a').removeClass('active');
+    $(this).addClass('active');
+
+    //special handling for "Show all topics"
+    currentTopic = (topicText === 'Show all topics') ? 'all' : topicText.toLowerCase().replace(/\s+/g, '-');
+
+    filterPosts(); //reapply filters
+});
+
 
   //event listener for the search input
   $('#search-term').on('input', function() {
@@ -99,7 +154,6 @@ $(document).ready(function() {
 	//apply filters
 	filterPosts();
   });
-	
 
 	
 
@@ -132,31 +186,41 @@ $(document).ready(function() {
         button.setAttribute('data-liked', 'true');
       }
 
-      // Update the likes number in the DOM
+      //update the likes number in the DOM
       likeCountSpan.textContent = likesNumber > 0 ? likesNumber : ''; //only display if greater than 0
       likeCountSpan.setAttribute('data-likes', likesNumber);
     });
   });
 
 
-  // Event listener for topic links in the sidebar
+  //event listener for topic links in the sidebar
   $('.section.topics a').click(function(e) {
     e.preventDefault();
     currentTopic = $(this).attr('id');
     filterPosts(); // apply both filters
   });
 
-  // Event listener for the search input
+  //event listener for the search input
   $('#search-term').on('input', function() {
     currentSearchTerm = $(this).val().toLowerCase().trim();
-    filterPosts(); // apply both filters
+    filterPosts(); //apply both filters
   });
+
+$(document).ready(function() {
+    //fetch and insert dynamic topics from PHP script
+    $.get("dynamic-topics.php", function(data) {
+        //prepend "Show all topics" with an id for easy access
+        $("#dynamic-topics").html('<li><a href="#" id="show-all-topics" class="topic-filter active">Show all topics</a></li>' + data);
+    });
+
+});
+
   
   		//sort by most liked comments
 	function sortByTop() {
 	  const posts = document.querySelectorAll('.all-content > .post');
 	  const sortedPosts = Array.from(posts).sort((a, b) => {
-		// Retrieve the like count from the data-likes attribute
+		//retrieve the like count from the data-likes attribute
 		const likesA = parseInt(a.querySelector('.like-count').getAttribute('data-likes')) || 0;
 		const likesB = parseInt(b.querySelector('.like-count').getAttribute('data-likes')) || 0;
 		return likesB - likesA; //sort in descending order of likes
@@ -164,17 +228,17 @@ $(document).ready(function() {
 
 	  const container = document.querySelector('.all-content');
 	  if (container) {
-		// Remove all current post elements from the DOM to avoid duplicates
+		//remove all current post elements from the DOM to avoid duplicates
 		posts.forEach(post => post.remove());
 
-		// Append sorted posts back to the container
+		//append sorted posts back to the container
 		sortedPosts.forEach(post => container.appendChild(post));
 	  } else {
 		console.error('Posts container not found.');
 	  }
 	}
 
-	// Ensure the DOM is fully loaded before calling this function
+	//ensure the DOM is fully loaded before calling this function
 
 
 		//sort by newest comments
@@ -193,13 +257,13 @@ $(document).ready(function() {
 		return dateB - dateA; // sort by descending date order (newest first)
 	  });
 
-	  // Assuming 'all-content' is the container that directly holds the posts
+	
 	  const container = document.querySelector('.all-content');
 	  if (container) {
-		// Remove all post elements from the DOM
+		//remove all post elements from the DOM
 		posts.forEach(post => post.remove());
 
-		// Append sorted posts back to the container
+		//append sorted posts back to the container
 		sortedPosts.forEach(post => {
 		  container.appendChild(post);
 		});
@@ -208,23 +272,23 @@ $(document).ready(function() {
 	  }
 	}
 
-		// Call the function once the page content has loaded
+		
 	// Call the function once the page content has loaded
 	document.addEventListener('DOMContentLoaded', () => {
 	  sortByNewest(); // Sort by newest posts on initial page load
 	  newestPostsBtn.classList.add('active'); // Set the newest button to active on initial load
 	});
 
-	// Adjust event listeners to check for null and toggle active class
+	//adjust event listeners to check for null and toggle active class
 	const topPostsBtn = document.getElementById('topPostsBtn');
 	const newestPostsBtn = document.getElementById('newestPostsBtn');
 
-	// Function to toggle active class on buttons
+	//function to toggle active class on buttons
 	function toggleButtonActive(clickedBtn) {
-	  // Remove 'active' class from both buttons
+	  //remove 'active' class from both buttons
 	  topPostsBtn.classList.remove('active');
 	  newestPostsBtn.classList.remove('active');
-	  // Add 'active' class to the button that was clicked
+	  //add 'active' class to the button that was clicked
 	  clickedBtn.classList.add('active');
 	}
 

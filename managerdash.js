@@ -46,6 +46,8 @@ dashboard.addEventListener("click", function() {
   }
 });
 
+
+
 function toggleSwitchProjDropdown() {
     document.getElementById("switchproj-dropdown").classList.toggle("show");
   }
@@ -227,9 +229,9 @@ document.getElementById("removestaff-formbtn").addEventListener("click", removem
   
   
 /*StatusChart*/
-var statustypes = ["Complete", "OnTime", "Overdue", "Not Started"];
+var statustypes = ["Completed", "OnTime", "Overdue", "Not Started"];
 var statusquantities = [10,6,2,7];
-var barColors = ["#054822","rgb(255, 149, 35)","#a1083b","#bbb"];
+var barColors = ["#52ab0c","#efbf1a","#ab450c","#646c6c"];
 
 new Chart("piechart", {
   type: "doughnut",
@@ -256,7 +258,7 @@ new Chart("workload-chart", {
   data: {
   labels: staffnames,
   datasets: [{
-    backgroundColor: "rgb(255, 149, 35)",
+    backgroundColor: "#efbf1a",
     data: workload
   }]
 },
@@ -360,3 +362,80 @@ function newElement() {
     }
   }
 }
+
+
+
+
+// All part 2 Java
+
+function addtaskTotable(task_id,task_name,hrs_remaining,status,deadline,assigned_to,notes){
+
+  var table = document.getElementById("taskstable");
+  var row = table.insertRow(-1);
+
+  var taskidcell = row.insertCell(0);
+  var tasknamecell = row.insertCell(1);
+  var hrscell = row.insertCell(2);
+  var statuscell = row.insertCell(3);
+  var deadlinecell = row.insertCell(4);
+  var staffassignedcell = row.insertCell(5);
+  var taskactionscell = row.insertCell(6);
+  
+  taskidcell.innerHTML = task_id;
+  tasknamecell.innerHTML = task_name;
+  hrscell.innerHTML = hrs_remaining;
+  statuscell.innerHTML = status;
+  deadlinecell.innerHTML = deadline;  
+  staffassignedcell.innerHTML = assigned_to; 
+
+  taskactionscell.innerHTML = '<button class = "notesbtn" onclick="opentasknotesForm()">Notes</button><button class="editbtn" onclick="loadtasktoform(this)"><span id="editsymbol" class="material-symbols-outlined">edit</span></button>';
+  }
+
+
+  function addStaffTotable(user_id,name,role,email){
+
+  var table = document.getElementById("StaffTable");
+  var row = table.insertRow(-1);
+
+  var useridcell = row.insertCell(0);
+  var namecell = row.insertCell(1);
+  var rolecell = row.insertCell(2);
+  var emailcell = row.insertCell(3);
+
+  useridcell.innerHTML = user_id;
+  namecell.innerHTML = name;
+  rolecell.innerHTML = role;
+  emailcell.innerHTML = email;
+  }
+
+
+const urlParams = new URLSearchParams(window.location.search);
+const selectedProjectID = urlParams.get('selected_project_ID');
+
+$.ajax({
+  type: "POST",
+  url: "load_project_todash.php",
+  data: {
+    ID: selectedProjectID
+  },
+  success: function (response) {
+    if (response === "invalid") {
+      alert("Something went wrong");
+    } else {	
+      alert(response);
+
+      var allTasks = JSON.parse(response)[0]; //[0] takes the first half of the encoded json array
+      var allStaff = JSON.parse(response)[1]; //[1] takes the first half of the encoded json array
+
+
+      for (var taskrow in allTasks) { //for every task returned, add each to the table
+        addtaskTotable(allTasks[taskrow][0],allTasks[taskrow][1],allTasks[taskrow][2],allTasks[taskrow][3],allTasks[taskrow][4],allTasks[taskrow][5],allTasks[taskrow][6]);
+      }
+
+
+      for (var staffrow in allStaff) { //for every staff returned, add each to the table
+        addStaffTotable(allStaff[staffrow][0],allStaff[staffrow][1],allStaff[staffrow][2],allStaff[staffrow][3]);
+      }
+    }
+  }
+});
