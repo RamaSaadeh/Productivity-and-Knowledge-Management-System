@@ -84,8 +84,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		//extract postID from the URL parameters
 		const urlParams = new URLSearchParams(window.location.search);
 		const postID = urlParams.get('id'); 
-	
-	
+
+
 		//AJAX request to fetch the single post based on postID
 		$.ajax({
 			url: "fetch-single-post.php",
@@ -93,13 +93,30 @@ document.addEventListener("DOMContentLoaded", function () {
 			dataType: "json",
 			data: { id: postID }, 
 			success: function(post) {
-				//populate HTML elements with post details
-				$('#postTopic').text(post.Topic);
-				$('#postTitle').text(post.Title);
-				$('#postContent').text(post.Content);
-				$('#authorName').text(post.AuthorName);
-				$('#postDate').text(post.DatePublished);
-				$('#likeCount').text(post.LikesCount);
+				if (response.success) {
+					
+					const post = response.data;
+
+					//populate HTML elements with post details
+					$('#postTopic').text(post.Topic);
+					$('#postTitle').text(post.Title);
+					$('#postContent').text(post.Content);
+					$('#authorName').text(post.AuthorName);
+					$('#postDate').text(post.DatePublished);
+					$('#likeCount').text(post.LikesCount);
+
+					//show or hide edit and delete buttons based on `isUserOwner` value
+					if (response.isUserOwner) {
+
+						$('.edit-post, .delete-post').show();
+					} else {
+						$('.edit-post, .delete-post').hide();
+					}
+				} else {
+					//handle case where post is not found or another error occurred
+					console.error("Error fetching single post: " + response.error);
+				}
+				
 			},
 			error: function(xhr, status, error) {
 				console.error("Error fetching single post: " + error);

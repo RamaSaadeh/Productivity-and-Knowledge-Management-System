@@ -41,6 +41,11 @@ body {
 
 }
 
+.edit-post, .delete-post {
+  display: none; /* initially hide edit/delete until its confirmed user created the post */
+}
+
+
 /*Beginning of css for navbar*/
 
 
@@ -389,9 +394,7 @@ textarea {
 }
 
 
-.media.comment .media-body {
 
-}
 
 .media.comment .comment-metadata {
     
@@ -400,9 +403,6 @@ textarea {
     padding-top: 10px;
 }
 
-.media.comment .comment-actions {
-
-}
 
 .content {
     display: flex; 

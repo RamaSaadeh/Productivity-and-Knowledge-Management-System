@@ -411,6 +411,13 @@ vertical-align: middle;
   
 }
 
+.media-body {
+  word-wrap: break-word;
+  overflow-wrap: break-word; 
+}
+
+
+
 .all-content .post .media-body {
   max-height: auto; 
   overflow-y: auto; 

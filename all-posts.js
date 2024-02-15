@@ -72,8 +72,8 @@ $(document).ready(function() {
                                 <i class="far fa-calendar">${post.DateCreated}</i>
                             </div>
                             <div class="comment-actions">
-                                <i class="fas fa-thumbs-up like-comment" title="Like" data-liked="false"></i>
-                                <span class="like-count" data-likes="${post.LikesCount}">${post.LikesCount}</span>
+                                <i class="fas fa-thumbs-up like-comment ${post.IsLiked ? 'liked' : ''}" title="Like" data-post-id="${post.PostID}" data-liked="${post.IsLiked ? 'true' : 'false'}"></i>
+                                <span class="like-count" data-post-id="${post.PostID}" data-likes="${post.LikesCount}">${post.LikesCount}</span>
                             </div>
                         </div>
                     </div>`;
@@ -130,6 +130,42 @@ $(document).ready(function() {
     };
 
 
+//event listener for like 
+$(document).on('click', '.like-comment', function() {
+  const $likeButton = $(this);
+  const postID = $likeButton.data('post-id');
+
+  //ajax call to update the number of likes (increment or decrement)
+  $.ajax({
+      url: "update-like.php",
+      type: "POST",
+      dataType: "json",
+      data: { postID: postID },
+      success: function(response) {
+          if (response.success) {
+              //find the like count for specific post and modify it appropriately
+              const likeCountSpan = $('.like-count[data-likes][data-post-id="' + postID + '"]');
+              likeCountSpan.text(response.newLikeCount); //update the number of likes on the page
+
+              //update the data-likes attribute to the new count
+              likeCountSpan.data('likes', response.newLikeCount);
+
+              //toggle the liked class and data-liked attribute based on the new state
+              if ($likeButton.data('liked') === 'true' || $likeButton.data('liked') === true) {
+                  $likeButton.removeClass('liked').data('liked', false).attr('data-liked', 'false');
+              } else {
+                  $likeButton.addClass('liked').data('liked', true).attr('data-liked', 'true');
+              }
+          } else {
+              console.error("Failed to update like status: " + response.message);
+          }
+      },
+      error: function(xhr, status, error) {
+          console.error("Error updating like status: " + error);
+      }
+  });
+});
+
 
 
 $('.section.topics').on('click', 'a', function(e) {
@@ -157,40 +193,6 @@ $('.section.topics').on('click', 'a', function(e) {
 
 	
 
-
-	  //select all like buttons on the page
-  const likeButtons = document.querySelectorAll('.like-comment');
-
-  //add a click event listener to each like button
-  likeButtons.forEach(button => {
-    button.addEventListener('click', function () {
-      //toggle the like state
-      const isLiked = button.getAttribute('data-liked') === 'true';
-      const likeCountSpan = button.nextElementSibling; 
-
-      //check if the likeCountSpan has data-likes attribute; if not, initialize to 0
-      let likesNumber = parseInt(likeCountSpan.getAttribute('data-likes'), 10);
-      if (isNaN(likesNumber)) {
-        likesNumber = 0; //initialize with 0 if there's an issue with the attribute
-      }
-
-      if (isLiked) {
-        //if the post is already liked, unlike it
-        likesNumber = Math.max(likesNumber - 1, 0); //prevent negative numbers
-        button.classList.remove('liked'); //optionally toggle a class to change the button's appearance
-        button.setAttribute('data-liked', 'false');
-      } else {
-        //if the post is not liked, it can be liked
-        likesNumber += 1;
-        button.classList.add('liked'); //optionally toggle a class to change the button's appearance
-        button.setAttribute('data-liked', 'true');
-      }
-
-      //update the likes number in the DOM
-      likeCountSpan.textContent = likesNumber > 0 ? likesNumber : ''; //only display if greater than 0
-      likeCountSpan.setAttribute('data-likes', likesNumber);
-    });
-  });
 
 
   //event listener for topic links in the sidebar
