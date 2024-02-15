@@ -66,4 +66,57 @@
 			$stmt->close();
 		}
 	}
+
+	else if ($action == "get_posts") {
+		$id = $_POST['id'];
+
+		include 'db.php';
+
+		$sql = "SELECT PostID, Title, DateCreated, IsDraft, LikesCount, Topic
+				FROM Posts
+				WHERE IsDraft = 0 AND UserID = ?
+				ORDER BY DateCreated DESC";
+		$stmt = $conn->prepare($sql);
+		$stmt->bind_param("s", $id);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		$posts = array();
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				$posts[] = $row;
+			}
+			echo json_encode($posts);
+		}
+		else {
+			echo json_encode([]);
+		}
+		$stmt->close();
+	}
+
+	else if ($action == "get_comments") {
+		$id = $_POST['id'];
+
+		include 'db.php';
+
+		$sql = "SELECT p.PostID, p.Title, p.Topic, c.CommentContent, c.Likes, c.LastModified
+				FROM Comments c
+				INNER JOIN Posts p ON c.PostID = p.PostID
+				WHERE c.UserID = ?
+				ORDER BY c.LastModified DESC";
+		$stmt = $conn->prepare($sql);
+		$stmt->bind_param("s", $id);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		$posts = array();
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				$posts[] = $row;
+			}
+			echo json_encode($posts);
+		}
+		else {
+			echo json_encode([]);
+		}
+		$stmt->close();
+	}
 ?>
