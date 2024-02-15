@@ -97,7 +97,7 @@ body {
 	transition: 0.5s;
 	outline: none;
 	width: 88%;
-	size: 12px;
+	font-size: 12px;
 }
 
 .details:focus {	
