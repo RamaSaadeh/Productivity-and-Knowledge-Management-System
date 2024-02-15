@@ -566,12 +566,48 @@ document.addEventListener("DOMContentLoaded", function () {
 	  }
 	}
 	
-	    //function to open the modal and set up the deletion process
-    function askDeleteConfirmation(deleteIcon) {
-        const commentId = deleteIcon.closest('.comment').getAttribute('data-comment-id');
-        openConfirmationModal(commentId);
-    }
+	//function to open the modal and set up the deletion process
+	function askDeleteConfirmation(deleteIcon) {
+		const postId = deleteIcon.closest('.post').getAttribute('data-post-id'); 
+		$('#confirmPostDelete').data('post-id', postId); //attach post id to the delete button
+		$('#deleteConfirmationModal').modal('show'); 
+	}
+	
+	
+	
+	$('#confirmPostDelete').click(function() {
 
+		const postID = urlParams.get('id'); //get post id from the url
+		console.log('Deleting post with ID:', postID); 
+	
+		$.ajax({
+			url: 'delete-post.php', 
+			type: 'POST',
+			dataType: 'json', 
+			data: { postId: postID },
+			success: function(response) {
+				if (response.success) {
+					//if the post was successfully deleted
+					$(`.post[data-post-id="${postID}"]`).remove(); 
+					$('#deleteConfirmationModal').modal('hide'); 
+					alert(response.message || 'Post deleted successfully.');
+				} else {
+					//if the server responded with an error
+					alert(response.message || 'Failed to delete post.');
+				}
+			},
+			error: function(xhr, status, error) {
+				//handle any AJAX errors
+				console.error("Error: " + error);
+				alert('Error deleting post.');
+			}
+		});
+	});
+	
+	$('.delete-post-icon').click(function() {
+		askDeleteConfirmation($(this)); //pass the clicked delete icon/button to the function
+	});
+	
 
 	document.body.addEventListener('click', function(event) {
 		if (event.target.classList.contains('edit-comment')) {
