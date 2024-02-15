@@ -97,8 +97,9 @@
 			
 
 			<div id="details" class="tabcontent">
-				<p id="email">Email: email@make-it-all.co.uk</p><br>
-				<p id="role">Role: Admin/Manager/General Staff/Team Leader</p><br>
+				<p id="email_address">Email: Nothing until the winscp updates the js</p>
+				<p id="role">Role: Admin/Manager/General Staff/Team Leader</p>
+				<p id="projects">Projects: None</p><br>
 				<h5><b>Change Password</b></h5>
 				<p>New Password</p>
 				<input name="password" type="password" id="password" class="details" onfocusout="passwordClose()" onfocus="passwordClick()" oninput="detailsInput('password')"/>
@@ -158,7 +159,8 @@
 		});
 
 		var email = JSON.parse(details).email;
-		document.getElementById("email").innerHTML = "Email: " + email;
+		
+		document.getElementById("email_address").innerHTML = "Email: " + email;
 		switch (role) {
 			case "a":
 				document.getElementById("role").innerHTML = "Role: Admin";
@@ -170,6 +172,36 @@
 				document.getElementById("role").innerHTML = "Role: Manager";
 				break;
 		}
+		var id = JSON.parse(details).id;
+
+		$.ajax({
+			type: "POST",
+			url: "profile.php",
+			data: {
+				action: "get_projects",
+				id: id
+			},
+			success: function (response) {
+				if (response == "none") {
+					document.getElementById("projects").innerHTML = "Projects: Currently not assigned to any projects";
+				}
+				else {
+					var array = response.split('/');
+					var string = "";
+					for (let i = 0; i < array.length - 1; i++) {
+						if (array[i].substring(array[i].length - 2) == "-L") {
+							array[i] = array[i].substring(0, array[i].length - 2) + " (L)";
+						}
+						string += array[i];
+						if (i < array.length - 2) string += ", ";
+					}
+					document.getElementById("projects").innerHTML = "Projects: " + string;
+				}
+			},
+			error: function() {
+				alert("error");
+			}
+		});
 
         function toggle(event, tab) {
 
@@ -248,7 +280,8 @@
             $.ajax({
                 type: "POST",
                 url: "profile.php",
-                data: {
+				data: {
+					action: "change_password",
                     id: id,
                     password: document.getElementById("password").value
                 },
