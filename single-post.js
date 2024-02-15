@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     let messageTimeout; //variable to store timeout
     
-    //caracter limit for the comments
+    //character limit for the comments
     const charLimit = 500;
    
     const commentTextArea = document.getElementById('comment');
@@ -80,23 +80,116 @@ document.addEventListener("DOMContentLoaded", function () {
       
     };
 	
- 
-    commentForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Stop the form from submitting the usual way
-
-        //retrieve comment text and validate it
-        const commentText = commentTextArea.value;
-        if (commentText.trim() === '') {
-            //show error message if comment is empty
-            displayMessage('Error: Comment cannot be empty.', false);
-        } else {
-            //add the comment and show success message
-            addComment(commentText);
-            displayMessage('Comment posted successfully!', true);
-            commentTextArea.value = ''; 
-            updateCharCount(); 
-        }
-    });
+	$(document).ready(function() {
+		//extract postID from the URL parameters
+		const urlParams = new URLSearchParams(window.location.search);
+		const postID = urlParams.get('id'); 
+	
+	
+		//AJAX request to fetch the single post based on postID
+		$.ajax({
+			url: "fetch-single-post.php",
+			type: "GET",
+			dataType: "json",
+			data: { id: postID }, 
+			success: function(post) {
+				//populate HTML elements with post details
+				$('#postTopic').text(post.Topic);
+				$('#postTitle').text(post.Title);
+				$('#postContent').text(post.Content);
+				$('#authorName').text(post.AuthorName);
+				$('#postDate').text(post.DatePublished);
+				$('#likeCount').text(post.LikesCount);
+			},
+			error: function(xhr, status, error) {
+				console.error("Error fetching single post: " + error);
+			}
+		});
+	});
+	
+	
+	
+	$(document).ready(function() {
+		//extract postID from the URL parameters
+		const urlParams = new URLSearchParams(window.location.search);
+	
+		const postID = urlParams.get('id');
+		//function to fetch comments for a post
+		function fetchComments(postID) {
+			$.ajax({
+				url: "fetch-comments.php",
+				type: "GET",
+				dataType: "json",
+				data: { id: postID },
+				 success: function(responseComments) {
+					//clear previous comments
+					$('#previousComments').empty();
+	
+					const comments = responseComments.reverse();
+	
+					//loop through comments and append to the sidebar
+					comments.forEach(function(comment) {
+						$('#previousComments').append(`
+							<div class="media comment" data-comment-id="${comment.CommentID}">
+								<div class="media-body comment-content">${comment.CommentContent}</div>
+								<div class="comment-metadata">
+									<div class="comment-user-date">
+										<i class="far fa-user">${comment.AuthorName}</i>
+										&nbsp;
+										<i class="far fa-calendar">${comment.LastModified}</i>
+										<span class="comment-edited" style="display: none;">(edited)</span>
+									</div>
+									<div class="comment-actions">
+										<i class="fas fa-edit edit-comment" title="Edit"></i>
+										<i class="fas fa-trash-alt delete-comment" title="Delete"></i>
+										<i class="fas fa-thumbs-up like-comment" title="Like"></i>
+										<span class="like-count">${comment.Likes}</span>
+									</div>
+								</div>
+							</div>
+						`);
+					});
+				},
+				error: function(xhr, status, error) {
+					console.error("Error fetching comments: " + error);
+				}
+			});
+		}
+	
+	
+		//fetch comments when the page loads
+		fetchComments(postID);
+	});
+	
+	
+	
+	commentForm.addEventListener('submit', function(event) {
+		event.preventDefault(); //stop the form from submitting the usual way
+	
+		//retrieve comment text and validate it
+		const commentText = commentTextArea.value;
+	
+		//extract postID from the URL
+		const urlParams = new URLSearchParams(window.location.search);
+		const postID = urlParams.get('id');
+	
+		if (!postID) {
+			displayMessage('Error: Post ID is missing.', false);
+			return;
+		}
+	
+		if (commentText.trim() === '') {
+			//show error message if comment is empty
+			displayMessage('Error: Comment cannot be empty.', false);
+		} else {
+			//add the comment with postID and show success message
+			addComment(commentText, postID);
+			displayMessage('Comment posted successfully!', true);
+			commentTextArea.value = ''; 
+			updateCharCount(); 
+		}
+	});
+	
 
     //function to update displayed character count
     function updateCharCount() {
@@ -426,16 +519,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 
-	function addComment(commentText) {
-		// increment counter for commentid
-		commentIdCounter++;
-
-		
-		createComment(commentText, '.previous-comments', commentIdCounter);
-	  
-	
-		deactivateSortButtons();
-	}
 
 	function deactivateSortButtons() {
 	
@@ -587,6 +670,78 @@ document.addEventListener("DOMContentLoaded", function () {
 		likeCountElem.textContent = currentCount.toString();
 	}
 
+
+	function addComment(commentText, postID) {
+		//AJAX call to add the comment to the database
+		$.ajax({
+			
+			url: "add-comment.php",
+			type: "POST",
+			dataType: "json",
+			data: {
+				id: postID,
+				comment: commentText
+			},
+			success: function(response) {
+				//handle success:
+				if (response.success) {
+					//if successful, fetch comments and update UI
+					fetchComments(postID); 
+				} else {
+					//if it erros, display error
+					console.error("Error adding comment: " + response.error);
+				}
+			},
+			error: function(xhr, status, error) {
+				//if it errors display error
+				console.error("Error adding comment: " + error);
+			}
+		});
+	
+		//function to fetch comments for a post
+		function fetchComments(postID) {
+			$.ajax({
+				url: "fetch-comments.php",
+				type: "GET",
+				dataType: "json",
+				data: { id: postID },
+				 success: function(responseComments) {
+					//clear previous comments
+					$('#previousComments').empty();
+	
+					const comments = responseComments.reverse();
+	
+					//loop through comments and append to sidebar 
+					comments.forEach(function(comment) {
+						$('#previousComments').append(`
+							<div class="media comment" data-comment-id="${comment.CommentID}">
+								<div class="media-body comment-content">${comment.CommentContent}</div>
+								<div class="comment-metadata">
+									<div class="comment-user-date">
+										<i class="far fa-user">${comment.AuthorName}</i>
+										&nbsp;
+										<i class="far fa-calendar">${comment.LastModified}</i>
+										<span class="comment-edited" style="display: none;">(edited)</span>
+									</div>
+									<div class="comment-actions">
+										<i class="fas fa-edit edit-comment" title="Edit"></i>
+										<i class="fas fa-trash-alt delete-comment" title="Delete"></i>
+										<i class="fas fa-thumbs-up like-comment" title="Like"></i>
+										<span class="like-count">${comment.Likes}</span>
+									</div>
+								</div>
+							</div>
+						`);
+					});
+				},
+				error: function(xhr, status, error) {
+					console.error("Error fetching comments: " + error);
+				}
+			});
+		}
+	
+	}
+	
 
 	function sortByTop() {
 		//sort the comments based on the like count
