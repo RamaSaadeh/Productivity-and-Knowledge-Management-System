@@ -39,15 +39,315 @@ dashboard.addEventListener("click", function() {
       a.href = "userdash.html";
       break;					
     case "m":
-      a.href = "accessproject.php";
-      break;
-    case "l":
-      a.href = "accessproject.php";
+      a.href = "managerdash.html";
       break;
     default:
       a.href = "#";
   }
 });
+
+
+function addtaskTotable(task_id,task_name,hrs_remaining,status,deadline,assigned_to,notes){
+
+  var table = document.getElementById("taskstable");
+  var row = table.insertRow(-1);
+
+  var taskidcell = row.insertCell(0);
+  var tasknamecell = row.insertCell(1);
+  var hrscell = row.insertCell(2);
+  var statuscell = row.insertCell(3);
+  var deadlinecell = row.insertCell(4);
+  var staffassignedcell = row.insertCell(5);
+  var taskactionscell = row.insertCell(6);
+  
+  taskidcell.innerHTML = task_id;
+  tasknamecell.innerHTML = task_name;
+  hrscell.innerHTML = hrs_remaining;
+  statuscell.innerHTML = status;
+  deadlinecell.innerHTML = deadline;  
+  staffassignedcell.innerHTML = assigned_to; 
+
+  taskactionscell.innerHTML = '<button class = "notesbtn" onclick="opentasknotesForm()">Notes</button><button class="editbtn" onclick="loadtasktoform(this)"><span id="editsymbol" class="material-symbols-outlined">edit</span></button>';
+  }
+
+
+function addStaffTotable(user_id,name,role,email){
+
+  var table = document.getElementById("StaffTable");
+  var row = table.insertRow(-1);
+
+  var useridcell = row.insertCell(0);
+  var namecell = row.insertCell(1);
+  var rolecell = row.insertCell(2);
+  var emailcell = row.insertCell(3);
+
+  useridcell.innerHTML = user_id;
+  namecell.innerHTML = name;
+  rolecell.innerHTML = role;
+  emailcell.innerHTML = email;
+}
+
+
+const urlParams = new URLSearchParams(window.location.search);
+const selectedProjectID = urlParams.get('selected_project_ID');
+
+$.ajax({
+  type: "POST",
+  url: "load_project_todash.php",
+  data: {
+    ID: selectedProjectID
+  },
+  success: function (response) {
+    if (response === "invalid") {
+      alert("Something went wrong");
+    } else {	
+
+      var allTasks = JSON.parse(response)[0]; //[0] takes the first half of the encoded json array
+      var allStaff = JSON.parse(response)[1]; //[1] takes the first half of the encoded json array
+
+
+      for (var taskrow in allTasks) { //for every task returned, add each to the table
+        addtaskTotable(allTasks[taskrow][0],allTasks[taskrow][1],allTasks[taskrow][2],allTasks[taskrow][3],allTasks[taskrow][4],allTasks[taskrow][5],allTasks[taskrow][6]);
+      }
+
+
+      for (var staffrow in allStaff) { //for every staff returned, add each to the table
+        addStaffTotable(allStaff[staffrow][0],allStaff[staffrow][1],allStaff[staffrow][2],allStaff[staffrow][3]);
+      }
+    }
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function openaddstaffForm() {
+
+  $.ajax({
+    type: "POST",
+    url: "loadstaff_not_in_proj.php",
+    data: {
+      ID: selectedProjectID
+    },
+    success: function (response) {
+      if (response === "invalid") {
+        alert("Something went wrong");
+      } else {	
+        
+        var allStaff = JSON.parse(response); //[0] takes the first half of the encoded json array
+
+        var selectDropdown = document.getElementById("select_addstaff");
+        //we want to overwrite the select/reset it each time so we dont just add to what was already there
+        selectDropdown.innerHTML = '<option value="" disabled selected>Select staff member to add to project</option>';
+
+
+        for (var staffrow in allStaff) { //for every staff returned, add each to the table
+
+          var option = document.createElement("option");
+
+            // Set the value of the option to user_id
+            option.value = allStaff[staffrow][0];
+            
+            // Concatenate name and email and set it as the text of the option
+            option.text = "#" + allStaff[staffrow][0] + "        |         " + allStaff[staffrow][1] + "         |         " + allStaff[staffrow][2];
+            
+            selectDropdown.appendChild(option);
+        }
+      }
+    }
+  });
+
+// now staff not in the team are loaded into the <select> we are going to open the form
+ document.getElementById("addstaffopaquebg").style.display = "block";
+ 
+}
+
+function addstaff_toteam(){
+  var selectedUserID = document.getElementById("select_addstaff").value;
+
+  $.ajax({
+    type: "POST",
+    url: "add_team_member.php",
+    data: {
+      projectID: selectedProjectID,
+      userID: selectedUserID
+    },
+    success: function (response) {
+      if (response === "invalid") {
+        alert("Something went wrong");
+      } 
+
+      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+    }
+  });
+
+  // now staff not in the team are loaded into the <select> we are going to open the form
+  document.getElementById("addstaffopaquebg").style.display = "none";
+}
+
+function closeaddstaffForm(){
+ document.getElementById("addstaffopaquebg").style.display = "none";
+}
+
+function openchangeroleForm() {
+
+  $.ajax({
+    type: "POST",
+    url: "loadstaff_in_proj.php",
+    data: {
+      ID: selectedProjectID
+    },
+    success: function (response) {
+      if (response === "invalid") {
+        alert("Something went wrong");
+      } else {	
+
+        var allStaff = JSON.parse(response);
+
+        var selectDropdown = document.getElementById("select_changerole");
+        //we want to overwrite the select/reset it each time so we dont just add to what was already there
+        selectDropdown.innerHTML = '<option value="" disabled selected>Select staff member to add to project</option>';
+
+
+        for (var staffrow in allStaff) { //for every staff returned, add each to the table
+
+          var option = document.createElement("option");
+
+            // Set the value of the option to user_id
+            option.value = allStaff[staffrow][0];
+            
+            // Concatenate name and email and set it as the text of the option
+            option.text = "#" + allStaff[staffrow][0] + "        |         " + allStaff[staffrow][1] + "         |         " + allStaff[staffrow][2];
+            
+            selectDropdown.appendChild(option);
+        }
+      }
+    }
+  });
+
+// now staff not in the team are loaded into the <select> we are going to open the form
+ document.getElementById("changeroleopaquebg").style.display = "block";
+}
+
+function maketeamleader(){
+  var selectedUserID = document.getElementById("select_changerole").value;
+
+  $.ajax({
+    type: "POST",
+    url: "make_teamleader.php",
+    data: {
+      projectID: selectedProjectID,
+      userID: selectedUserID
+    },
+    success: function (response) {
+      if (response === "invalid") {
+        alert("Something went wrong");
+      } 
+
+      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+    }
+  });
+
+  // now staff not in the team are loaded into the <select> we are going to open the form
+  document.getElementById("changeroleopaquebg").style.display = "none";
+}
+
+function closechangeroleForm() {
+  document.getElementById("changeroleopaquebg").style.display = "none";
+}
+
+function openremovestaffForm(){
+  $.ajax({
+    type: "POST",
+    url: "loadstaff_in_proj.php",
+    data: {
+      ID: selectedProjectID
+    },
+    success: function (response) {
+      if (response === "invalid") {
+        alert("Something went wrong");
+      } else {	
+
+        var allStaff = JSON.parse(response);
+
+        var selectDropdown = document.getElementById("select_removestaff");
+        //we want to overwrite the select/reset it each time so we dont just add to what was already there
+        selectDropdown.innerHTML = '<option value="" disabled selected>Select staff member to add to project</option>';
+
+
+        for (var staffrow in allStaff) { //for every staff returned, add each to the table
+
+          var option = document.createElement("option");
+
+            // Set the value of the option to user_id
+            option.value = allStaff[staffrow][0];
+            
+            // Concatenate name and email and set it as the text of the option
+            option.text = "#" + allStaff[staffrow][0] + "        |         " + allStaff[staffrow][1] + "         |         " + allStaff[staffrow][2];
+            
+            selectDropdown.appendChild(option);
+        }
+      }
+    }
+  });
+
+// now staff not in the team are loaded into the <select> we are going to open the form
+ document.getElementById("removestaffopaquebg").style.display = "block";
+}
+
+function remove_fromteam(){
+  var selectedUserID = document.getElementById("select_removestaff").value;
+
+  $.ajax({
+    type: "POST",
+    url: "remove_teammember.php",
+    data: {
+      projectID: selectedProjectID,
+      userID: selectedUserID
+    },
+    success: function (response) {
+      if (response === "invalid") {
+        alert("Something went wrong");
+      } 
+
+      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+    }
+  });
+
+  // now staff not in the team are loaded into the <select> we are going to open the form
+  document.getElementById("removestaffopaquebg").style.display = "none";
+}
+
+function closeremovestaffForm() {
+  document.getElementById("removestaffopaquebg").style.display = "none";
+}
+
+
+
 
 
 
@@ -93,26 +393,6 @@ function closeedittaskForm() {
   document.getElementById("edittaskopaquebg").style.display = "none";
 }
 
-function openchangeroleForm() {
-  document.getElementById("changeroleopaquebg").style.display = "block";
-}
-function closechangeroleForm() {
-  document.getElementById("changeroleopaquebg").style.display = "none";
-}
-
-function openaddstaffForm() {
-  document.getElementById("addstaffopaquebg").style.display = "block";
-}
-function closeaddstaffForm() {
-  document.getElementById("addstaffopaquebg").style.display = "none";
-}
-
-function openremovestaffForm() {
-  document.getElementById("removestaffopaquebg").style.display = "block";
-}
-function closeremovestaffForm() {
-  document.getElementById("removestaffopaquebg").style.display = "none";
-}
   
 function addLinkToDiv() {
   // Create a new <a> element
@@ -173,33 +453,6 @@ function makechangestotasktable(){
 }
   
   
-function maketeamleader(){	
-  var Allstafftable = document.getElementById("StaffTable");
-
-  var rows = Allstafftable.getElementsByTagName("tr");
-
-  //We first must get rid of old Team Leader
-  for (var i = 1; i < rows.length; i++) { //loop through all rows of table
-
-      var currentrowrole = rows[i].getElementsByTagName("td")[1];
-      if (currentrowrole.textContent.includes("Team Leader")) {
-          currentrowrole.textContent = "xxxxxx";
-      }
-  }
-    
-  //Below finds member and makes them Team Leader
-  var membertomaketeamleader = document.getElementById("select-changerole").value;
-
-  for (var i = 1; i < rows.length; i++) { //loop through all rows of table
-
-      var currentrowstaffname = rows[i].getElementsByTagName("td")[0];
-      var currentrowrole = rows[i].getElementsByTagName("td")[1];
-      if (currentrowstaffname.textContent.includes(membertomaketeamleader)) {
-          currentrowrole.textContent = "Team Leader";
-      }
-  }
-}
-  
 function removemember(){	
   var membertoremove = document.getElementById("select-removestaff").value;
   var Allstafftable = document.getElementById("StaffTable");
@@ -222,10 +475,6 @@ function removemember(){
 document.getElementById("createnewproj-formbtn").addEventListener("click", addLinkToDiv);
 
 document.getElementById("addtask-formbtn").addEventListener("click", addnewtaskTotable);
-
-document.getElementById("changerole-formbtn").addEventListener("click", maketeamleader);
-
-document.getElementById("removestaff-formbtn").addEventListener("click", removemember);
   
   
   
@@ -369,76 +618,5 @@ function newElement() {
 
 
 
-// All part 2 Java
-
-function addtaskTotable(task_id,task_name,hrs_remaining,status,deadline,assigned_to,notes){
-
-  var table = document.getElementById("taskstable");
-  var row = table.insertRow(-1);
-
-  var taskidcell = row.insertCell(0);
-  var tasknamecell = row.insertCell(1);
-  var hrscell = row.insertCell(2);
-  var statuscell = row.insertCell(3);
-  var deadlinecell = row.insertCell(4);
-  var staffassignedcell = row.insertCell(5);
-  var taskactionscell = row.insertCell(6);
-  
-  taskidcell.innerHTML = task_id;
-  tasknamecell.innerHTML = task_name;
-  hrscell.innerHTML = hrs_remaining;
-  statuscell.innerHTML = status;
-  deadlinecell.innerHTML = deadline;  
-  staffassignedcell.innerHTML = assigned_to; 
-
-  taskactionscell.innerHTML = '<button class = "notesbtn" onclick="opentasknotesForm()">Notes</button><button class="editbtn" onclick="loadtasktoform(this)"><span id="editsymbol" class="material-symbols-outlined">edit</span></button>';
-  }
 
 
-  function addStaffTotable(user_id,name,role,email){
-
-  var table = document.getElementById("StaffTable");
-  var row = table.insertRow(-1);
-
-  var useridcell = row.insertCell(0);
-  var namecell = row.insertCell(1);
-  var rolecell = row.insertCell(2);
-  var emailcell = row.insertCell(3);
-
-  useridcell.innerHTML = user_id;
-  namecell.innerHTML = name;
-  rolecell.innerHTML = role;
-  emailcell.innerHTML = email;
-  }
-
-
-const urlParams = new URLSearchParams(window.location.search);
-const selectedProjectID = urlParams.get('selected_project_ID');
-
-$.ajax({
-  type: "POST",
-  url: "load_project_todash.php",
-  data: {
-    ID: selectedProjectID
-  },
-  success: function (response) {
-    if (response === "invalid") {
-      alert("Something went wrong");
-    } else {	
-      alert(response);
-
-      var allTasks = JSON.parse(response)[0]; //[0] takes the first half of the encoded json array
-      var allStaff = JSON.parse(response)[1]; //[1] takes the first half of the encoded json array
-
-
-      for (var taskrow in allTasks) { //for every task returned, add each to the table
-        addtaskTotable(allTasks[taskrow][0],allTasks[taskrow][1],allTasks[taskrow][2],allTasks[taskrow][3],allTasks[taskrow][4],allTasks[taskrow][5],allTasks[taskrow][6]);
-      }
-
-
-      for (var staffrow in allStaff) { //for every staff returned, add each to the table
-        addStaffTotable(allStaff[staffrow][0],allStaff[staffrow][1],allStaff[staffrow][2],allStaff[staffrow][3]);
-      }
-    }
-  }
-});
