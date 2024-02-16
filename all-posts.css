@@ -313,10 +313,11 @@ vertical-align: middle;
     margin: 30px auto;
 }
 
-.media-backdrop-container {
-  position: relative;
-  height: 100%;
+.media-body {
+  word-wrap: break-word;
+  overflow-wrap: break-word; 
 }
+
 
 
 
