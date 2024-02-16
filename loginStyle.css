@@ -1,6 +1,10 @@
+* {
+	font-family: 'Quicksand', sans-serif;
+}
+
 body {
 	background-color: #efbf1a;
-	font-family: Arial;
+	font-family: Arial, Helvetica, sans-serif;
 	text-align: center;
 }
 

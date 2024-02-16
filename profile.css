@@ -1,6 +1,10 @@
+* {
+	font-family: 'Quicksand', sans-serif;
+}
+
 body {
 	background-color: #f6f6f6;
-	font-family: Arial;
+	font-family: Arial, Helvetica, sans-serif;
 	text-align: center;
 	min-height: 100vh;
 	display: flex;
@@ -300,38 +304,43 @@ body {
   
   /*End of css for navbar*/
 
-.footer {
-    background: #303036;
-    color: #d3d3d3;
-    height: 140px;
+/*Footer Content*/
+.myFooter {
+	grid-area: myFooter;
 	text-align: left;
-	width: 100%;
-	clear: both;
+	height: 13.5vh;
+}
+
+.footer {
+	background: #303036;
+	color: #d3d3d3;
+	height: 140px;
+	position: relative;
 }
 
 .footer .footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    margin-left: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	float: left;
+	height: 100%;
+	margin-left: 2vw;
 }
 
 .footer-title {
-    font-family: 'Churchward Design Bold';
-    font-size: 40px; 
-    margin-bottom: 20px; 
+	font-family: 'Churchward Design Bold';
+	font-size: 3vh;
+	margin-bottom: 0.5vh;
 }
 
-
 .footer .footer-content .footer-section {
-    flex: 1;
-    padding: 2px;
+	flex: 1;
+	padding: 2px;
 }
 
 .footer .footer-content .about .contact-details span {
-    display: block;
-    font-size: 1.1em;
+	display: block;
+	font-size: 1.1em;
 }
 
 
