@@ -219,7 +219,7 @@
   @media (max-width: 991px) {
   
       .navbar-collapse {
-          background-color: #de6b25; /* Background color for the mobile menu */
+          background-color: #efbf1a; /* Background color for the mobile menu */
           padding: 10px; /* Add padding to the mobile menu */
       }
   
@@ -243,7 +243,7 @@
       }
   
       .navbar-dark .navbar-nav .nav-item .nav-link:hover {
-          background-color: #ffa200; /* Background color on hover */
+          background-color: #f6dc80; /* Background color on hover */
           color: black; /* Text color on hover */
       }
   }
@@ -267,7 +267,7 @@
   }
   
   #adminButtons span {
-      background-color: rgb(174, 168, 162);
+      background-color: #d3d3d3;
       padding: 1vh 3vh; /* Adjust padding as needed */
       border-radius: 3% 3%;
       height: 84%; /* You can set a specific height here */
@@ -284,7 +284,7 @@
   
   #adminButtons span:hover{
       font-weight: bold;
-      background-color: rgb(255, 149, 35);
+      background-color: #f6dc80;
   } 
   
   
@@ -358,7 +358,7 @@
       height: 10vh;
       padding-top: 2vh;
       padding-bottom: 2vh;
-      background-color: orange;
+      background-color: #efbf1a;
   }
   
   
@@ -481,7 +481,7 @@ table.dataTable thead .sorting_desc_disabled:before {
   
   .staffContainer tr{
       th:nth-child(even),td:nth-child(even) {
-      background-color: rgb(243, 243, 243);
+      background-color: #d3d3d3;
   }
   }
 
@@ -571,7 +571,7 @@ table.dataTable thead .sorting_desc_disabled:before {
   
   /* Darker background-color on hover */
   #toDoUL li:hover {
-      background: #eec46b;
+      background: #f6dc80;
   }
   
   #toDoUL li {
