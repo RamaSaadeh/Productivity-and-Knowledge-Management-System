@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			type: "GET",
 			dataType: "json",
 			data: { id: postID }, 
-			success: function(post) {
+			success: function(response) {
 				if (response.success) {
 					
 					const post = response.data;
@@ -100,13 +100,13 @@ document.addEventListener("DOMContentLoaded", function () {
 					//populate HTML elements with post details
 					$('#postTopic').text(post.Topic);
 					$('#postTitle').text(post.Title);
-					$('#postContent').text(post.Content);
+					$('#postContent').html(post.Content);
 					$('#authorName').text(post.AuthorName);
 					$('#postDate').text(post.DatePublished);
 					$('#likeCount').text(post.LikesCount);
 
 					//show or hide edit and delete buttons based on `isUserOwner` value
-					if (response.isUserOwner) {
+					if (post.isUserOwner) {
 
 						$('.edit-post, .delete-post').show();
 					} else {
@@ -376,119 +376,197 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 		//function to toggle content editable state and enforce character limit
-	function editPost(editIcon, contentElement) {
-		const isEditable = contentElement.isContentEditable;
-		contentElement.contentEditable = !isEditable;
-
-		if (!isEditable) {
+			//function to toggle content editable state and enforce character limit
+			function editPost(editIcon) {
+				//toggle edit/save icon
+				  const isEditing = editIcon.classList.contains('fa-edit');
+				  editIcon.classList.toggle('fa-save', isEditing);
+				  editIcon.classList.toggle('fa-edit', !isEditing);
+		  
+			   //toggle content editable state
+				  const elements = ['#postTitle', '#postTopic', '#postContent'];
+				  elements.forEach(selector => {
+					  const element = document.querySelector(selector);
+					  const isEditable = element.isContentEditable;
+					  element.contentEditable = !isEditable;
+		  
+					  if (isEditing) { 
+						  element.setAttribute('data-original-content', element.textContent);
+						  if (selector === '#postContent') element.focus(); // Focus on content by default
+					  }
+				  });
+		  
+			  //if switching from edit to save, open confirmation modal
+				  if (!isEditing) openSaveConfirmationModal();
+			  }
+		  
+			  
+		  function saveEdits() {
+			  const titleElement = document.querySelector('#postTitle');
+			  const topicElement = document.querySelector('#postTopic');
+			  const contentElement = document.querySelector('#postContent');
+		  
+			  //character limits
+			  let title = titleElement.textContent.substring(0, 40).trim();
+			  let topic = topicElement.textContent.substring(0, 40).trim();
+			  let content = contentElement.textContent.substring(0, 1500).trim();
+		  
+			  //update elements with trimmed content
+			  titleElement.textContent = title;
+			  topicElement.textContent = topic;
+			  contentElement.textContent = content;
+		  
+			  //check for changes and update the database via AJAX
+			  const elements = [titleElement, topicElement, contentElement];
+			  const hasChanges = elements.some(el => el.textContent.trim() !== el.getAttribute('data-original-content'));
+			  if (hasChanges) {
+				
+				  updatePost({title, topic, content}); //function to make ajax call
+				  showEditedStatus(); //add (edited) to end of date
+		  
 		
-			contentElement.setAttribute('data-original-content', contentElement.textContent);
-			contentElement.focus();
-			editIcon.classList.add('fa-save');
-			editIcon.classList.remove('fa-edit');
-		} else {
-		
-			openSaveConfirmationModal(contentElement);
-			editIcon.classList.remove('fa-save');
-			editIcon.classList.add('fa-edit');
-		}
-	}
-	
-	function saveEdits(contentElement) {
-
-		let content = contentElement.textContent;
-		if (content.length > 1500) {
-			alert('The content is too long. It will be trimmed to 1500 characters.');
-			content = content.substring(0, 1500);
-			contentElement.textContent = content; 
-		}
-
-	
-		if (content.trim() !== contentElement.getAttribute('data-original-content')) {
-			const dateTextElement = document.querySelector('.post .comment-user-date .date-text');
-			if (dateTextElement) {
-				dateTextElement.textContent = ` ${getFormattedDate()}`;
-
-				let editedSpan = dateTextElement.nextElementSibling;
-
-				if (!editedSpan || !editedSpan.classList.contains('comment-edited')) {
-					editedSpan = document.createElement('span');
-					editedSpan.classList.add('comment-edited');
-					editedSpan.textContent = ' (edited)';
-					dateTextElement.parentNode.insertBefore(editedSpan, dateTextElement.nextSibling);
-				}
-
-				editedSpan.style.display = 'inline';
-			}
-		}
-
-		console.log('Content saved:', contentElement.textContent.trim()); 
-
-	
-		contentElement.setAttribute('data-original-content', contentElement.textContent.trim());
-
-		
-		closeModal(document.getElementById('savePostModal'));
-	}
-
-		
-	
-		//function to open the save confirmation modal
-	function openSaveConfirmationModal(contentElement) {
-		const modal = document.getElementById('savePostModal');
-		const confirmSaveBtn = document.getElementById('confirmSave');
-		const cancelSaveBtn = document.getElementById('cancelSave');
-		const closeSpan = modal.querySelector('.close');
-
-
-		modal.style.display = "block";
-
-
-		confirmSaveBtn.onclick = null;
-		cancelSaveBtn.onclick = null;
-		closeSpan.onclick = null;
-		window.onclick = null;
-
-
-		confirmSaveBtn.onclick = function() {
-			saveEdits(contentElement);
-			closeModal(); 
-		};
-
-	
-		cancelSaveBtn.onclick = function() {
-			closeModal(); 
-		};
-
-
-		closeSpan.onclick = function() {
-			closeModal(); 
-		};
+			  }
+		  
+			  //close the modal
+			  closeModal(document.getElementById('savePostModal'));
+		  }
+		  
+		  function updatePost(data) {
+			  //get postID from the URL parameters
+			  const urlParams = new URLSearchParams(window.location.search);
+			  const postID = urlParams.get('id');
+		  
+			  //ajax call to update the post in Posts table
+			  $.ajax({
+				  url: 'update-post.php',
+				  type: 'POST',
+				  data: {
+					  postID: postID, 
+					  title: data.title,
+					  topic: data.topic,
+					  content: data.content
+				  },
+				  success: function(response) {
+					  console.log('Post updated successfully', response);
+					  //success handling
+				  },
+				  error: function(xhr, status, error) {
+					  console.error('Failed to update post', error);
+					  //error handling
+				  }
+			  });
+		  }
+		  
+		  function showEditedStatus() {
+			  //find the date element
+			  const dateElement = document.getElementById('postDate');
+		  
+			  //check if the "(edited)" span already exists
+			  let editedSpan = dateElement.nextElementSibling;
+			  if (!editedSpan || !editedSpan.classList.contains('edited-mark')) {
+				  //if it does not exist, create it
+				  editedSpan = document.createElement('span');
+				  editedSpan.classList.add('edited-mark'); 
+				  editedSpan.textContent = ' (edited)';
+				  //insert the "(edited)" span after the date element
+				  dateElement.parentNode.insertBefore(editedSpan, dateElement.nextSibling);
+			  } else {
+				  //if it already exists, ensure it's visible
+				  editedSpan.style.display = '';
+			  }
+		  }
+		  
 
 		
-		window.onclick = function(event) {
-			if (event.target === modal) {
+	
+			//function to open the save confirmation modal
+		function openSaveConfirmationModal(contentElement) {
+			const modal = document.getElementById('savePostModal');
+			const confirmSaveBtn = document.getElementById('confirmSave');
+			const cancelSaveBtn = document.getElementById('cancelSave');
+			const closeSpan = modal.querySelector('.close');
+
+
+			modal.style.display = "block";
+
+
+			confirmSaveBtn.onclick = null;
+			cancelSaveBtn.onclick = null;
+			closeSpan.onclick = null;
+			window.onclick = null;
+
+
+			confirmSaveBtn.onclick = function() {
+				saveEdits(contentElement);
 				closeModal(); 
-			}
-		};
+			};
+
+		
+			cancelSaveBtn.onclick = function() {
+				closeModal(); 
+			};
+
+
+			closeSpan.onclick = function() {
+				closeModal(); 
+			};
+
+			
+			window.onclick = function(event) {
+				if (event.target === modal) {
+					closeModal(); 
+				}
+			};
+		}
+
+
+
+	
+	function attachCharCountListeners() {
+		document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+			el.addEventListener('input', () => {
+				//determine the character limit based on the element's ID or data attribute
+				let charLimit;
+				switch(el.id) {
+					case 'postTitle':
+					case 'postTopic':
+						charLimit = 40;
+						break;
+					case 'postContent':
+						charLimit = 1500;
+						break;
+					default:
+						charLimit = 0; //default case
+				}
+				updateCharCount(el.id, charLimit);
+			});
+		});
 	}
 
 
+	document.querySelectorAll('.edit-post').forEach(button => {
+		button.addEventListener('click', function() {
+			
+			const titleElement = document.getElementById('postTitle');
+			const topicElement = document.getElementById('postTopic');
+			const contentElement = document.getElementById('postContent');
 
-    const editButtons = document.querySelectorAll('.edit-post'); 
-    const postContent = document.getElementById('postContent');
+			//toggle editing state for each post component
+			[titleElement, topicElement, contentElement].forEach(el => {
+				if (!el.hasAttribute('data-original-content')) {
+					el.setAttribute('data-original-content', el.textContent.trim());
+				}
+			});
 
-   
-	document.querySelector('.edit-post').addEventListener('click', function() {
+			//pass the edit icon to the function
+			editPost(this); 
 
-		const contentElement = document.getElementById('postContent');
-	
-		if (!contentElement.hasAttribute('data-original-content')) {
-			contentElement.setAttribute('data-original-content', contentElement.textContent.trim());
-		}
-		editPost(this, contentElement);
+			//attach character count listeners after making elements editable
+			attachCharCountListeners();
+		});
 	});
-		
+
+	
 		
 	function openConfirmationModal(commentId) {
 		const modal = document.getElementById('confirmationModal');
