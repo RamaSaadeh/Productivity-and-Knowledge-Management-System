@@ -112,6 +112,13 @@ document.addEventListener("DOMContentLoaded", function () {
 					} else {
 						$('.edit-post, .delete-post').hide();
 					}
+					//update like button based on `IsLiked`
+					if (post.IsLiked) {
+						$('.like-post').addClass('liked').attr('data-liked', 'true').attr('title', 'Unlike');
+					} else {
+						$('.like-post').removeClass('liked').attr('data-liked', 'false').attr('title', 'Like');
+					}
+					
 				} else {
 					//handle case where post is not found or another error occurred
 					console.error("Error fetching single post: " + response.error);
@@ -122,7 +129,41 @@ document.addEventListener("DOMContentLoaded", function () {
 				console.error("Error fetching single post: " + error);
 			}
 		});
+		//handles liking posts
+		$('.like-post').click(function() {
+			const isLiked = $(this).hasClass('liked');
+
+			$.ajax({
+				url: 'update-like.php',
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					postID: postID,
+					isLiked: isLiked
+				},
+				success: function(response) {
+					if (response.success) {
+						// Update the like count display for the post
+						$('#likeCount').text(response.newLikeCount);
+						
+						// Toggle the like button class and title attribute for the post
+						if (isLiked) {
+							$('.like-post').removeClass('liked').attr('data-liked', 'false').attr('title', 'Like');
+						} else {
+							$('.like-post').addClass('liked').attr('data-liked', 'true').attr('title', 'Unlike');
+						}
+					} else {
+						alert(response.message || 'Failed to update like status.');
+					}
+				},
+				error: function(xhr, status, error) {
+					console.error("Error: " + error);
+					alert('Error updating like status.');
+				}
+			});
+		});
 	});
+
 	
 	
 	

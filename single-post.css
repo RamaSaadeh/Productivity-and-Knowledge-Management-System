@@ -578,30 +578,23 @@ textarea {
 
 
 .like-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.like-comment {
-    cursor: pointer;
-    color: black; 
+.like-comment, .like-post {
+  cursor: pointer;
+  color: black; 
 }
 
-
-.like-comment.liked {
-    color: blue; 
+.like-comment.liked, .like-post.liked {
+  color: #2980B9; 
 }
 
-
-
-
-
-.like-comment.liked:hover {
-    color: blue; 
+.like-comment.liked:hover, .like-post.liked:hover {
+  color: #2980B9; 
 }
-
-
 
 
 .error-message-wrapper, .success-message-wrapper {
