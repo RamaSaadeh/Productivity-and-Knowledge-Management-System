@@ -15,7 +15,9 @@ if (isset($_GET['id'])) {
     
     //query to retrieve the details of the specific post based on its ID
     $sql = "SELECT p.PostID, p.Title, p.Content, p.DateCreated, p.DatePublished, p.IsDraft, p.LikesCount, p.Topic, u.name AS AuthorName,
-            (p.UserID = $userId) AS IsUserOwner
+            (p.UserID = $userId) AS IsUserOwner,
+            EXISTS(SELECT 1 FROM PostLikes pl WHERE pl.PostID = p.PostID AND pl.UserID = $userId) AS IsLiked
+
             FROM Posts p
             INNER JOIN users u ON p.UserID = u.user_id
             WHERE p.PostID = '$postId'";
@@ -25,12 +27,17 @@ if (isset($_GET['id'])) {
 
     if ($result->num_rows > 0) {
         $post = $result->fetch_assoc(); //fetch the post details
-        //prepare the response
-        $response = [
+
+        //convert the IsUserOwner and IsLiked values from integer/exists result to boolean
+        $post['IsUserOwner'] = (bool)$post['IsUserOwner'];
+        $post['IsLiked'] = (bool)$post['IsLiked'];
+
+        //prepare and output the response
+        echo json_encode([
             'success' => true,
-            'data' => $post,
-            'isUserOwner' => (bool)$post['IsUserOwner'] //cas isUserOwner to bool value as can only be 1 or 0
-        ];
+            'data' => $post
+        ]);
+
         
         echo json_encode($response); //encode response as JSON
     } else {

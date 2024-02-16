@@ -148,7 +148,7 @@ $(document).on('click', '.like-comment', function() {
               likeCountSpan.text(response.newLikeCount); //update the number of likes on the page
 
               //update the data-likes attribute to the new count
-              likeCountSpan.data('likes', response.newLikeCount);
+              likeCountSpan.attr('data-likes', response.newLikeCount);
 
               //toggle the liked class and data-liked attribute based on the new state
               if ($likeButton.data('liked') === 'true' || $likeButton.data('liked') === true) {
