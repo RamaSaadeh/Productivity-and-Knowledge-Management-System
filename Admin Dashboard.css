@@ -71,7 +71,7 @@
   outline: none;
   }
   .inviteuser-form .btn {
-  background-color: #f6dc80;
+  background-color: #be6b25;
   color: white;
   padding: 16px 20px;
   border: none;
@@ -212,42 +212,6 @@
   }
   
   /*End of css for navbar*/
-  
-  
-  
-  /* Styles for the collapsed (mobile) navigation bar */
-  @media (max-width: 991px) {
-  
-      .navbar-collapse {
-          background-color: #efbf1a; /* Background color for the mobile menu */
-          padding: 10px; /* Add padding to the mobile menu */
-      }
-  
-      .navbar-dark .navbar-nav .nav-link {
-          color: white;
-          font-size: 1.2em;
-          text-decoration: none;
-          padding: 25px 30px; /* Keep padding between elements on the nav bar horizontally and vertically*/
-          padding-top: 20px;
-  
-  
-      }
-  
-      .navbar-dark .navbar-nav .nav-item {
-          background-color: transparent; /* Background color for the menu items */
-          padding: 10px 0; /* Adjust padding for the menu items */
-      }
-  
-      .navbar-dark .navbar-nav .nav-item .nav-link {
-          color: white; /* Text color for the menu items */
-      }
-  
-      .navbar-dark .navbar-nav .nav-item .nav-link:hover {
-          background-color: #f6dc80; /* Background color on hover */
-          color: black; /* Text color on hover */
-      }
-  }
-  
   
   .mainContent{
       text-align: center;
