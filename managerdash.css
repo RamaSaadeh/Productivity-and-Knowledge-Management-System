@@ -244,7 +244,6 @@ body {
 .SwitchProject {
 	float: right;
 	position: relative;
-	display: inline-block;
 }
 
 .switchprojdropdown-content a:hover {background-color: #ddd;}
@@ -812,7 +811,7 @@ canvas {
 
 
 /*My Team Content*/
-.removemember {
+#removememberbtn {
 	background-color:#efbf1a;
 	color: white;
 	border: none;
@@ -824,7 +823,7 @@ canvas {
 	margin-left: 5px;
 	font-size: 14;
 }
-.addmember {
+#addmemberbtn {
 	background-color: #efbf1a;
 	color: white;
 	border: none;
@@ -836,7 +835,7 @@ canvas {
 	font-size: 14;
 	margin-left: 5px;
 }
-.changeteamroles{
+#changeteamrolesbtn{
 	background-color:#efbf1a;
 	color: white;
 	border: none;
@@ -859,7 +858,7 @@ canvas {
 	height: auto;
 	border-radius: 20px;
 }
-#select-changerole {
+#select_changerole {
 	width: 100%;
 	height: auto;
 	padding: 12px 20px;
@@ -896,21 +895,24 @@ canvas {
 	border-radius: 20px;
 }
 #addstafflabel {
-	color: grey;
+	color: grey; 
 	font-size: 18;
 	padding-left: 10px;
 }
-#staffemail {
+
+#select_addstaff {
 	width: 100%;
+	height: auto;
 	padding: 12px 20px;
 	margin: 8px 0;
 	display: inline-block;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-sizing: border-box;
-	margin-bottom: 20px;
+	color: grey;
 }
-#addstaff-formbtn {
+
+#addstaff_formbtn {
 	width: 100%;
 	background-color: #efbf1a;
 	border-radius: 15px;
@@ -918,6 +920,7 @@ canvas {
 	color: white;
 	padding: 16px 32px;
 	text-decoration: none;
+
 	margin: 4px 2px;
 	cursor: pointer;
 	margin-top: 5px;
@@ -935,7 +938,7 @@ canvas {
 	height: auto;
 	border-radius: 20px;
 }
-#select-removestaff {
+#select_removestaff {
 	width: 100%;
 	height: auto;
 	padding: 12px 20px;
@@ -1083,7 +1086,7 @@ canvas {
 	th, td {
 		padding: 5px;
 	}
-	.removemember, .addmember, .changeteamroles {
+	.removemember, #addmemberbtn, .changeteamroles {
 		float: none;
 	}
 }
