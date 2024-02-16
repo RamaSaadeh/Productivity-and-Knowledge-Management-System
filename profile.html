@@ -147,6 +147,9 @@
 				case "m":
 					a.href = "accessproject.php";
 					break;
+				case 'l':
+					a.href = "accessproject.php";
+					break;
 				default:
 					a.href = "#";
 			}
@@ -165,6 +168,8 @@
 			case "m":
 				document.getElementById("role").innerHTML = "Role: Manager";
 				break;
+			case "l":
+				document.getElementById("role").innerHTML = "Role: General Staff";
 		}
 		var id = JSON.parse(details).id;
 
