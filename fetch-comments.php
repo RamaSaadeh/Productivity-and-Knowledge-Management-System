@@ -8,10 +8,14 @@ if (isset($_GET['id'])) {
     $postID = mysqli_real_escape_string($conn, $_GET['id']);
 
     //sql statement to get all comments related to specific post
-    $sql = "SELECT c.CommentID, c.PostID, c.UserID, c.CommentContent, c.Likes, c.LastModified, u.name AS AuthorName
+    $sql = "SELECT c.CommentID, c.PostID, c.UserID, c.CommentContent, c.Likes, c.LastModified, u.name AS AuthorName,
+            (c.UserID = $userId) AS IsUserOwner,
+            CL.UserID IS NOT NULL AS HasLiked
             FROM Comments c
             INNER JOIN users u ON c.UserID = u.user_id
-            WHERE c.PostID = '$postID'"; 
+            LEFT JOIN CommentLikes CL ON c.CommentID = CL.CommentID AND CL.UserID = $userId
+            WHERE c.PostID = '$postID'";
+
 
     //execute query
     $result = $conn->query($sql);
@@ -24,8 +28,16 @@ if (isset($_GET['id'])) {
   
         while ($row = $result->fetch_assoc()) {
             //add each comment to the comments array
+            $row['IsUserOwner'] = $row['IsUserOwner'] == 1 ? true : false;
+            $row['HasLiked'] = $row['HasLiked'] == 1 ? true : false;
             $comments[] = $row;
         }
+       
+           
+
+          
+      
+
 
         //close the connection
         $conn->close();

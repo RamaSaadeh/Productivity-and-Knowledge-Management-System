@@ -189,38 +189,39 @@
     
     
     
-    // change content when staff / project / to-do clicked
+     // change content when staff / project / to-do clicked
     
-    function staffClicked(){
-            document.getElementById("toDoBttn").style.backgroundColor = "rgb(174, 168, 162)";
-            document.getElementById("staffToDoContainer").style.display = "none";
-            document.getElementById("projectsBttn").style.backgroundColor = "rgb(174, 168, 162)";
-            document.getElementById("staffProjectsContainer").style.display = "none";
-            document.getElementById("staffBttn").style.backgroundColor = "#be6b25";
-            document.getElementById("staffInfoContainer").style.display = "block";
-    
-        }
-    
-        function toDoClicked(){
-            document.getElementById("staffBttn").style.backgroundColor = "rgb(174, 168, 162)";
-            document.getElementById("staffInfoContainer").style.display = "none";
-            
-            document.getElementById("projectsBttn").style.backgroundColor = "rgb(174, 168, 162)";
-            document.getElementById("staffProjectsContainer").style.display = "none";
-    
-            document.getElementById("toDoBttn").style.backgroundColor = "#be6b25";
-            document.getElementById("staffToDoContainer").style.display = "block";
-        
-        }
-    
-        function projectsClicked(){
-            document.getElementById("toDoBttn").style.backgroundColor = "rgb(174, 168, 162)";
-            document.getElementById("staffToDoContainer").style.display = "none";
-            document.getElementById("staffBttn").style.backgroundColor = "rgb(174, 168, 162)";
-            document.getElementById("staffInfoContainer").style.display = "none";
-            document.getElementById("projectsBttn").style.backgroundColor = "#be6b25";
-            document.getElementById("staffProjectsContainer").style.display = "block";
-        }
+     function staffClicked(){
+      document.getElementById("toDoBttn").style.backgroundColor = "#d3d3d3";
+      document.getElementById("staffToDoContainer").style.display = "none";
+      document.getElementById("projectsBttn").style.backgroundColor = "#d3d3d3";
+      document.getElementById("staffProjectsContainer").style.display = "none";
+      document.getElementById("staffBttn").style.backgroundColor = "#2980B9";
+      document.getElementById("staffInfoContainer").style.display = "block";
+
+  }
+
+  function toDoClicked(){
+      document.getElementById("staffBttn").style.backgroundColor = "#d3d3d3";
+      document.getElementById("staffInfoContainer").style.display = "none";
+      
+      document.getElementById("projectsBttn").style.backgroundColor = "#d3d3d3";
+      document.getElementById("staffProjectsContainer").style.display = "none";
+
+      document.getElementById("toDoBttn").style.backgroundColor = "#2980B9";
+      document.getElementById("staffToDoContainer").style.display = "block";
+  
+  }
+
+  function projectsClicked(){
+      document.getElementById("toDoBttn").style.backgroundColor = "#d3d3d3";
+      document.getElementById("staffToDoContainer").style.display = "none";
+      document.getElementById("staffBttn").style.backgroundColor = "#d3d3d3";
+      document.getElementById("staffInfoContainer").style.display = "none";
+      document.getElementById("projectsBttn").style.backgroundColor = "#2980B9";
+      document.getElementById("staffProjectsContainer").style.display = "block";
+  }
+
     
     
         // setting projects as the initial display
