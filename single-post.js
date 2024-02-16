@@ -105,8 +105,8 @@ document.addEventListener("DOMContentLoaded", function () {
 					$('#postDate').text(post.DatePublished);
 					$('#likeCount').text(post.LikesCount);
 
-					//show or hide edit and delete buttons based on `isUserOwner` value
-					if (post.isUserOwner) {
+					//show or hide edit and delete buttons based on `IsUserOwner` value
+					if (post.IsUserOwner) {
 
 						$('.edit-post, .delete-post').show();
 					} else {
@@ -187,24 +187,31 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 					//loop through comments and append to the sidebar
 					comments.forEach(function(comment) {
+
+                    	const editDeleteIcons = comment.IsUserOwner ? `
+                        	<i class="fas fa-edit edit-comment" title="Edit"></i>
+                        	<i class="fas fa-trash-alt delete-comment" title="Delete"></i>` : '';
+
+   						const likeButtonClass = comment.HasLiked ? 'like-comment liked' : 'like-comment';
+    					const likeButtonTitle = comment.HasLiked ? 'Unlike' : 'Like';
+
 						$('#previousComments').append(`
-							<div class="media comment" data-comment-id="${comment.CommentID}">
-								<div class="media-body comment-content">${comment.CommentContent}</div>
-								<div class="comment-metadata">
-									<div class="comment-user-date">
-										<i class="far fa-user">${comment.AuthorName}</i>
-										&nbsp;
-										<i class="far fa-calendar">${comment.LastModified}</i>
-										<span class="comment-edited" style="display: none;">(edited)</span>
-									</div>
-									<div class="comment-actions">
-										<i class="fas fa-edit edit-comment" title="Edit"></i>
-										<i class="fas fa-trash-alt delete-comment" title="Delete"></i>
-										<i class="fas fa-thumbs-up like-comment" title="Like"></i>
-										<span class="like-count">${comment.Likes}</span>
-									</div>
-								</div>
-							</div>
+    						<div class="media comment" data-comment-id="${comment.CommentID}">
+       							<div class="media-body comment-content">${comment.CommentContent}</div>
+       							<div class="comment-metadata">
+            						<div class="comment-user-date">
+                						<i class="far fa-user">${comment.AuthorName}</i>
+                						&nbsp;
+                						<i class="far fa-calendar">${comment.LastModified}</i>
+                						<span class="comment-edited" style="display: none;">(edited)</span>
+            						</div>
+            						<div class="comment-actions">
+                						${editDeleteIcons}
+                						<i class="fas fa-thumbs-up ${likeButtonClass}" title="${likeButtonTitle}"></i>
+                						<span class="like-count">${comment.Likes}</span>
+            						</div>
+       							</div>
+    						</div>
 						`);
 					});
 				},
@@ -219,6 +226,10 @@ document.addEventListener("DOMContentLoaded", function () {
 		fetchComments(postID);
 	});
 	
+
+	
+	
+
 	
 	
 	commentForm.addEventListener('submit', function(event) {
@@ -824,23 +835,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	  }
 	}
 
-	function likeComment(likeIcon) {
-		const likeCountElem = likeIcon.nextElementSibling;
-		let currentCount = parseInt(likeCountElem.textContent, 10);
-		
-		//check if comment is already liked by the user
-		if(likeIcon.classList.contains('liked')) {
-			//decrease the like count
-			currentCount--;
-			likeIcon.classList.remove('liked');
-		} else {
-			//like the comment
-			currentCount++;
-			likeIcon.classList.add('liked');
-		}
 
-		likeCountElem.textContent = currentCount.toString();
-	}
 
 
 	function addComment(commentText, postID) {
@@ -963,13 +958,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-	document.addEventListener('click', function(event) {
-		if (event.target && event.target.classList.contains('like-comment')) {
-			likeComment(event.target);
-		}
-	});
-		
-
 	document.getElementById('topCommentsBtn').addEventListener('click', function() {
 	  sortByTop();
 	  setActiveButton(this);
@@ -993,6 +981,51 @@ document.addEventListener("DOMContentLoaded", function () {
 	  selectedButton.classList.add('active');
 	}
 
+	$(document).ready(function() {
+		$('#previousComments').on('click', '.like-comment', function() {
+			const $this = $(this);
+			//get comment di
+			const commentID = $this.closest('.media.comment').data('comment-id');
+			console.log(commentID);
+			const isLiked = $this.hasClass('liked'); 
+			console.log(isLiked);
+	
+			$.ajax({
+				url: 'update-comment-like.php', 
+				type: 'POST',
+				data: {
+					commentID: commentID, 
+					isLiked: isLiked 
+				},
+				dataType: 'json',
+				success: function(response) {
+					if (response.success) {
+						//toggle 'liked' class based on current state
+						$this.toggleClass('liked');
+						
+						//update the title attribute based on whether it's now liked or not
+						if ($this.hasClass('liked')) {
+							$this.attr('title', 'Unlike'); //if the comment is liked, change the title to 'Unlike'
+						} else {
+							$this.attr('title', 'Like'); //if the comment is unliked, revert the title to 'Like'
+						}
+						
+						//update likes count text
+						const $likeCount = $this.siblings('.like-count');
+						let likes = parseInt($likeCount.text(), 10);
+						likes = isLiked ? likes - 1 : likes + 1; //increment or decrement based on current state
+						$likeCount.text(likes);
+					} else {
+						alert('Failed to update like status: ' + response.message);
+					}
+				},
+				error: function(xhr, status, error) {
+					console.error("Error: " + error);
+				}
+			});
+		});
+	});
+	
 	
 
 	
