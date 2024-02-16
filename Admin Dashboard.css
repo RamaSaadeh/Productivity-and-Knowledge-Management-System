@@ -664,41 +664,30 @@ table.dataTable thead .sorting_desc_disabled:before {
       
       
   
-  /* Footer styles */
-  .footer {
-      background: #303036;
-      color: #d3d3d3;
-      height: inherit;
-      position: relative;
-  }
-  
-  .footer .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 100%;
-      margin-left: 2vw;
-  }
-  
-  .footer-title {
-      font-family: 'Churchward Design Bold';  /* specify the font */
-      font-size: 3vh;  /* adjust to desired size */
-      margin-bottom: 0.5vh;  /* spacing below the title */
-  
-  }
-  
-  .footer .contact-details{
-      font-size: 1.5vh;
-  }
-  
-  
-  .footer .footer-content .footer-section {
-      flex: 1;
-      padding: 2px;
-  }
-  
-  .footer .footer-content .about .contact-details span {
-      display: block;
-      font-size: 1.1em;
-  }
-  
+/*Footer Content*/
+.footer {
+    background: #303036;
+    color: #d3d3d3;
+    height: 140px;
+    position: relative;
+}
+.footer .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    margin-left: 2vw;
+}
+.footer-title {
+    font-family: 'Churchward Design Bold'; 
+    font-size: 3vh;  
+    margin-bottom: 0.5vh; 
+}
+.footer .footer-content .footer-section {
+    flex: 1;
+    padding: 2px;
+}
+.footer .footer-content .about .contact-details span {
+    display: block;
+    font-size: 1.1em;
+}
