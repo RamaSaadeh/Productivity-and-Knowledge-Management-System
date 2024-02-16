@@ -147,6 +147,9 @@
 				case "m":
 					a.href = "accessproject.php";
 					break;
+				case 'l':
+					a.href = "accessproject.php";
+					break;
 				default:
 					a.href = "#";
 			}
@@ -165,6 +168,8 @@
 			case "m":
 				document.getElementById("role").innerHTML = "Role: Manager";
 				break;
+			case "l":
+				document.getElementById("role").innerHTML = "Role: General Staff";
 		}
 		var id = JSON.parse(details).id;
 
@@ -207,6 +212,7 @@
 			},
 			success: function (response) {
 				var posts = JSON.parse(response);
+				if (posts.length == 0) document.getElementById("posts").innerHTML = "You haven't posted anything yet!";
 				posts.forEach(function (post) {	
 					var postHTML = `
 						<a href="single-post.html?id=${post.PostID}"><b>${post.Topic}</b><br>
@@ -233,6 +239,7 @@
 			},
 			success: function (response) {
 				var posts = JSON.parse(response);
+				if (posts.length == 0) document.getElementById("comments").innerHTML = "You haven't commented anything yet!";
 				posts.forEach(function (post) {
 					var postHTML = `
 						<a href="single-post.html?id=${post.PostID}"><b>${post.Topic}</b><br>

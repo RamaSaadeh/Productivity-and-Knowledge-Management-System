@@ -28,7 +28,11 @@ async function getData() {
 						break;
 					case 'Manager':
 						array[1] = 'm';
-						window.location.replace("accessproject.html");
+						window.location.replace("accessproject.php");
+						break;
+					case 'Leader':
+						array[1] = 'l';
+						window.location.replace("accessproject.php");
 						break;
 				}
 				let obj = { id: array[0], role: array[1], email: array[2]};
