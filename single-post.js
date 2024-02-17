@@ -462,7 +462,24 @@ document.addEventListener("DOMContentLoaded", function () {
 				  if (!isEditing) openSaveConfirmationModal();
 			  }
 		  
-			  
+				
+		//close the modal
+		function closeModal() {
+			//get both modals by ID
+			const confirmationModal = document.getElementById('confirmationModal');
+			const saveModal = document.getElementById('savePostModal');
+
+
+			if (confirmationModal.style.display !== "none") {
+				confirmationModal.style.display = "none";
+			}
+
+			if (saveModal.style.display !== "none") {
+				saveModal.style.display = "none";
+			}
+		}
+
+
 		  function saveEdits() {
 			  const titleElement = document.querySelector('#postTitle');
 			  const topicElement = document.querySelector('#postTopic');
