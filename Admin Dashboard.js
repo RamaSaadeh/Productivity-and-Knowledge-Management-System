@@ -54,9 +54,16 @@
       var editCell = document.createElement("td");
       editCell.classList.add("editUser");
       editCell.textContent = " ";
+
+      // create a delete button
       var deleteCell = document.createElement("td");
       deleteCell.classList.add("deleteUser");
-      deleteCell.textContent = " ";
+      var deleteButton = document.createElement("button");
+      deleteButton.classList.add("deleteUserBttn");
+      deleteButton.textContent = "\u2718"; 
+      deleteButton.onclick = deleteUser;
+      deleteCell.appendChild(deleteButton);
+
 
       // append cells to row
       newRow.appendChild(nameCell);
@@ -74,6 +81,22 @@
     
   });
     
+
+
+  function deleteUser(){
+    // Get the parent row of the button
+    var row = this.closest('tr');
+
+    // Access data within the row
+    var fullName = row.querySelector('.fullName').textContent;
+    var staffId = row.querySelector('.staffId').textContent;
+    // Access other data similarly
+
+    // Ask for confirmation with the data
+    if (confirm('Are you sure you want to delete the user ' + fullName + ' with ID ' + staffId + '?')) {
+        // Code to delete the user
+    }
+  }
 
 
 
