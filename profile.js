@@ -3,20 +3,6 @@ var role = JSON.parse(details).role;
 
 var email = JSON.parse(details).email;
 
-document.getElementById("email_address").innerHTML = "Email: " + email;
-switch (role) {
-	case "a":
-		document.getElementById("role").innerHTML = "Role: Admin";
-		break;
-	case "g":
-		document.getElementById("role").innerHTML = "Role: General Staff";
-		break;
-	case "m":
-		document.getElementById("role").innerHTML = "Role: Manager";
-		break;
-	case "l":
-		document.getElementById("role").innerHTML = "Role: General Staff";
-}
 var id = JSON.parse(details).id;
 
 $.ajax({

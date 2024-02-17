@@ -159,7 +159,22 @@
                 default:
                     a.href = "#";
             }
-        });
+		});
+
+        document.getElementById("email_address").innerHTML = "Email: " + email;
+        switch (role) {
+            case "a":
+                document.getElementById("role").innerHTML = "Role: Admin";
+                break;
+            case "g":
+                document.getElementById("role").innerHTML = "Role: General Staff";
+                break;
+            case "m":
+                document.getElementById("role").innerHTML = "Role: Manager";
+                break;
+            case "l":
+                document.getElementById("role").innerHTML = "Role: General Staff";
+        }
 	</script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
