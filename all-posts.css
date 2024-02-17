@@ -1,7 +1,12 @@
 * {
-	box-sizing: border-box
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
 }
 
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	box-sizing: border-box;
+}
 body {
 	padding: 0px;
 	margin: 0px;
@@ -308,10 +313,11 @@ vertical-align: middle;
     margin: 30px auto;
 }
 
-.media-backdrop-container {
-  position: relative;
-  height: 100%;
+.media-body {
+  word-wrap: break-word;
+  overflow-wrap: break-word; 
 }
+
 
 
 
@@ -357,7 +363,7 @@ vertical-align: middle;
 
 
 .post .post-topic {
-  color: #007bff; 
+  color: #2980B9; 
 }
 
 
@@ -411,13 +417,6 @@ vertical-align: middle;
   
 }
 
-.media-body {
-  word-wrap: break-word;
-  overflow-wrap: break-word; 
-}
-
-
-
 .all-content .post .media-body {
   max-height: auto; 
   overflow-y: auto; 
@@ -448,7 +447,7 @@ vertical-align: middle;
 
 
 .like-comment.liked {
-  color: blue; 
+  color: #2980B9; 
 }
 
 
@@ -496,7 +495,7 @@ vertical-align: middle;
   background-color: #f0f0f0; 
   font-weight: bold;
   color: #333; 
-  border-left: 4px solid #007bff; 
+  border-left: 4px solid #2980B9; 
 }
 
 .sidebar .section.topics ul li a {
@@ -536,39 +535,32 @@ html, body {
   border-radius: 4px; 
 }
 
-
-/* Footer styles */
+/*Footer Content*/
 .footer {
-    background: #303036;
-    color: #d3d3d3;
-    height: 140px;
-    position: relative;
-	margin-top: auto;
+  background: #303036;
+  color: #d3d3d3;
+  height: 140px;
+  position: relative;
 }
-
 .footer .footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    margin-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin-left: 2vw;
 }
-
 .footer-title {
-    font-family: 'Churchward Design Bold';  
-    font-size: 40px;  
-    margin-bottom: 20px;  
+  font-family: 'Churchward Design Bold'; 
+  font-size: 3vh;  
+  margin-bottom: 0.5vh; 
 }
-
-
 .footer .footer-content .footer-section {
-    flex: 1;
-    padding: 2px;
+  flex: 1;
+  padding: 2px;
 }
-
 .footer .footer-content .about .contact-details span {
-    display: block;
-    font-size: 1.1em;
+  display: block;
+  font-size: 1.1em;
 }
 
 
@@ -585,7 +577,7 @@ button.active {
 
 .post-read-more .btn {
   padding: 5px 15px;
-  background-color: #007bff;
+  background-color: #2980B9;
   color: white;
   text-decoration: none;
   font-weight: bold;
@@ -599,7 +591,7 @@ button.active {
 
 .post-read-more .btn:hover,
 .post-read-more .btn:focus {
-  background-color: #0056b3;
+  background-color: #2980B9;
   transform: translateY(-1px);
   cursor: pointer;
   outline: none; 
@@ -634,12 +626,12 @@ button.active {
 }
 
 .sort-button.active {
-  background-color: #007bff !important; 
+  background-color: #2980B9 !important; 
   color: white !important; 
 }
 
 .sort-button:hover {
-  background-color: #0056b3; 
+  background-color: #2980B9; 
   color: white;
 }
 

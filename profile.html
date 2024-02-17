@@ -4,6 +4,7 @@
 	<title>Profile | Make-It-All</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	<link href="https://db.onlinewebfonts.com/c/77009ab521bc15b6e38fcc22dd5270f4?family=Churchward+Design+Bold" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--<script src="profile.js"></script>-->
@@ -42,9 +43,10 @@
 					</li>
 					<li class="nav-item dropdown" id="accountBox">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<span id="profileIcon" class="material-symbols-outlined">
-							account_circle
-						</span>    Account</a>
+							<span id="profileIcon" class="material-symbols-outlined">
+								account_circle
+							</span>    Account
+						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="profile.html">My Profile</a>
 							<a class="dropdown-item logout" href="login.html">Logout</a>
@@ -76,19 +78,19 @@
 		</div><br>
 		<div id="main">
 			<div id="tabs">
-				<button class="btnTabs" onclick="toggle(event, 'posts')" id="openTab" ><b>Posts</b></button>
+				<button class="btnTabs" onclick="toggle(event, 'posts')" id="openTab"><b>Posts</b></button>
 				<button class="btnTabs" onclick="toggle(event, 'comments')"><b>Comments</b></button>
 				<button class="btnTabs" onclick="toggle(event, 'details')"><b>Details</b></button>
 			</div>
-			
-			
-			<div id="posts" class="tabcontent">				
+
+
+			<div id="posts" class="tabcontent">
 			</div>
-			
-			
+
+
 			<div id="comments" class="tabcontent">
 			</div>
-			
+
 
 			<div id="details" class="tabcontent">
 				<p id="email_address">Email: Nothing until the winscp updates the js</p>
@@ -96,7 +98,7 @@
 				<p id="projects">Projects: None</p><br>
 				<h5><b>Change Password</b></h5>
 				<p>New Password</p>
-				<input name="password" type="password" id="password" class="details" onfocusout="passwordClose()" onfocus="passwordClick()" oninput="detailsInput('password')"/>
+				<input name="password" type="password" id="password" class="details" onfocusout="passwordClose()" onfocus="passwordClick()" oninput="detailsInput('password')" />
 				<br><br>
 				<p>Confirm New Password</p>
 				<input name="confirm" type="password" id="confirm" class="details" onfocusout="passwordClose()" onfocus="passwordClick()" oninput="detailsInput('confirm')" /><br>
@@ -116,25 +118,29 @@
 			</div>
 		</div>
 	</div>
-	<div id="block">
-	</div>
-	<div class = "footer">
-		<div class = "footer-content">
-			<div class = "footer-section about">			
-				<h1 class ="footer-title"> Make-It-All</h1>
-				<div class="contact-details">
-					<span><i class="fas fa-phone"></i> &nbsp; 01509 888999</span>
-					<span><i class="fas fa-envelope"></i> &nbsp; king@make-it-all.co.uk</span>			
+	<footer class="myFooter">
+		<div class="footer">
+			<div class="footer-content">
+				<div class="footer-section about">
+
+					<h1 class="footer-title"> Make-It-All</h1>
+
+					<div class="contact-details">
+						<span><i class="fas fa-phone"></i> &nbsp; 01509 888999</span>
+						<span><i class="fas fa-envelope"></i> &nbsp; king@make-it-all.co.uk</span>
+					</div>
 				</div>
+
 			</div>
 		</div>
-	</div>
+	</footer>
+
 	<script>
 		document.getElementById("openTab").click();
 
 		var details = sessionStorage.getItem("user");
-        var role = JSON.parse(details).role;
-        //Decides which Dash to link to
+		var role = JSON.parse(details).role;
+		//Decides which Dash to link to
 		dashboard.addEventListener("click", function () {
 			var a = document.getElementById("dashboard");
 			switch (role) {
@@ -156,7 +162,7 @@
 		});
 
 		var email = JSON.parse(details).email;
-		
+
 		document.getElementById("email_address").innerHTML = "Email: " + email;
 		switch (role) {
 			case "a":
@@ -197,7 +203,7 @@
 					document.getElementById("projects").innerHTML = "Projects: " + string;
 				}
 			},
-			error: function() {
+			error: function () {
 				alert("There was an error loading projects");
 			}
 		});
@@ -213,14 +219,14 @@
 			success: function (response) {
 				var posts = JSON.parse(response);
 				if (posts.length == 0) document.getElementById("posts").innerHTML = "You haven't posted anything yet!";
-				posts.forEach(function (post) {	
+				posts.forEach(function (post) {
 					var postHTML = `
-						<a href="single-post.html?id=${post.PostID}"><b>${post.Topic}</b><br>
-						<h5>${post.Title}</h5><br>
-						<i class="far fa-calendar">  ${post.DateCreated}</i>
-						<i class="fas fa-thumbs-up like-comment">  ${post.LikesCount}</i>
-						</a>
-					`;
+							<a href="single-post.html?id=${post.PostID}"><b>${post.Topic}</b><br>
+							<h5>${post.Title}</h5><br>
+							<i class="far fa-calendar">  ${post.DateCreated}</i>
+							<i class="fas fa-thumbs-up like-comment">  ${post.LikesCount}</i>
+							</a>
+						`;
 					document.getElementById("posts").innerHTML += postHTML;
 				});
 			},
@@ -242,161 +248,161 @@
 				if (posts.length == 0) document.getElementById("comments").innerHTML = "You haven't commented anything yet!";
 				posts.forEach(function (post) {
 					var postHTML = `
-						<a href="single-post.html?id=${post.PostID}"><b>${post.Topic}</b><br>
-						<h5>${post.Title}</h5><br>${post.CommentContent}<br>
-						<i class="far fa-calendar">  ${post.LastModified}</i>
-						<i class="fas fa-thumbs-up like-comment">  ${post.Likes}</i>
-						</a>
-					`;
+							<a href="single-post.html?id=${post.PostID}"><b>${post.Topic}</b><br>
+							<h5>${post.Title}</h5><br>${post.CommentContent}<br>
+							<i class="far fa-calendar">  ${post.LastModified}</i>
+							<i class="fas fa-thumbs-up like-comment">  ${post.Likes}</i>
+							</a>
+						`;
 					document.getElementById("comments").innerHTML += postHTML;
 				});
 			},
 			error: function () {
-                alert("There was an error loading comments");
-            }
+				alert("There was an error loading comments");
+			}
 		});
 
-        function toggle(event, tab) {
+		function toggle(event, tab) {
 
-            var i = 0;
-            var tabcontent;
-            var btnTabs;
+			var i = 0;
+			var tabcontent;
+			var btnTabs;
 
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
+			tabcontent = document.getElementsByClassName("tabcontent");
+			for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+			}
 
-            btnTabs = document.getElementsByClassName("btnTabs");
-            for (i = 0; i < btnTabs.length; i++) {
-                btnTabs[i].className = btnTabs[i].className.replace(" active", "");
-            }
+			btnTabs = document.getElementsByClassName("btnTabs");
+			for (i = 0; i < btnTabs.length; i++) {
+				btnTabs[i].className = btnTabs[i].className.replace(" active", "");
+			}
 
-            document.getElementById(tab).style.display = "block";
-            event.currentTarget.className += " active";
-        }
+			document.getElementById(tab).style.display = "block";
+			event.currentTarget.className += " active";
+		}
 
-        var green = "#2fe617";
+		var green = "#2fe617";
 
-        function passwordClick() {
-            $("#passwordDetails").slideDown();
-        }
-        function passwordClose() {
-            $("#passwordDetails").slideUp();
-        }
+		function passwordClick() {
+			$("#passwordDetails").slideDown();
+		}
+		function passwordClose() {
+			$("#passwordDetails").slideUp();
+		}
 
-        function detailsInput(box) {
-            colour = "#D2D2D2";
-            document.getElementById(box).style.borderColor = colour;
-            a = $("#password").val();
-            var colour = (a.length >= 8) ? green : "red";
-            $("#length").css('color', colour);
+		function detailsInput(box) {
+			colour = "#D2D2D2";
+			document.getElementById(box).style.borderColor = colour;
+			a = $("#password").val();
+			var colour = (a.length >= 8) ? green : "red";
+			$("#length").css('color', colour);
 
-            colour = (a.toUpperCase() != a) ? green : "red";
-            $("#lowercase").css('color', colour);
+			colour = (a.toUpperCase() != a) ? green : "red";
+			$("#lowercase").css('color', colour);
 
-            colour = (a.toLowerCase() != a) ? green : "red";
-            $("#uppercase").css('color', colour);
+			colour = (a.toLowerCase() != a) ? green : "red";
+			$("#uppercase").css('color', colour);
 
-            colour = (/\d/.test(a)) ? green : "red";
-            $("#number").css('color', colour);
+			colour = (/\d/.test(a)) ? green : "red";
+			$("#number").css('color', colour);
 
-            var match = specialCheck();
-            colour = (match) ? green : "red";
-            $("#special").css('color', colour);
+			var match = specialCheck();
+			colour = (match) ? green : "red";
+			$("#special").css('color', colour);
 
-            var b = $("#confirm").val();
-            colour = (a == b) ? green : "red";
-            $("#match").css('color', colour);
-        }
+			var b = $("#confirm").val();
+			colour = (a == b) ? green : "red";
+			$("#match").css('color', colour);
+		}
 
-        function specialCheck() {
-            var a = $("#password").val();
-            for (let i = 0; i < a.length; i++) {
-                if (a.charAt(i).match(/^[^a-zA-Z0-9]+$/)) return true;
-            }
-            return false;
-        }
+		function specialCheck() {
+			var a = $("#password").val();
+			for (let i = 0; i < a.length; i++) {
+				if (a.charAt(i).match(/^[^a-zA-Z0-9]+$/)) return true;
+			}
+			return false;
+		}
 
-        function submitClick() {
-            colour = "#D2D2D2";
-            document.getElementById("password").style.borderColor = colour;
-            var complete = passwordComplete();
-            var a = document.getElementById("successMessage");
-            a.style.display = "none";
-            var b = document.getElementById("error");
-            b.style.display = "none";
-            if (!complete) return;
-            var details = sessionStorage.getItem("user");
+		function submitClick() {
+			colour = "#D2D2D2";
+			document.getElementById("password").style.borderColor = colour;
+			var complete = passwordComplete();
+			var a = document.getElementById("successMessage");
+			a.style.display = "none";
+			var b = document.getElementById("error");
+			b.style.display = "none";
+			if (!complete) return;
+			var details = sessionStorage.getItem("user");
 			var id = JSON.parse(details).id;
-            //check if new password == old password
-            $.ajax({
-                type: "POST",
-                url: "profile.php",
+			//check if new password == old password
+			$.ajax({
+				type: "POST",
+				url: "profile.php",
 				data: {
 					action: "change_password",
-                    id: id,
-                    password: document.getElementById("password").value
-                },
+					id: id,
+					password: document.getElementById("password").value
+				},
 				success: function (response) {
 					if (response == "invalid") {
 						b.style.display = "block";
 					}
 					else {
-                        $("#passwordDetails").slideUp();
-                        a.style.display = "block";
+						$("#passwordDetails").slideUp();
+						a.style.display = "block";
 					}
-                },
-                error: function () {
-                    alert("error");
-                }
+				},
+				error: function () {
+					alert("error");
+				}
 			});
-        }
+		}
 
-        function passwordComplete() {
-            const colours = [];
-            colours[0] = document.getElementById("length").style.color;
-            colours[1] = document.getElementById("lowercase").style.color;
-            colours[2] = document.getElementById("uppercase").style.color;
-            colours[3] = document.getElementById("number").style.color;
-            colours[4] = document.getElementById("special").style.color;
-            colours[5] = document.getElementById("match").style.color;
-            if (!colours.includes("red")) return true;
-            $("#passwordDetails").slideDown();
-            colour = "red";
-            document.getElementById("password").style.borderColor = colour;
-            document.getElementById("confirm").style.borderColor = colour;
-            return false;
-        }
+		function passwordComplete() {
+			const colours = [];
+			colours[0] = document.getElementById("length").style.color;
+			colours[1] = document.getElementById("lowercase").style.color;
+			colours[2] = document.getElementById("uppercase").style.color;
+			colours[3] = document.getElementById("number").style.color;
+			colours[4] = document.getElementById("special").style.color;
+			colours[5] = document.getElementById("match").style.color;
+			if (!colours.includes("red")) return true;
+			$("#passwordDetails").slideDown();
+			colour = "red";
+			document.getElementById("password").style.borderColor = colour;
+			document.getElementById("confirm").style.borderColor = colour;
+			return false;
+		}
 
-        var inviteForm = document.getElementById("inviteuseropaquebg");
+		var inviteForm = document.getElementById("inviteuseropaquebg");
 
-        function openForm() {
-            inviteForm.style.display = "block";
-        }
+		function openForm() {
+			inviteForm.style.display = "block";
+		}
 
-        function closeForm() {
-            inviteForm.style.display = "none";
-            document.getElementById("email").value = "";
-            document.getElementById("emailError").style.display = "none";
-        }
+		function closeForm() {
+			inviteForm.style.display = "none";
+			document.getElementById("email").value = "";
+			document.getElementById("emailError").style.display = "none";
+		}
 
-        function sendInvite() {
-            var email = document.getElementById("email").value;
-            var label = document.getElementById("emailError");
-            if (email.slice(email.length - 18).toLowerCase() != "@make-it-all.co.uk") {
-                label.innerHTML = "Email address is not valid";
-                label.style.color = "red";
-                label.style.display = "block";
-            }
-            else {
-                label.innerHTML = "Invite sent!";
-                label.style.color = "#2fe617";
-                label.style.display = "block";
-            }
-        }
+		function sendInvite() {
+			var email = document.getElementById("email").value;
+			var label = document.getElementById("emailError");
+			if (email.slice(email.length - 18).toLowerCase() != "@make-it-all.co.uk") {
+				label.innerHTML = "Email address is not valid";
+				label.style.color = "red";
+				label.style.display = "block";
+			}
+			else {
+				label.innerHTML = "Invite sent!";
+				label.style.color = "#2fe617";
+				label.style.display = "block";
+			}
+		}
 	</script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
 </body>
 </html>
