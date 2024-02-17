@@ -40,6 +40,7 @@ function specialCheck() {
 }
 
 function submitClick() {
+	event.preventDefault();
 	colour = "#D2D2D2";
 	document.getElementById("password").style.borderColor = colour;
 	$("#passwordDetails").slideUp();
