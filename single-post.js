@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			url: "fetch-single-post.php",
 			type: "GET",
 			dataType: "json",
-			data: { postID: postID,
+			data: { id: postID,
 					userID: userID
 			}, 
 			success: function(response) {
