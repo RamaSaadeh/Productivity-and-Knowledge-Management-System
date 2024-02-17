@@ -1,4 +1,13 @@
 /* single.html CSS */
+* {
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	box-sizing: border-box;
+}
 
 :root {
     --footer-height: 100px; 
