@@ -65,6 +65,9 @@ $(document).ready(function() {
     $('#post-form').submit(function(e) {
         e.preventDefault();
         
+		var details = sessionStorage.getItem("user");
+		var userID = JSON.parse(details).id;
+
         //retrieve values from form fields
         const postTopic = $('#post-topic').val();
         const postTitle = $('#post-title').val();
@@ -93,6 +96,7 @@ $(document).ready(function() {
             type: "POST",
             url: "create-post.php",
             data: {
+				userID: userID,
                 topic: postTopic,
                 title: postTitle,
                 body: postBody,
