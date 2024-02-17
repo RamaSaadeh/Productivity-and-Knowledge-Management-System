@@ -1,3 +1,129 @@
+document.getElementById("openTab").click();
+
+var details = sessionStorage.getItem("user");
+var role = JSON.parse(details).role;
+//Decides which Dash to link to
+dashboard.addEventListener("click", function () {
+	var a = document.getElementById("dashboard");
+	switch (role) {
+		case "a":
+			a.href = "AdminDashboard.html";
+			break;
+		case "g":
+			a.href = "userdash.html";
+			break;
+		case "m":
+			a.href = "accessproject.php";
+			break;
+		case 'l':
+			a.href = "accessproject.php";
+			break;
+		default:
+			a.href = "#";
+	}
+});
+
+var email = JSON.parse(details).email;
+
+document.getElementById("email_address").innerHTML = "Email: " + email;
+switch (role) {
+	case "a":
+		document.getElementById("role").innerHTML = "Role: Admin";
+		break;
+	case "g":
+		document.getElementById("role").innerHTML = "Role: General Staff";
+		break;
+	case "m":
+		document.getElementById("role").innerHTML = "Role: Manager";
+		break;
+	case "l":
+		document.getElementById("role").innerHTML = "Role: General Staff";
+}
+var id = JSON.parse(details).id;
+
+$.ajax({
+	type: "POST",
+	url: "profile.php",
+	data: {
+		action: "get_projects",
+		id: id
+	},
+	success: function (response) {
+		if (response == "none") {
+			document.getElementById("projects").innerHTML = "Projects: Currently not assigned to any projects";
+		}
+		else {
+			var array = response.split('/');
+			var string = "";
+			for (let i = 0; i < array.length - 1; i++) {
+				if (array[i].substring(array[i].length - 2) == "-L") {
+					array[i] = array[i].substring(0, array[i].length - 2) + " (L)";
+				}
+				string += array[i];
+				if (i < array.length - 2) string += ", ";
+			}
+			document.getElementById("projects").innerHTML = "Projects: " + string;
+		}
+	},
+	error: function () {
+		alert("There was an error loading projects");
+	}
+});
+
+//get posts
+$.ajax({
+	type: "POST",
+	url: "profile.php",
+	data: {
+		action: "get_posts",
+		id: id
+	},
+	success: function (response) {
+		var posts = JSON.parse(response);
+		if (posts.length == 0) document.getElementById("posts").innerHTML = "You haven't posted anything yet!";
+		posts.forEach(function (post) {
+			var postHTML = `
+							<a href="single-post.html?id=${post.PostID}"><b>${post.Topic}</b><br>
+							<h5>${post.Title}</h5><br>
+							<i class="far fa-calendar">  ${post.DateCreated}</i>
+							<i class="fas fa-thumbs-up like-comment">  ${post.LikesCount}</i>
+							</a>
+						`;
+			document.getElementById("posts").innerHTML += postHTML;
+		});
+	},
+	error: function () {
+		alert("There was an error loading posts");
+	}
+});
+
+//get comments
+$.ajax({
+	type: "POST",
+	url: "profile.php",
+	data: {
+		action: "get_comments",
+		id: id
+	},
+	success: function (response) {
+		var posts = JSON.parse(response);
+		if (posts.length == 0) document.getElementById("comments").innerHTML = "You haven't commented anything yet!";
+		posts.forEach(function (post) {
+			var postHTML = `
+							<a href="single-post.html?id=${post.PostID}"><b>${post.Topic}</b><br>
+							<h5>${post.Title}</h5><br>${post.CommentContent}<br>
+							<i class="far fa-calendar">  ${post.LastModified}</i>
+							<i class="fas fa-thumbs-up like-comment">  ${post.Likes}</i>
+							</a>
+						`;
+			document.getElementById("comments").innerHTML += postHTML;
+		});
+	},
+	error: function () {
+		alert("There was an error loading comments");
+	}
+});
+
 function toggle(event, tab) {
 
 	var i = 0;
@@ -66,14 +192,11 @@ function specialCheck() {
 }
 
 function submitClick() {
-	event.preventDefault();
 	colour = "#D2D2D2";
 	document.getElementById("password").style.borderColor = colour;
 	var complete = passwordComplete();
-	//var a = document.getElementById("success");
 	var a = document.getElementById("successMessage");
 	a.style.display = "none";
-	//var b = document.getElementById("success");
 	var b = document.getElementById("error");
 	b.style.display = "none";
 	if (!complete) return;
@@ -84,23 +207,23 @@ function submitClick() {
 		type: "POST",
 		url: "profile.php",
 		data: {
+			action: "change_password",
 			id: id,
 			password: document.getElementById("password").value
 		},
 		success: function (response) {
-			alert(response);
 			if (response == "invalid") {
 				b.style.display = "block";
-				return;
+			}
+			else {
+				$("#passwordDetails").slideUp();
+				a.style.display = "block";
 			}
 		},
 		error: function () {
 			alert("error");
 		}
 	});
-
-	$("#passwordDetails").slideUp();
-	a.style.display = "block";
 }
 
 function passwordComplete() {
