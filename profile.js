@@ -4,6 +4,11 @@ function toggle(event, tab) {
 	var tabcontent;
 	var btnTabs;
 
+	document.getElementById("password").value = "";
+	document.getElementById("confirm").value = "";
+	document.getElementById("successMessage").style.display = "none";
+	document.getElementById("error").style.display = "none";
+
 	tabcontent = document.getElementsByClassName("tabcontent");
 	for (i = 0; i < tabcontent.length; i++) {
 		tabcontent[i].style.display = "none";
@@ -65,9 +70,11 @@ function submitClick() {
 	colour = "#D2D2D2";
 	document.getElementById("password").style.borderColor = colour;
 	var complete = passwordComplete();
-	var a = document.getElementById("success");
+	//var a = document.getElementById("success");
+	var a = document.getElementById("successMessage");
 	a.style.display = "none";
-	var b = document.getElementById("success");
+	//var b = document.getElementById("success");
+	var b = document.getElementById("error");
 	b.style.display = "none";
 	if (!complete) return;
 	var details = sessionStorage.getItem("user");
