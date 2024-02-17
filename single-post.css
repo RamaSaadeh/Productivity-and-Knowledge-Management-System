@@ -118,7 +118,7 @@ opacity: 1;
 
 .nav{
   max-width: fit-content;
-  max-height: fit-content;
+  max-height: 90px;
 }
 
 .navbar{
