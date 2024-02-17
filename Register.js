@@ -60,7 +60,7 @@ function submitClick() {
 	else {
 		$.ajax({
 			type: "POST",
-			url: "register.php",
+			url: "Register.php",
 			data: {
 				action: "check_email",
 				email: email
@@ -75,7 +75,7 @@ function submitClick() {
 				else {
 					$.ajax({
 						type: "POST",
-						url: "register.php",
+						url: "Register.php",
 						data: {
 							action: "register_user",
 							firstName: firstName,
@@ -94,6 +94,15 @@ function submitClick() {
 				alert("error");
 			}
 		});
+		/*$.ajax({
+			url: 'test_connection.php',
+			success: function (response) {
+				alert(response);
+			},
+			error: function () {
+				alert("error");
+			}
+		});*/
 	}
 }
 
