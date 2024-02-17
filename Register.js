@@ -66,6 +66,7 @@ function submitClick() {
 				email: email
 			},
 			success: function (response) {
+				alert(response);
 				if (response == "exists") {
 					registerError.innerHTML = "Email address is already in use";
 					colour = "red";
