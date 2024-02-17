@@ -227,6 +227,7 @@
         // setting projects as the initial display
         projectsClicked();
         
+        // adapting dashboard links depending on user role
         dashboard.addEventListener("click", function() {
             var user = sessionStorage.getItem("user");
             var a = document.getElementById("dashboard");
