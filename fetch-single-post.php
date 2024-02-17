@@ -17,13 +17,16 @@ if (isset($_GET['id'])) {
     $sql = "SELECT p.PostID, p.Title, p.Content, p.DateCreated, p.DatePublished, p.IsDraft, p.LikesCount, p.Topic, u.name AS AuthorName,
             (p.UserID = $userID) AS IsUserOwner,
             EXISTS(SELECT 1 FROM PostLikes pl WHERE pl.PostID = p.PostID AND pl.UserID = $userID) AS IsLiked
-
             FROM Posts p
             INNER JOIN users u ON p.UserID = u.user_id
             WHERE p.PostID = '$postId'";
 
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $postId);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    $result = $conn->query($sql);
+ 
 
     if ($result->num_rows > 0) {
         $post = $result->fetch_assoc(); //fetch the post details
@@ -37,9 +40,6 @@ if (isset($_GET['id'])) {
             'success' => true,
             'data' => $post
         ]);
-
-        
-        echo json_encode($response); //encode response as JSON
     } else {
         echo json_encode(['success' => false, 'error' => 'Post not found']); //if post not found, return error
     }
