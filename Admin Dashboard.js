@@ -1,5 +1,30 @@
+  // requesting staff info  on page load
 
+  var staffData; // to store the users data in json format
+
+  $(document).ready(function(){
+      $.ajax({ 
+          url: "return-all-staff.php",
+          dataType: "json", // Specify the expected data type of the response
+          success: function(data){ // 'data' parameter contains the response from the server
+              staffData = data;
+              alert("Users data loaded successfully");
+              console.log(staffData);
+              // Here you can perform any further operations with the users data if needed
+          },
+          error: function(xhr, status, error) { // Function to handle errors
+              alert("An error occurred while fetching users data: " + error);
+          }
+      });
+  });
     
+
+
+
+
+
+
+
     // Get the modal and close button
     var modal = document.getElementById("projectsWindow");
     var closeButton = document.querySelector(".closeProj");
@@ -270,9 +295,6 @@
                 label.style.display = "block";
             }
         }
-
-
-
 
         function deleteUser(){
             confirm("Are you sure you want to delete this user?");
