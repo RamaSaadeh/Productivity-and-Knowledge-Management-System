@@ -3,6 +3,8 @@
   var staffData; // to store the users data in json format
 
   $(document).ready(function(){
+
+    /* commenting out for testing
       $.ajax({ 
           url: "return-all-staff.php",
           dataType: "json", // Specify the expected data type of the response
@@ -15,10 +17,13 @@
           error: function(xhr, status, error) { // Function to handle errors
               alert("An error occurred while fetching users data: " + error);
           }
-      });
+      }); */
   });
     
 
+  //replacing staffData with a different json array (for ease of testing)
+staffData = JSON.parse('[{"user_id":"1","name":"John Doe","email":"J.Doe@make-it-all.co.uk","role":"General"},{"user_id":"2","name":"Jane Stevens","email":"JaneStevens@make-it-all.co.uk","role":"Manager"},{"user_id":"3","name":"Fake Name","email":"fname@make-it-all.co.uk","role":"Admin"},{"user_id":"4","name":"Donald Donaldson","email":"donald@make-it-all.co.uk","role":"Manager"}]');
+console.log(staffData);
 
 
 
