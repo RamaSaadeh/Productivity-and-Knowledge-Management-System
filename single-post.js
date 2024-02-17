@@ -935,35 +935,41 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 					//loop through comments and append to sidebar 
 					comments.forEach(function(comment) {
+
+						const editDeleteIcons = comment.IsUserOwner ? `
+						  <i class="fas fa-edit edit-comment" title="Edit"></i>
+						  <i class="fas fa-trash-alt delete-comment" title="Delete"></i>` : '';
+
+					   	const likeButtonClass = comment.HasLiked ? 'like-comment liked' : 'like-comment';
+						const likeButtonTitle = comment.HasLiked ? 'Unlike' : 'Like';
+
 						$('#previousComments').append(`
-							<div class="media comment" data-comment-id="${comment.CommentID}">
-								<div class="media-body comment-content">${comment.CommentContent}</div>
-								<div class="comment-metadata">
-									<div class="comment-user-date">
-										<i class="far fa-user">${comment.AuthorName}</i>
-										&nbsp;
-										<i class="far fa-calendar">${comment.LastModified}</i>
-										<span class="comment-edited" style="display: none;">(edited)</span>
-									</div>
-									<div class="comment-actions">
-										<i class="fas fa-edit edit-comment" title="Edit"></i>
-										<i class="fas fa-trash-alt delete-comment" title="Delete"></i>
-										<i class="fas fa-thumbs-up like-comment" title="Like"></i>
-										<span class="like-count">${comment.Likes}</span>
-									</div>
-								</div>
+						<div class="media comment" data-comment-id="${comment.CommentID}">
+							<div class="media-body comment-content">${comment.CommentContent}</div>
+							<div class="comment-metadata">
+						 		<div class="comment-user-date">
+							 		<i class="far fa-user">${comment.AuthorName}</i>
+									&nbsp;
+							 		<i class="far fa-calendar">${comment.LastModified}</i>
+							 		<span class="comment-edited" style="display: none;">(edited)</span>
+						 		</div>
+						 		<div class="comment-actions">
+							 		${editDeleteIcons}
+							 		<i class="fas fa-thumbs-up ${likeButtonClass}" title="${likeButtonTitle}"></i>
+							 		<span class="like-count">${comment.Likes}</span>
+						 		</div>
 							</div>
-						`);
-					});
-				},
-				error: function(xhr, status, error) {
-					console.error("Error fetching comments: " + error);
-				}
-			});
-		}
+				 		</div>
+					`);
+				});
+			},
+			error: function(xhr, status, error) {
+				console.error("Error fetching comments: " + error);
+			}
+		});
 	
 	}
-	
+}
 
 	function sortByTop() {
 		//sort the comments based on the like count
