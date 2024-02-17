@@ -35,7 +35,7 @@
 		$role = $_POST['role'];
 		$password = hash('sha256', $_POST['password']);
 
-		$stmt = $conn->prepare("INSERT INTO `users` (role, email, name, password) VALUES (?, ?, ?, ?)");
+		$stmt = $conn->prepare("INSERT INTO `users` (user_id, role, email, name, password) VALUES (1, ?, ?, ?, ?)");
 		$stmt->bind_param("ssss", $role, $email, $name, $password);
 		$stmt->execute();
 	}
