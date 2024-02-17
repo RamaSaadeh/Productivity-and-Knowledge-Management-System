@@ -198,6 +198,7 @@ document.addEventListener("DOMContentLoaded", function () {
    						const likeButtonClass = comment.HasLiked ? 'like-comment liked' : 'like-comment';
     					const likeButtonTitle = comment.HasLiked ? 'Unlike' : 'Like';
 
+
 						$('#previousComments').append(`
     						<div class="media comment" data-comment-id="${comment.CommentID}">
        							<div class="media-body comment-content">${comment.CommentContent}</div>
@@ -623,82 +624,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	
 		
-	function openConfirmationModal(commentId) {
-		const modal = document.getElementById('confirmationModal');
-		const confirmButton = document.getElementById('confirmDelete');
-		const cancelButton = document.getElementById('cancelDelete');
 
-		
-		modal.style.display = "block";
-
-		confirmButton.onclick = null; 
-
-		
-		confirmButton.onclick = function() {
-			deleteComment(commentId); //delete comment
-			closeModal(); //close the modal after the action
-		};
-
-		//cancel button event listener
-		cancelButton.onclick = function() {
-			closeModal(); // Just close the modal
-		};
-
-		//when the user clicks anywhere outside of the modal, close it
-		window.onclick = function(event) {
-			if (event.target == modal) {
-				closeModal();
-			}
-		};
-	}
-
-	//close the modal
-	function closeModal() {
-		//get both modals by ID
-		const confirmationModal = document.getElementById('confirmationModal');
-		const saveModal = document.getElementById('savePostModal');
-		
-
-		if (confirmationModal.style.display !== "none") {
-			confirmationModal.style.display = "none";
-		}
-
-		if (saveModal.style.display !== "none") {
-			saveModal.style.display = "none";
-		}
-	}
-
-
-
-	function deactivateSortButtons() {
-	
-		var topCommentsBtn = document.getElementById('topCommentsBtn');
-		var newestCommentsBtn = document.getElementById('newestCommentsBtn');
-
-	
-		topCommentsBtn.classList.remove('active');
-		newestCommentsBtn.classList.remove('active');
-		    
-
-	}
-	
-	
-
-	function deleteComment(commentId) {
-	  //find the comment element with the matching data-comment-id attribute
-	  const commentElement = document.querySelector(`.comment[data-comment-id="${commentId}"]`);
-	  if (commentElement) {
-	
-		commentElement.classList.add('fade-out');
-		
-	
-		setTimeout(() => {
-		  commentElement.remove();
-	
-		}, 500); 
-	  }
-	}
-	
 	//function to open the modal and set up the deletion process
 	function askDeleteConfirmation(deleteIcon) {
 		const postId = deleteIcon.closest('.post').getAttribute('data-post-id'); 
@@ -743,104 +669,180 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 
 	document.body.addEventListener('click', function(event) {
-		if (event.target.classList.contains('edit-comment')) {
-			
-			editComment(event.target);
-		} else if (event.target.classList.contains('delete-comment')) {
-
+		if (event.target.classList.contains('delete-comment')) {
+			// Get the closest comment element and its ID
 			const commentElement = event.target.closest('.comment');
 			const commentId = commentElement.getAttribute('data-comment-id');
 	
-			askDeleteConfirmation(event.target);
+			// Show the confirmation modal
+			document.getElementById('confirmationModal').style.display = 'block';
+	
+			// Store the comment ID in a global variable or directly in the modal's confirm button for later use
+			document.getElementById('confirmDelete').setAttribute('data-comment-id', commentId);
 		}
 	});
-		
-	  document.addEventListener('click', function(event) {
-		//check if the delete-post icon was clicked
-		if (event.target.classList.contains('delete-post')) {
-		  // Prevent any default action
-		  event.preventDefault();
-		  //show the delete confirmation modal
-		  document.getElementById('deletePostModal').style.display = 'block';
+	
+	// Handle confirmation of deletion
+	document.getElementById('confirmDelete').addEventListener('click', function() {
+		const commentId = this.getAttribute('data-comment-id'); // Retrieve the comment ID
+	
+		// Call the function to delete the comment
+		deleteComment(commentId);
+	});
+	
+	// Handle cancellation of deletion
+	document.getElementById('cancelDelete').addEventListener('click', function() {
+		document.getElementById('confirmationModal').style.display = 'none'; // Hide the modal
+	});
+			
+		  //delete icon for posts
+		  document.addEventListener('click', function(event) {
+			//check if the delete-post icon was clicked
+			if (event.target.classList.contains('delete-post')) {
+			  // Prevent any default action
+			  event.preventDefault();
+			  //show the delete confirmation modal
+			  document.getElementById('deletePostModal').style.display = 'block';
+			}
+		  });
+	
+	
+		  const confirmPostDeleteBtn = document.getElementById('confirmPostDelete');
+		  const cancelPostDeleteBtn = document.getElementById('cancelPostDelete');
+		  const deletePostModal = document.getElementById('deletePostModal');
+	
+		  confirmPostDeleteBtn.addEventListener('click', function() {
+	
+			
+			window.location.href = 'all-posts.html';
+		  });
+	
+		  cancelPostDeleteBtn.addEventListener('click', function() {
+			deletePostModal.style.display = 'none';
+		  });
+	
+		  window.addEventListener('click', function(event) {
+			if (event.target === deletePostModal) {
+			  deletePostModal.style.display = 'none';
+			}
+		  });
+	
+	
+	function deleteComment(commentId) {
+		// Example using Fetch API to send the delete request
+		fetch('delete-comment.php', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			body: `commentID=${commentId}`
+		})
+		.then(response => response.json())
+		.then(data => {
+			if (data.success) {
+				// Comment deleted successfully, remove it from the DOM
+				document.querySelector(`.comment[data-comment-id="${commentId}"]`).remove();
+				// Hide the confirmation modal
+				document.getElementById('confirmationModal').style.display = 'none';
+			} else {
+				alert('Failed to delete comment: ' + data.message);
+			}
+		})
+		.catch(error => {
+			console.error('Error:', error);
+			alert('Error deleting comment.');
+		});
+	}
+	
+	
+	// Event listener for editing comments
+	document.body.addEventListener('click', function(event) {
+		if (event.target.classList.contains('edit-comment')) {
+			// Get the closest comment element and its ID
+			const commentElement = event.target.closest('.comment');
+			const commentId = commentElement.getAttribute('data-comment-id');
+	
+			// Get the comment content from the comment element
+			const commentContent = commentElement.querySelector('.comment-content').textContent;
+	
+			// Ensure the textarea exists in the DOM before attempting to set its value
+			const editCommentTextarea = document.getElementById('editedCommentContent'); // Updated ID reference
+			if (editCommentTextarea) {
+				editCommentTextarea.value = commentContent; // Populate the textarea with the comment content
+			} else {
+				console.error('Textarea for editing comment not found');
+			}
+	
+			// Store the comment ID in a global variable or directly in the modal's confirm button for later use
+			const confirmEditButton = document.getElementById('confirmEdit');
+			if (confirmEditButton) {
+				confirmEditButton.setAttribute('data-comment-id', commentId);
+			} else {
+				console.error('Confirm edit button not found');
+			}
+	
+			// Show the edit modal, ensuring the modal exists
+			const editCommentModal = document.getElementById('editCommentModal');
+			if (editCommentModal) {
+				editCommentModal.style.display = 'block';
+			} else {
+				console.error('Edit comment modal not found');
+			}
 		}
-	  });
-
-
-	  const confirmPostDeleteBtn = document.getElementById('confirmPostDelete');
-	  const cancelPostDeleteBtn = document.getElementById('cancelPostDelete');
-	  const deletePostModal = document.getElementById('deletePostModal');
-
-	  confirmPostDeleteBtn.addEventListener('click', function() {
-
-		
-		window.location.href = 'all-posts.html';
-	  });
-
-	  cancelPostDeleteBtn.addEventListener('click', function() {
-		deletePostModal.style.display = 'none';
-	  });
-
-	  window.addEventListener('click', function(event) {
-		if (event.target === deletePostModal) {
-		  deletePostModal.style.display = 'none';
+	});
+	
+	// Handle confirmation of edit
+	document.getElementById('confirmEdit').addEventListener('click', function() {
+		const commentId = this.getAttribute('data-comment-id'); // Retrieve the comment ID
+		const textarea = document.getElementById('editedCommentContent'); // Updated ID reference
+	
+		// Validate if the textarea is successfully accessed
+		if (textarea !== null) {
+			const updatedContent = textarea.value; // Get the updated comment content
+	
+			// Call the function to update the comment
+			updateComment(commentId, updatedContent);
+		} else {
+			console.error('Textarea element not found');
 		}
-	  });
+	});
+	
+	// Handle cancellation of edit
+	document.getElementById('cancelEdit').addEventListener('click', function() {
+		document.getElementById('editCommentModal').style.display = 'none'; // Hide the edit modal
+	});
+	
+	// Function to update the comment
+	function updateComment(commentId, updatedContent) {
+		// Send an AJAX request to update the comment in the database
+		fetch('edit-comment.php', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			// Make sure the keys match what the PHP script expects
+			body: `commentID=${encodeURIComponent(commentId)}&newContent=${encodeURIComponent(updatedContent)}`
+		})
+		.then(response => response.json())
+		.then(data => {
+			if (data.success) {
+				// Update the comment content in the HTML
+				document.querySelector(`.comment[data-comment-id="${commentId}"] .comment-content`).textContent = updatedContent;
+				// Hide the edit modal
+				document.getElementById('editCommentModal').style.display = 'none';
+			} else {
+				alert('Failed to update comment: ' + data.message);
+			}
+		})
+		.catch(error => {
+			console.error('Error:', error);
+			alert('Error updating comment.');
+		});
+	}
+	
 
 
 	//edit comments
-	function editComment(editIcon) {
-	  const commentElem = editIcon.closest('.comment');
-	  const commentTextElem = commentElem.querySelector('.comment-content');
-	  const currentText = commentTextElem.textContent.trim();
-	  const maxLength = 500;
-	  const remainingLength = maxLength - currentText.length;
-
-	  //ask the user to edit their comment with the remaining character length
-	  let newText = prompt(`Edit your comment (max ${maxLength} characters):`, currentText).substring(0, maxLength);
-
-	  if (newText && newText !== currentText) {
-		commentTextElem.textContent = newText;
-
-		//show "(edited)" next to the date text
-		const editedSpan = commentElem.querySelector('.comment-edited');
-		if (editedSpan) {
-		  editedSpan.style.display = 'inline'; // This will show the (edited) text
-		}
-
-		//update the date to the current date
-		const currentDate = new Date();
-		const formattedDate = currentDate.toLocaleDateString('en-US', {
-		  year: 'numeric',
-		  month: 'short',
-		  day: 'numeric',
-		});
-		const dateTextElem = commentElem.querySelector('.date-text');
-		if (dateTextElem) {
-		  dateTextElem.textContent = ` ${formattedDate}`;
-		}
-
-		//update comments in both sections based on the unique identifier
-		const commentId = commentElem.getAttribute('data-comment-id');
-		const correspondingComments = document.querySelectorAll(`.comment[data-comment-id="${commentId}"]`);
-
-		correspondingComments.forEach(elem => {
-		  const contentElem = elem.querySelector('.comment-content');
-		  contentElem.textContent = newText;
-		  const editedElem = elem.querySelector('.comment-edited');
-		  if (editedElem) {
-			editedElem.style.display = 'inline'; 
-		  }
-		  const dateTextElemCorresponding = elem.querySelector('.date-text');
-		  if (dateTextElemCorresponding) {
-			dateTextElemCorresponding.textContent = ` ${formattedDate}`;
-		  }
-		});
-	  }
-	}
-
-
-
-
 	function addComment(commentText, postID) {
 		//AJAX call to add the comment to the database
 		$.ajax({
@@ -858,7 +860,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					//if successful, fetch comments and update UI
 					fetchComments(postID); 
 				} else {
-					//if it erros, display error
+					//if it errors, display error
 					console.error("Error adding comment: " + response.error);
 				}
 			},
@@ -987,7 +989,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	$(document).ready(function() {
 		$('#previousComments').on('click', '.like-comment', function() {
 			const $this = $(this);
-			//get comment di
+			//get comment id
 			const commentID = $this.closest('.media.comment').data('comment-id');
 			console.log(commentID);
 			const isLiked = $this.hasClass('liked'); 
