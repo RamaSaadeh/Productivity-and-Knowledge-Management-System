@@ -1,10 +1,17 @@
 <?php
 
-	include 'db.php';
 
+
+	$servername = "localhost";
+	$username = "host";
+	$dbpassword = "Team017FTW!";
+	$database = "makeitall";
 
 	$email = $_POST['email'];
 	$password = hash('sha256', $_POST['password']);
+
+
+	$conn = new mysqli($servername, $username, $dbpassword, $database);
 
 	$stmt = $conn->prepare("SELECT COUNT(user_id) FROM `users` WHERE email = ? AND password = ?");
 	$stmt->bind_param("ss", $email, $password);
