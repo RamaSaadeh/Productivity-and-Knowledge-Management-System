@@ -64,7 +64,7 @@ $(document).ready(function() {
 		success: function (posts) {
 			posts.length = 0;
 			if (posts.length == 0) {
-				$('.all-content').append("There are currently no posts!");
+				$('.all-content').append("<br><br>There are currently no posts!");
 			}
             posts.forEach(function(post) {
                 var postClass = post.Topic.toLowerCase().replace(/\s+/g, '-');
