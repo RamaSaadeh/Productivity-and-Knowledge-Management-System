@@ -5,12 +5,12 @@ error_reporting(E_ALL);
 
 include 'db.php';
 
-$userId = 1; //hardcoded for testing
+$userID = mysqli_real_escape_string($conn, $_GET['userID']); //get user id from request
 
 // query for counting number of drafts user has
 $sql = "SELECT COUNT(*) AS draftCount FROM Posts WHERE UserID = ? AND IsDraft = 1";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $userId);
+$stmt->bind_param("i", $userID);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();

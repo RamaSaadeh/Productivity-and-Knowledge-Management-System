@@ -138,12 +138,17 @@ $(document).on('click', '.like-comment', function() {
   const $likeButton = $(this);
   const postID = $likeButton.data('post-id');
 
+  var details = sessionStorage.getItem("user");
+  var userID = JSON.parse(details).id;
+
   //ajax call to update the number of likes (increment or decrement)
   $.ajax({
       url: "update-like.php",
       type: "POST",
       dataType: "json",
-      data: { postID: postID },
+      data: { postID: postID, //pass post id
+              userID: userID  //pass user id
+      },
       success: function(response) {
           if (response.success) {
               //find the like count for specific post and modify it appropriately

@@ -4,19 +4,19 @@ header('Content-Type: application/json');
 include 'db.php';
 
 //hardcoded user ID for testing
-$userId = 1;
+$userID = mysqli_real_escape_string($conn, $_POST['userID']); //get user id from request
 
 //check for POST request and required parameters
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['commentID'])) {
     $commentID = mysqli_real_escape_string($conn, $_POST['commentID']);
     
     //check if the user has already liked the comment
-    $checkLike = "SELECT * FROM CommentLikes WHERE CommentID = '$commentID' AND UserID = '$userId'"; 
+    $checkLike = "SELECT * FROM CommentLikes WHERE CommentID = '$commentID' AND UserID = '$userID'"; 
     $checkResult = mysqli_query($conn, $checkLike);
     
     if (mysqli_num_rows($checkResult) > 0) {
         //user has liked the comment before, so unlike it
-        $deleteLike = "DELETE FROM CommentLikes WHERE CommentID = '$commentID' AND UserID = '$userId'";
+        $deleteLike = "DELETE FROM CommentLikes WHERE CommentID = '$commentID' AND UserID = '$userID'";
         mysqli_query($conn, $deleteLike);
         
         //decrement likes count in Comments table
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['commentID'])) {
         $response = ['success' => true, 'message' => 'Comment unliked successfully.'];
     } else {
         //user hasn't liked the comment before, so like it
-        $addLike = "INSERT INTO CommentLikes (CommentID, UserID) VALUES ('$commentID', '$userId')";
+        $addLike = "INSERT INTO CommentLikes (CommentID, UserID) VALUES ('$commentID', '$userID')";
         mysqli_query($conn, $addLike);
         
         //increment Likes count in Comments table

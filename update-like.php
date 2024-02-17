@@ -6,9 +6,10 @@ include 'db.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //get post ID from the request
     $postID = mysqli_real_escape_string($conn, $_POST['postID']);
+    $userID = mysqli_real_escape_string($conn, $_POST['userID']); //get user id from request
 
-    //hardcoded user id for testing purposes
-    $userID = 1;
+   
+    
     $newLikeCount = 0; //initialize the variable to store the new like count
 
     //check if the user has already liked the post

@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$postID = mysqli_real_escape_string($conn, $_POST['id']); 
 
     //hardcoded user id for testing 
-    $userID = 1;
+    $userID = mysqli_real_escape_string($conn, $_GET['userID']); //get user id from request
     $commentContent = mysqli_real_escape_string($conn, $_POST['comment']);
 
     //insert comment into Comments table in database

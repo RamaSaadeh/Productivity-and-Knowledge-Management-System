@@ -122,6 +122,9 @@ $(document).ready(function() {
 	//when saving a draft
 
 $('#draftButton').click(function() {
+	var details = sessionStorage.getItem("user");
+	var userID = JSON.parse(details).id;
+
     const postTitle = $('#post-title').val();
     const postTopic = $('#post-topic').val();
     const postBody = $('#post-body').val();
@@ -162,6 +165,7 @@ $('#draftButton').click(function() {
     $.ajax({
         type: "GET",
         url: "check-drafts.php",
+		data: { userID: userID }, //pass user id
         dataType: "json",
         success: function(response) {
             //test log
@@ -185,6 +189,8 @@ $('#draftButton').click(function() {
 
 function saveDraft(postTitle, postTopic, postBody) {
     //AJAX call to save the draft
+	var details = sessionStorage.getItem("user");
+	var userID = JSON.parse(details).id;
 
     const errorMessage = $('#error-message');
     const successMessage = $('#success-message');
@@ -193,6 +199,7 @@ function saveDraft(postTitle, postTopic, postBody) {
         type: "POST",
         url: "create-post.php",
         data: {
+			userID: userID,
             title: postTitle,
             topic: postTopic,
             body: postBody,
@@ -398,10 +405,15 @@ function saveDraft(postTitle, postTopic, postBody) {
 
 //function to fetch drafts from the server and display them in the sidebar
 function fetchAndDisplayDrafts() {
-    $.ajax({
+
+	var details = sessionStorage.getItem("user");
+	var userID = JSON.parse(details).id;
+    
+	$.ajax({
 	type: "GET",
 	url: "fetch-drafts.php", 
 	dataType: "json",
+	data: { userID: userID},
 	success: function(response) {
 	    //check if drafts were retrieved successfully
 	    if (response && response.drafts) {
@@ -461,24 +473,7 @@ function appendDraftToSidebar(draft) {
 	var $buttonElement = $("#someButtonId");
 	const $draftContainer = $buttonElement.closest('.media.draft');
   
-  
-	function editDraft($buttonElement) {
-		const $draftContainer = $buttonElement.closest('.draft');
-		const postID = $draftContainer.data('post-id');
-		const title = $draftContainer.find('.draft-title').text();
-		const topic = $draftContainer.find('.draft-topic').text();
-		const body = $draftContainer.find('.draft-body').text();
 
-	
-		$('#post-title').val(title);
-		$('#post-topic').val(topic);
-		$('#post-body').val(body);
-		
-		//store the current editing draft
-		currentEditingDraft = $draftContainer;
-
-	}
-  
   
 
 

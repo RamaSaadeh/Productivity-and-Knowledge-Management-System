@@ -9,11 +9,11 @@ if (isset($_GET['id'])) {
 
     //sql statement to get all comments related to specific post
     $sql = "SELECT c.CommentID, c.PostID, c.UserID, c.CommentContent, c.Likes, c.LastModified, u.name AS AuthorName,
-            (c.UserID = $userId) AS IsUserOwner,
+            (c.UserID = $userID) AS IsUserOwner,
             CL.UserID IS NOT NULL AS HasLiked
             FROM Comments c
             INNER JOIN users u ON c.UserID = u.user_id
-            LEFT JOIN CommentLikes CL ON c.CommentID = CL.CommentID AND CL.UserID = $userId
+            LEFT JOIN CommentLikes CL ON c.CommentID = CL.CommentID AND CL.UserID = $userID
             WHERE c.PostID = '$postID'";
 
 

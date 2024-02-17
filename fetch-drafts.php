@@ -4,12 +4,12 @@
 include 'db.php';
 
 //hardcoded user ID for testing
-$userId = 1;
+$userID = mysqli_real_escape_string($conn, $_GET['userID']); //get user id from request
 
 //SQL query to fetch drafts for the specified user
 $sql = "SELECT PostID, Title, Content, DateCreated, Topic FROM Posts WHERE UserID = ? AND IsDraft = 1";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $userId);
+$stmt->bind_param("i", $userID);
 $stmt->execute();
 $result = $stmt->get_result();
 

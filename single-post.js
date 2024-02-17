@@ -84,6 +84,10 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 	
 	$(document).ready(function() {
+
+		var details = sessionStorage.getItem("user");
+		var userID = JSON.parse(details).id;
+
 		//extract postID from the URL parameters
 		const urlParams = new URLSearchParams(window.location.search);
 		const postID = urlParams.get('id'); 
@@ -94,7 +98,9 @@ document.addEventListener("DOMContentLoaded", function () {
 			url: "fetch-single-post.php",
 			type: "GET",
 			dataType: "json",
-			data: { id: postID }, 
+			data: { id: postID,
+					userID: userID
+			}, 
 			success: function(response) {
 				if (response.success) {
 					
@@ -853,6 +859,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	//edit comments
 	function addComment(commentText, postID) {
+
+		var details = sessionStorage.getItem("user");
+		var userID = JSON.parse(details).id;
 		//AJAX call to add the comment to the database
 		$.ajax({
 			
@@ -861,7 +870,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			dataType: "json",
 			data: {
 				id: postID,
-				comment: commentText
+				comment: commentText,
+				userID: userID
 			},
 			success: function(response) {
 				//handle success:
@@ -997,6 +1007,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	$(document).ready(function() {
 		$('#previousComments').on('click', '.like-comment', function() {
+			var details = sessionStorage.getItem("user");
+			var userID = JSON.parse(details).id;
+
 			const $this = $(this);
 			//get comment id
 			const commentID = $this.closest('.media.comment').data('comment-id');
@@ -1009,7 +1022,8 @@ document.addEventListener("DOMContentLoaded", function () {
 				type: 'POST',
 				data: {
 					commentID: commentID, 
-					isLiked: isLiked 
+					isLiked: isLiked,
+					userID: userID
 				},
 				dataType: 'json',
 				success: function(response) {
@@ -1043,30 +1057,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 
 	
-	function showError(message) {
-		const errorMessage = document.getElementById('error-message');
-		const successMessage = document.getElementById('success-message');
-		
-		//clear any previous success message
-		successMessage.style.display = 'none';
-		successMessage.textContent = '';
-		
-		//display the error message
-		errorMessage.style.display = 'block';
-		errorMessage.textContent = message;
-	}
 
-	function showSuccess(message) {
-		const errorMessage = document.getElementById('error-message');
-		const successMessage = document.getElementById('success-message');
-		
-		//clear any previous error message
-		errorMessage.style.display = 'none';
-		errorMessage.textContent = '';
-		
-		//display the success message
-		successMessage.style.display = 'block';
-		successMessage.textContent = message;
-	}
 
 });

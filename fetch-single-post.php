@@ -4,8 +4,8 @@ header('Content-Type: application/json');
 
 include 'db.php';
 
-//hardcoded user ID for testing purposes
-$userId = 1;
+
+$userID = mysqli_real_escape_string($conn, $_GET['userID']); //get user id from request
 
 
 //check if the Post ID is in the request
@@ -15,8 +15,8 @@ if (isset($_GET['id'])) {
     
     //query to retrieve the details of the specific post based on its ID
     $sql = "SELECT p.PostID, p.Title, p.Content, p.DateCreated, p.DatePublished, p.IsDraft, p.LikesCount, p.Topic, u.name AS AuthorName,
-            (p.UserID = $userId) AS IsUserOwner,
-            EXISTS(SELECT 1 FROM PostLikes pl WHERE pl.PostID = p.PostID AND pl.UserID = $userId) AS IsLiked
+            (p.UserID = $userID) AS IsUserOwner,
+            EXISTS(SELECT 1 FROM PostLikes pl WHERE pl.PostID = p.PostID AND pl.UserID = $userID) AS IsLiked
 
             FROM Posts p
             INNER JOIN users u ON p.UserID = u.user_id

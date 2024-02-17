@@ -13,11 +13,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = $_POST['title'];
     $body = $_POST['body'];
     $isDraft = (isset($_POST['isDraft']) && $_POST['isDraft'] === '0') ? 0 : 1;
-    $userId = 1; //will be replaced with a dynamic value representing the logged-in user
+    $userID = mysqli_real_escape_string($conn, $_POST['userID']); //get user id from request
 
     $sql = "INSERT INTO Posts (UserID, Topic, Title, Content, IsDraft) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("isssi", $userId, $topic, $title, $body, $isDraft);
+    $stmt->bind_param("isssi", $userID, $topic, $title, $body, $isDraft);
     
 
 
