@@ -58,7 +58,7 @@ function submitClick() {
 		a.style.display = "block";
 	}
 	else {
-		$.ajax({
+		/*$.ajax({
 			type: "POST",
 			url: "Register.php",
 			data: {
@@ -91,6 +91,15 @@ function submitClick() {
 				}
 			},
 			error:function(){
+				alert("error");
+			}
+		});*/
+		$.ajax({
+			url: 'test_connection.php',
+			success: function (response) {
+				alert(response);
+			},
+			error: function () {
 				alert("error");
 			}
 		});
