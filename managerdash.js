@@ -67,7 +67,7 @@ function addtaskTotable(task_id,task_name,hrs_remaining,status,deadline,assigned
   deadlinecell.innerHTML = deadline;  
   staffassignedcell.innerHTML = assigned_to; 
 
-  taskactionscell.innerHTML = '<button class = "notesbtn" onclick="opentasknotesForm(this)">Notes</button><button class="editbtn" onclick="loadtasktoform(this)"><span id="editsymbol" class="material-symbols-outlined">edit</span></button>';
+  taskactionscell.innerHTML = '<button class = "notesbtn" onclick="opentasknotesForm()">Notes</button><button class="editbtn" onclick="loadtasktoform(this)"><span id="editsymbol" class="material-symbols-outlined">edit</span></button>';
   }
 
 
@@ -346,197 +346,6 @@ function closeremovestaffForm() {
   document.getElementById("removestaffopaquebg").style.display = "none";
 }
 
-function openaddtaskForm() {
-
-  $.ajax({
-    type: "POST",
-    url: "find_new_taskID.php",
-    data: {
-      ID: selectedProjectID
-    },
-    success: function (response) {
-      if (response === "invalid") {
-        alert("Something went wrong");
-      } else {	
-
-        var newtaskID = JSON.parse(response);
-        var newtaskID_textbox = document.getElementById("new_taskID");
-
-        //we want to overwrite the select/reset it each time so we dont just add to what was already there
-        newtaskID_textbox.value = newtaskID;
-
-
-        //once the first ajax returns then load the second ajax
-        $.ajax({
-          type: "POST",
-          url: "loadstaff_in_proj.php",
-          data: {
-            ID: selectedProjectID
-          },
-          success: function (response) {
-            if (response === "invalid") {
-              alert("Something went wrong");
-            } else {	
-      
-              var allStaff = JSON.parse(response);
-      
-              var selectDropdown = document.getElementById("new_choosestaff_select");
-              //we want to overwrite the select/reset it each time so we dont just add to what was already there
-              selectDropdown.innerHTML = '';
-      
-      
-              for (var staffrow in allStaff) { //for every staff returned, add each to the table
-      
-                var option = document.createElement("option");
-      
-                  // Set the value of the option to user_id
-                  option.value = allStaff[staffrow][0];
-                  
-                  // Concatenate name and email and set it as the text of the option
-                  option.text = "#" + allStaff[staffrow][0] + "        |         " + allStaff[staffrow][1] + "         |         " + allStaff[staffrow][2];
-                  
-                  selectDropdown.appendChild(option);
-              }
-      
-            //placed inside the success so that only displays form after loaded
-            document.getElementById("addtaskopaquebg").style.display = "block";
-            }
-          }
-        });
-
-
-
-
-
-      }
-    }
-  });
-}
-
-function isValidDateString(str) {
-  // Split the string by hyphens
-  var parts = str.split('-');
-
-  // Check if there are exactly three parts
-  if (parts.length !== 3) {
-    return false;
-  }
-
-  // Check if each part is a valid integer
-  for (var i = 0; i < 3; i++) {
-    // Parse the part as an integer
-    var num = parseInt(parts[i], 10);
-
-    // Check if the parsed number is a valid integer
-    if (isNaN(num)) {
-      return false;
-    }
-  }
-
-  // Check if the year, month, and day are in the valid range
-  var year = parseInt(parts[0], 10);
-  var month = parseInt(parts[1], 10);
-  var day = parseInt(parts[2], 10);
-
-  if (year < 1000 || year > 9999 || month < 1 || month > 12 || day < 1 || day > 31) {
-    return false;
-  }
-
-  return true;
-}
-
-function addnewtask() {
-
-  event.preventDefault();
-
-  var newtaskID = document.getElementById("new_taskID").value;
-  var newtaskName = document.getElementById("new_taskname").value;
-  var newtaskStatus = document.getElementById("new_statusselect").value; 
-  var newhrs = document.getElementById("new_hrs").value; 
-  var newtaskDeadline = document.getElementById("new_deadline").value; 
-
-  //to create an array of all staff assigned to this task
-  var selectdropdown = document.getElementById("new_choosestaff_select");
-  var selectedOptions = selectdropdown.selectedOptions;
-  var newtaskStaff = [];
-  for (var i = 0; i < selectedOptions.length; i++) {
-    newtaskStaff.push(selectedOptions[i].value);
-  }
-
-
-  
- if(isValidDateString(newtaskDeadline)){
-  $.ajax({
-    type: "POST",
-    url: "add_new_task.php",
-    data: {
-      projectID: selectedProjectID,
-      taskID: newtaskID,
-      name: newtaskName,
-      status: newtaskStatus,
-      hrs: newhrs,
-      deadline: newtaskDeadline,
-      staff: newtaskStaff
-    },
-    success: function (response) {
-      if (response === "invalid") {
-        alert("Something went wrong");
-      } 
-
-      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
-    }
-  });
-
-  // now staff not in the team are loaded into the <select> we are going to open the form
-  document.getElementById("addtaskopaquebg").style.display = "none";
- } else{
-  alert("Invalid date entered");
-  // window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
- }
-}
-
-function closeaddtaskForm() {
-  document.getElementById("addtaskopaquebg").style.display = "none";
-}
-
-
-
-function opentasknotesForm(button) {
-  
-  var row = button.parentNode.parentNode;
-
-  // Get the data from the cells of the row
-  var this_tasks_id = row.cells[0].innerText;
-  alert(this_tasks_id);
- 
-  $.ajax({
-    type: "POST",
-    url: "load_tasknotes.php",
-    data: {
-      ID: selectedProjectID,
-      taskid: this_tasks_id
-    },
-    success: function (response) {
-      if (response === "invalid") {
-        alert("Something went wrong");
-      } else {	
-
-        var task_notes = JSON.parse(response);
-        alert(task_notes);
-       
-      }
-    }
-  });
-
-// now staff not in the team are loaded into the <select> we are going to open the form
-
-  document.getElementById("tasknotesopaquebg").style.display = "block";
-}
-
-
-
-
-
 
 
 
@@ -563,8 +372,16 @@ function closeToDoList() {
   document.getElementById("ToDoListopaquebg").style.display = "none";
 }
 
+function openaddtaskForm() {
+  document.getElementById("addtaskopaquebg").style.display = "block";
+}
+function closeaddtaskForm() {
+  document.getElementById("addtaskopaquebg").style.display = "none";
+}
 
-
+function opentasknotesForm() {
+  document.getElementById("tasknotesopaquebg").style.display = "block";
+}
 function closetasknotesForm() {
   document.getElementById("tasknotesopaquebg").style.display = "none";
 }
@@ -610,8 +427,6 @@ function addnewtaskTotable(){
 
   closeaddtaskForm();
 }
-
-
   
 var currentrowopened = null; //used so that we can use the same row throughout loadtasktoform() and makechangestotasktable()
 function loadtasktoform(button){
@@ -656,7 +471,10 @@ function removemember(){
   
   
   
-// document.getElementById("addtask-formbtn").addEventListener("click", addnewtaskTotable);
+/*All event Listeners*/
+document.getElementById("createnewproj-formbtn").addEventListener("click", addLinkToDiv);
+
+document.getElementById("addtask-formbtn").addEventListener("click", addnewtaskTotable);
   
 
 
@@ -701,54 +519,46 @@ $(document).ready(function() {
 });
   
   
-function find_workload(callback) {
-  $.ajax({
-    type: "POST",
-    url: "get_workload.php",
-    data: {
-      ID: selectedProjectID,
-    },
-    success: function (response) {
-      if (response === "invalid") {
-        alert("Something went wrong");
-      } else {
-        var data = JSON.parse(response);
-        callback(data[0], data[1]);
-      }
-    }
-  });
-}
   
-find_workload(function(workload, staffnames) {
-  new Chart("workload-chart", {
-    type: "horizontalBar",
-    data: {
-      labels: staffnames,
-      datasets: [{
-        backgroundColor: "#efbf1a",
-        data: workload
-      }]
-    },
-    options: {
-      legend: { display: false },
-      scales: {
-        xAxes: [{
-          scaleLabel: {
+/*WorkloadGraph*/
+var workload = [1,4,6,8,2,0,5];
+var staffnames = ["John", "Claire", "Steve", "Anne", "Martin", "Jack", "Ben"];
+
+new Chart("workload-chart", {
+  type: "horizontalBar",
+  data: {
+  labels: staffnames,
+  datasets: [{
+    backgroundColor: "#efbf1a",
+    data: workload
+  }]
+},
+  options: {
+
+    legend: {display: false},
+    scales: {
+      xAxes: [{
+        scaleLabel: {
             display: true,
-            labelString: 'Hrs of Work Remaining',
+            labelString: 'Number of Tasks',
             fontColor: "white",
             fontSize: 18
-          },
-          gridLines: { display: false },
-          ticks: { display: false, min: 0, max: 80 }
-        }],
+        },
+        gridLines: {display: false},
+        ticks: {
+            display: false,
+            min: 0, max:10,
+            }
+            }],
         yAxes: [{
-          gridLines: { display: false },
-          ticks: { fontColor: "white", fontSize: 18 }
-        }]
-      }
+        gridLines: {display: false},
+        ticks: {
+            fontColor: "white",
+            fontSize: 20
+            }
+            }]
     }
-  });
+  }
 });
   
   

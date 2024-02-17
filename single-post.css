@@ -1,4 +1,13 @@
 /* single.html CSS */
+* {
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	box-sizing: border-box;
+}
 
 :root {
     --footer-height: 100px; 
@@ -89,7 +98,7 @@ background-color: #ddd;
 outline: none;
 }
 .inviteuser-form .btn {
-background-color: #be6b25;
+background-color: #efbf1a;
 color: white;
 padding: 16px 20px;
 border: none;
@@ -318,7 +327,7 @@ textarea {
 /* Button styles */
 #postButton {
   
-	background: #007bff; 
+	background: #2980B9; 
     color: white; 
     padding: 10px 20px; 
     border: none; 
@@ -340,7 +349,7 @@ textarea {
 
 
 #postButton:hover {
-    background-color: #0056b3; 
+    background-color: #216a9b; 
 }
 
 
@@ -486,36 +495,32 @@ textarea {
 }
 
 
+/*Footer Content*/
 .footer {
-    background: #303036;
-    color: #d3d3d3;
-    height: 140px;
-    position: relative;
+  background: #303036;
+  color: #d3d3d3;
+  height: 140px;
+  position: relative;
 }
-
 .footer .footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    margin-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin-left: 2vw;
 }
-
 .footer-title {
-    font-family: 'Churchward Design Bold';  
-    font-size: 40px; 
-    margin-bottom: 20px; 
+  font-family: 'Churchward Design Bold'; 
+  font-size: 3vh;  
+  margin-bottom: 0.5vh; 
 }
-
-
 .footer .footer-content .footer-section {
-    flex: 1;
-    padding: 2px;
+  flex: 1;
+  padding: 2px;
 }
-
 .footer .footer-content .about .contact-details span {
-    display: block;
-    font-size: 1.1em;
+  display: block;
+  font-size: 1.1em;
 }
 
 
@@ -879,7 +884,7 @@ ul {
 
 
 .post .post-topic {
-  color: #007bff;
+  color: #2980B9;
 }
 
 .comment-actions .edit-post,
@@ -961,7 +966,7 @@ ul {
 }
 
 .modal-yes {
-  background-color: #007bff; 
+  background-color: #2980B9; 
   color: white; 
 }
 
@@ -973,7 +978,7 @@ ul {
 
 
 .modal-yes:hover {
-  background-color: #0056b3; 
+  background-color: #216a9b; 
 }
 
 .modal-no:hover {
@@ -1001,7 +1006,7 @@ ul {
 
 
 #confirmationModal .modal-yes {
-  background-color: #007bff; 
+  background-color: #2980B9; 
 
 }
 
@@ -1026,7 +1031,7 @@ ul {
 
 
 #confirmationModal .modal-yes:hover {
-  background-color: #0056b3; 
+  background-color: #216a9b; 
 }
 
 
@@ -1059,8 +1064,8 @@ ul {
 
 .comments-buttons-wrapper button.active {
   color: white;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #2980B9;
+  border-color: #2980B9;
 }
 
 
@@ -1082,14 +1087,14 @@ ul {
 
 
 #topCommentsBtn.active, #newestCommentsBtn.active {
-  background-color: #007bff; 
+  background-color: #2980B9; 
   color: white; 
-  border-color: #007bff; 
+  border-color: #2980B9; 
 }
 
 
 #topCommentsBtn.active:hover, #newestCommentsBtn.active:hover {
-  background-color: #0069d9; 
+  background-color: #216a9b; 
 }
 
 
@@ -1111,8 +1116,8 @@ ul {
 
 .comments-buttons-wrapper button.active {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff; 
+  background-color: #2980B9;
+  border-color: #2980B9; 
 }
 
 
