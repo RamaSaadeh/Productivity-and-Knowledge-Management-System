@@ -24,6 +24,7 @@
     staffData = JSON.parse('[{"user_id":"1","name":"John Doe","email":"J.Doe@make-it-all.co.uk","role":"General","managing":[],"leading":["2"]},{"user_id":"2","name":"Jane Stevens","email":"JaneStevens@make-it-all.co.uk","role":"Manager","managing":[],"leading":["1"]},{"user_id":"3","name":"Fake Name","email":"fname@make-it-all.co.uk","role":"Admin","managing":["1"],"leading":[]},{"user_id":"4","name":"Donald Donaldson","email":"donald@make-it-all.co.uk","role":"Manager","managing":[],"leading":[]}]');
     console.log(staffData);
     var staffTable = document.getElementById("staffInfo");
+    var tbody = staffTable.querySelector("tbody");
     staffData.forEach(function(item){
 
       // create a new table row for each user in the database
@@ -51,9 +52,16 @@
       var managingCell = document.createElement("td");
       managingCell.classList.add("teamManaging");
       managingCell.textContent = item['managing'];
-      var editCell = document.createElement("td");
-      editCell.classList.add("editUser");
-      editCell.textContent = " ";
+
+     // create a edit user button
+     var editCell = document.createElement("td");
+     editCell.classList.add("editUser");
+     var editButton = document.createElement("button");
+     editButton.classList.add("editUserBttn");
+     editButton.textContent = "\u270E"; 
+     editButton.onclick = editUser;
+     editCell.appendChild(editButton);
+
 
       // create a delete button
       var deleteCell = document.createElement("td");
@@ -76,7 +84,7 @@
       newRow.appendChild(deleteCell);
 
       // append new row to table
-      staffTable.appendChild(newRow);
+      tbody.appendChild(newRow);
     })
     
   });
@@ -95,12 +103,35 @@
     // Ask for confirmation with the data
     if (confirm('Are you sure you want to delete the user ' + fullName + ' with ID ' + staffId + '?')) {
         // Code to delete the user
+        alert("user deleted");
+    }
+  }
+
+  function editUser(){
+    // Get the parent row of the button
+    var row = this.closest('tr');
+
+    // Access data within the row
+    var fullName = row.querySelector('.fullName').textContent;
+    var staffId = row.querySelector('.staffId').textContent;
+    // Access other data similarly
+
+    // Ask for confirmation with the data
+    if (confirm('Are you sure you want to edit user ' + fullName + ' with ID ' + staffId + '?')) {
+        // Code to delete the user
+        alert("User edited");
     }
   }
 
 
+  // add editUser onclick function to each edit user button 
+  document.querySelectorAll('.editUserBttn').forEach(function(button){
+    button.onclick = editUser;
+  });
 
-
+  document.querySelectorAll('.deleteUserBttn').forEach(function(button){
+    button.onclick = deleteUser;
+  });
 
 
 
@@ -377,10 +408,6 @@
             }
         }
 
-        function deleteUser(){
-            confirm("Are you sure you want to delete this user?");
-            alert("User removed from the system.");
-        }
     
     
         var deleteButtons = document.querySelectorAll('.deleteUserBttn');
