@@ -727,9 +727,10 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 		  });
 	
-	
+
+	//delete comments from sidebar
 	function deleteComment(commentId) {
-		// Example using Fetch API to send the delete request
+		
 		fetch('delete-comment.php', {
 			method: 'POST',
 			headers: {
@@ -740,9 +741,16 @@ document.addEventListener("DOMContentLoaded", function () {
 		.then(response => response.json())
 		.then(data => {
 			if (data.success) {
-				// Comment deleted successfully, remove it from the DOM
-				document.querySelector(`.comment[data-comment-id="${commentId}"]`).remove();
-				// Hide the confirmation modal
+				
+				const commentElement = document.querySelector(`.comment[data-comment-id="${commentId}"]`);
+				commentElement.classList.add('fade-out');
+	
+			
+				commentElement.addEventListener('transitionend', function() {
+					commentElement.remove();
+				}, { once: true }); 
+	
+				
 				document.getElementById('confirmationModal').style.display = 'none';
 			} else {
 				alert('Failed to delete comment: ' + data.message);
@@ -753,6 +761,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			alert('Error deleting comment.');
 		});
 	}
+		
 	
 	
 	// Event listener for editing comments
