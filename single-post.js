@@ -140,6 +140,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 		//handles liking posts
 		$('.like-post').click(function() {
+			var details = sessionStorage.getItem("user");
+			var userID = JSON.parse(details).id;
 			const isLiked = $(this).hasClass('liked');
 
 			$.ajax({
@@ -147,6 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				type: 'POST',
 				dataType: 'json',
 				data: {
+					userID: userID,
 					postID: postID,
 					isLiked: isLiked
 				},
@@ -177,6 +180,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 	
 	$(document).ready(function() {
+		//get user id
+		var details = sessionStorage.getItem("user");
+		var userID = JSON.parse(details).id;
+
 		//extract postID from the URL parameters
 		const urlParams = new URLSearchParams(window.location.search);
 	
@@ -187,7 +194,9 @@ document.addEventListener("DOMContentLoaded", function () {
 				url: "fetch-comments.php",
 				type: "GET",
 				dataType: "json",
-				data: { id: postID },
+				data: { id: postID, 
+						userID: userID
+				},
 				 success: function(responseComments) {
 					//clear previous comments
 					$('#previousComments').empty();
@@ -908,11 +917,16 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 		//function to fetch comments for a post
 		function fetchComments(postID) {
+			var details = sessionStorage.getItem("user");
+			var userID = JSON.parse(details).id;
+
 			$.ajax({
 				url: "fetch-comments.php",
 				type: "GET",
 				dataType: "json",
-				data: { id: postID },
+				data: { id: postID,
+						userID: userID
+				},
 				 success: function(responseComments) {
 					//clear previous comments
 					$('#previousComments').empty();
