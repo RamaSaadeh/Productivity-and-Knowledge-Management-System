@@ -476,27 +476,46 @@ document.getElementById("createnewproj-formbtn").addEventListener("click", addLi
 
 document.getElementById("addtask-formbtn").addEventListener("click", addnewtaskTotable);
   
-  
-  
-  
-  
-/*StatusChart*/
-var statustypes = ["Completed", "OnTime", "Overdue", "Not Started"];
-var statusquantities = [10,6,2,7];
-var barColors = ["#52ab0c","#efbf1a","#ab450c","#646c6c"];
 
-new Chart("piechart", {
-  type: "doughnut",
-  data: {
-    labels: statustypes,
-    datasets: [{
-      backgroundColor: barColors,
-      data: statusquantities
-    }]
-  },
-  options: {
-    legend: {display: false},
-  }
+
+function find_statusquantities(callback) {
+  $.ajax({
+    type: "POST",
+    url: "get_tasks_forpie.php",
+    data: {
+      ID: selectedProjectID,
+    },
+    success: function (response) {
+      if (response === "invalid") {
+        alert("Something went wrong");
+      } else {
+        var statusquantities = JSON.parse(response);
+        callback(statusquantities);
+      }
+    }
+  });
+}
+
+// we want to refresh/load this pie chart whenever the window laods- however, before it loads we have to get task summaries
+$(document).ready(function() {
+  find_statusquantities(function(statusquantities) {
+    var statustypes = ["Completed", "OnTrack", "Overdue", "Not Started"];
+    var barColors = ["#52ab0c", "#efbf1a", "#ab450c", "#646c6c"];
+
+    new Chart("piechart", {
+      type: "doughnut",
+      data: {
+        labels: statustypes,
+        datasets: [{
+          backgroundColor: barColors,
+          data: statusquantities
+        }]
+      },
+      options: {
+        legend: { display: false },
+      }
+    });
+  });
 });
   
   
