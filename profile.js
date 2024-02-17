@@ -5,6 +5,7 @@ var email = JSON.parse(details).email;
 
 var id = JSON.parse(details).id;
 
+
 //get comments
 $.ajax({
     type: "POST",
