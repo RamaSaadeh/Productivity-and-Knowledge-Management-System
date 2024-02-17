@@ -89,6 +89,9 @@ function submitClick() {
 					registerError.innerHTML = "Success!";
 					a.style.display = "block";
 				}
+			},
+			error:function(){
+				alert("error");
 			}
 		});
 	}
