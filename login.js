@@ -3,7 +3,7 @@ async function getData() {
 	a.innerHTML = "Details could not be found";
 	var email = document.getElementById("email").value;
 	var password = document.getElementById("password").value;
-	$.ajax({
+	/*$.ajax({
 		type: "POST",
 		url: "login.php",
 		data: {
@@ -39,5 +39,14 @@ async function getData() {
 				sessionStorage.setItem("user", JSON.stringify(obj));
 			}
 		}
-	});	
+	});*/
+	$.ajax({
+		url: 'test_connection.php',
+		success: function (response) {
+			alert(response);
+		},
+		error: function () {
+			alert("error");
+		}
+	});
 }

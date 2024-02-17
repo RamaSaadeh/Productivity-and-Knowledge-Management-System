@@ -1,12 +1,20 @@
 <?php
 echo "COB290 Database Connection";
 
-$servername = "v2";
+$servername = "localhost";
 $username = "host";
-$password = "Team017FTW!";
+$dbpassword = "Team017FTW!";
+$database = "makeitall";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password);
+$conn = new mysqli($servername, $username, $dbpassword, $database);
+
+/*$servername = "localhost";
+$username = "team017";
+$dbpassword = "xngk4RgUqJxMjKX3EMak";
+$database = "team017";
+
+$conn = new mysqli($servername, $username, $dbpassword, $database);*/
 
 // Check connection
 if ($conn->connect_error) {
