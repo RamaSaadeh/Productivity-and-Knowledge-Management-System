@@ -1,25 +1,5 @@
 var details = sessionStorage.getItem("user");
 var role = JSON.parse(details).role;
-//Decides which Dash to link to
-dashboard.addEventListener("click", function () {
-	var a = document.getElementById("dashboard");
-	switch (role) {
-		case "a":
-			a.href = "AdminDashboard.html";
-			break;
-		case "g":
-			a.href = "userdash.html";
-			break;
-		case "m":
-			a.href = "accessproject.php";
-			break;
-		case 'l':
-			a.href = "accessproject.php";
-			break;
-		default:
-			a.href = "#";
-	}
-});
 
 var email = JSON.parse(details).email;
 

@@ -137,6 +137,29 @@
 
 	<script>
 		document.getElementById("openTab").click();
+        var details = sessionStorage.getItem("user");
+        var role = JSON.parse(details).role;
+        var email = JSON.parse(details).email;
+        //Decides which Dash to link to
+        dashboard.addEventListener("click", function () {
+            var a = document.getElementById("dashboard");
+            switch (role) {
+                case "a":
+                    a.href = "AdminDashboard.html";
+                    break;
+                case "g":
+                    a.href = "userdash.html";
+                    break;
+                case "m":
+                    a.href = "accessproject.php";
+                    break;
+                case 'l':
+                    a.href = "accessproject.php";
+                    break;
+                default:
+                    a.href = "#";
+            }
+        });
 	</script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
