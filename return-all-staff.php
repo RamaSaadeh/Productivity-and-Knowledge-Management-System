@@ -39,7 +39,7 @@ if ($result2 -> num_rows > 0){
 }
 
 // add team membership info to each associative array in staffData
-foreach($staffData as $user){
+foreach($staffData as &$user){
     $managing = array();
     $leading = array();
     foreach ($teamsData as $team){

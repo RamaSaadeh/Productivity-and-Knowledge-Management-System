@@ -18,12 +18,64 @@
               alert("An error occurred while fetching users data: " + error);
           }
       }); */
+
+
+        //replacing staffData with a different json array (for ease of testing)
+    staffData = JSON.parse('[{"user_id":"1","name":"John Doe","email":"J.Doe@make-it-all.co.uk","role":"General","managing":[],"leading":["2"]},{"user_id":"2","name":"Jane Stevens","email":"JaneStevens@make-it-all.co.uk","role":"Manager","managing":[],"leading":["1"]},{"user_id":"3","name":"Fake Name","email":"fname@make-it-all.co.uk","role":"Admin","managing":["1"],"leading":[]},{"user_id":"4","name":"Donald Donaldson","email":"donald@make-it-all.co.uk","role":"Manager","managing":[],"leading":[]}]');
+    console.log(staffData);
+    var staffTable = document.getElementById("staffInfo");
+    staffData.forEach(function(item){
+
+      // create a new table row for each user in the database
+      var newRow = document.createElement("tr");
+      newRow.setAttribute("scope", "row");
+      newRow.setAttribute("id", item['user_id']);
+      newRow.classList.add("staffMember");
+
+      // create new table cells to hold user information
+      var nameCell = document.createElement("td");
+      nameCell.classList.add("fullName");
+      nameCell.textContent = item['name'];
+      var idCell = document.createElement("td");
+      idCell.classList.add("staffId");
+      idCell.textContent = item['user_id'];
+      var roleCell = document.createElement("td");
+      roleCell.classList.add("userLevel");
+      roleCell.textContent = item['role'];
+      var emailCell = document.createElement("td");
+      emailCell.classList.add("email");
+      emailCell.textContent = item['email'];
+      var leadingCell = document.createElement("td");
+      leadingCell.classList.add("teamLeading");
+      leadingCell.textContent = item['leading'];
+      var managingCell = document.createElement("td");
+      managingCell.classList.add("teamManaging");
+      managingCell.textContent = item['managing'];
+      var editCell = document.createElement("td");
+      editCell.classList.add("editUser");
+      editCell.textContent = " ";
+      var deleteCell = document.createElement("td");
+      deleteCell.classList.add("deleteUser");
+      deleteCell.textContent = " ";
+
+      // append cells to row
+      newRow.appendChild(nameCell);
+      newRow.appendChild(idCell);
+      newRow.appendChild(roleCell);
+      newRow.appendChild(emailCell);
+      newRow.appendChild(leadingCell);
+      newRow.appendChild(managingCell);
+      newRow.appendChild(editCell);
+      newRow.appendChild(deleteCell);
+
+      // append new row to table
+      staffTable.appendChild(newRow);
+    })
+    
   });
     
 
-  //replacing staffData with a different json array (for ease of testing)
-staffData = JSON.parse('[{"user_id":"1","name":"John Doe","email":"J.Doe@make-it-all.co.uk","role":"General"},{"user_id":"2","name":"Jane Stevens","email":"JaneStevens@make-it-all.co.uk","role":"Manager"},{"user_id":"3","name":"Fake Name","email":"fname@make-it-all.co.uk","role":"Admin"},{"user_id":"4","name":"Donald Donaldson","email":"donald@make-it-all.co.uk","role":"Manager"}]');
-console.log(staffData);
+
 
 
 
