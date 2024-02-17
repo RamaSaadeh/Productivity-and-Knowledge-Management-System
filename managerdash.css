@@ -486,17 +486,33 @@ body {
 	background-color:#efbf1a;
 	color: white;
 }	
-#taskname{
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid grey;
-  border-radius: 4px;
-  box-sizing: border-box;
+
+.addtaskform_labels {
+	color: grey;
+	font-size: 12;
+	padding-left: 10px;
+}
+#new_taskID{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid grey;
+	border-radius: 4px;
+	box-sizing: border-box;
 }
 
-#statusselect {
+#new_taskname{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid grey;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#new_statusselect {
 	width: 100%;
 	padding: 16px 20px;
 	border: 1px solid #ccc;
@@ -504,7 +520,7 @@ body {
 	color: grey;
 }
 
-#deadline {
+#new_deadline {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -514,13 +530,20 @@ body {
   box-sizing: border-box;
   margin-bottom: 20px;
 }
-#choosestafflabel {
-	color: grey;
-	font-size: 12;
-	padding-left: 10px;
+
+#new_hrs{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	margin-bottom: 20px;
 }
 
-#choosestaff {
+
+#new_choosestaff_select {
 	width: 100%;
 	height: 150px;
 	padding: 12px 20px;
