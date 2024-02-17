@@ -60,13 +60,12 @@ function submitClick() {
 	else {
 		$.ajax({
 			type: "POST",
-			url: "register.php",
+			url: "Register.php",
 			data: {
 				action: "check_email",
 				email: email
 			},
 			success: function (response) {
-				alert(response);
 				if (response == "exists") {
 					registerError.innerHTML = "Email address is already in use";
 					colour = "red";
@@ -76,7 +75,7 @@ function submitClick() {
 				else {
 					$.ajax({
 						type: "POST",
-						url: "register.php",
+						url: "Register.php",
 						data: {
 							action: "register_user",
 							firstName: firstName,
