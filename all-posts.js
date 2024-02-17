@@ -51,11 +51,16 @@ function sendInvite() {
 }
 
 $(document).ready(function() {
+
+  var details = sessionStorage.getItem("user");
+  var userID = JSON.parse(details).id;
     //display dynamic posts from the database
+
     $.ajax({
         url: "fetch-posts.php",
         type: "GET",
         dataType: "json", //this ensures jQuery treats the response as JSON.
+        data: {userID: userID},
         success: function(posts) {
             posts.forEach(function(post) {
                 var postClass = post.Topic.toLowerCase().replace(/\s+/g, '-');
