@@ -62,7 +62,7 @@ $(document).ready(function() {
         dataType: "json", //this ensures jQuery treats the response as JSON.
         data: {userID: userID},
 		success: function (posts) {
-			posts = null;
+			posts.length = 0;
 			if (posts.length == 0) {
 				$('.all-content').innerHTML = "There are currently no posts!";
 			}
