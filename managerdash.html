@@ -131,6 +131,7 @@
 		<div class="section-header">Project XXX
 			<button class="addtaskbtn" onclick="openaddtaskForm()">Add Task</button>
 		</div>	
+
 		<div class="tablediv">
 			<table id="taskstable">
 				  <tr>
@@ -173,33 +174,38 @@
 </div>
 
 <div class="popup-background" id="addtaskopaquebg">
-	<form class="addtask-form" action="javascript:getData()" method="get">
+	<form class="addtask-form" onsubmit="addnewtask()" method="get">
 		<div class="form-title">
 			<button type="button" id="cancel-formbtn" onclick="closeaddtaskForm()">Cancel</button>
 			<div id="formheader">New Task</div>
 		</div>
 		
 		<div id="formcontent">
-			<input type="text" placeholder="Enter Task Name" id="taskname" required>
+			<label class="addtaskform_labels">Task ID</label>
+			<input type="text" value="" id="new_taskID" readonly>
+
+			<label class="addtaskform_labels">Task Name</label>
+			<input type="text" placeholder="Enter Task Name" id="new_taskname" required>
 			
-			<select required id="statusselect">
+			<label class="addtaskform_labels">Task Status</label>
+			<select required id="new_statusselect">
 				<option value="" disabled selected hidden>Choose Status...</option>
 				<option value="Not Started">Not Started</option>
 				<option value="On Track">On Track</option>
 				<option value="Overdue">Overdue</option>
 				<option value="Completed">Completed</option>
 			</select>
-			<input type="text" placeholder="Deadline: dd/mm/yyyy" id="deadline" required>
-			<label id="choosestafflabel">Hold ctrl to select multiple staff</label>
-			<select multiple required id="choosestaff">
-				<option value="John Doe">John Doe</option>
-				<option value="Claire Owens">Claire Owens</option>
-				<option value="Steve Jobs">Steve Jobs</option>
-				<option value="Anne Levy">Anne Levy</option>
-				<option value="Martin Keown">Martin Keown</option>
-				<option value="Jack Richards">Jack Richards</option>
-				<option value="Ben Potts">Ben Potts</option>
-			</select>		
+
+			<label class="addtaskform_labels">Hours task will take</label>
+			<input type="text" placeholder="Hours: e.g. 5" id="new_hrs" required>
+
+			<label class="addtaskform_labels">Task Deadline</label>
+			<input type="text" placeholder="Deadline: yyyy-mm-dd" id="new_deadline" required>
+
+			<label class="addtaskform_labels">Hold ctrl to select multiple staff</label>
+			<select multiple required id="new_choosestaff_select">
+			</select>	
+
 			<button type="submit" id="addtask-formbtn">Add new task</button>
 		</div>
 	</form>
