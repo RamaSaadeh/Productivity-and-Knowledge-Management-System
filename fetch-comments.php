@@ -4,8 +4,11 @@ header('Content-Type: application/json');
 //connect to database
 include 'db.php';
 
+
+
 if (isset($_GET['id'])) {
     $postID = mysqli_real_escape_string($conn, $_GET['id']);
+    $userID = mysqli_real_escape_string($conn, $_GET['userID']); //get user id from request
 
     //sql statement to get all comments related to specific post
     $sql = "SELECT c.CommentID, c.PostID, c.UserID, c.CommentContent, c.Likes, c.LastModified, u.name AS AuthorName,
