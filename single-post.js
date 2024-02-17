@@ -140,6 +140,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 		//handles liking posts
 		$('.like-post').click(function() {
+			var details = sessionStorage.getItem("user");
+			var userID = JSON.parse(details).id;
 			const isLiked = $(this).hasClass('liked');
 
 			$.ajax({
@@ -147,6 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				type: 'POST',
 				dataType: 'json',
 				data: {
+					userID: userID,
 					postID: postID,
 					isLiked: isLiked
 				},
