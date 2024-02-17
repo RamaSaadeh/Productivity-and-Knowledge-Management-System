@@ -1,12 +1,12 @@
 <?php 
+
+
+	include 'db.php';
+
 	$action = $_POST['action'];
 	
-	$servername = "localhost";
-	$username = "team017";
-	$dbpassword = "xngk4RgUqJxMjKX3EMak";
-	$database = "team017";
 
-	$conn = new mysqli($servername, $username, $dbpassword, $database);
+	
 
 	if ($action == "check_email") {
 		$email = $_POST['email'];

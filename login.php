@@ -1,10 +1,7 @@
 <?php
-	$servername = "localhost";
-	$username = "team017";
-	$dbpassword = "xngk4RgUqJxMjKX3EMak";
-	$database = "team017";
 
-	$conn = new mysqli($servername, $username, $dbpassword, $database);
+	include 'db.php';
+
 
 	$email = $_POST['email'];
 	$password = hash('sha256', $_POST['password']);
