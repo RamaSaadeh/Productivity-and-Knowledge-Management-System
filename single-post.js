@@ -935,6 +935,14 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 					//loop through comments and append to sidebar 
 					comments.forEach(function(comment) {
+
+						const editDeleteIcons = comment.IsUserOwner ? `
+						  <i class="fas fa-edit edit-comment" title="Edit"></i>
+						  <i class="fas fa-trash-alt delete-comment" title="Delete"></i>` : '';
+
+					   	const likeButtonClass = comment.HasLiked ? 'like-comment liked' : 'like-comment';
+						const likeButtonTitle = comment.HasLiked ? 'Unlike' : 'Like';
+
 						$('#previousComments').append(`
 							<div class="media comment" data-comment-id="${comment.CommentID}">
 								<div class="media-body comment-content">${comment.CommentContent}</div>
