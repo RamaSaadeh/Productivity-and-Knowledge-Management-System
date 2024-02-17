@@ -1,5 +1,3 @@
-document.getElementById("openTab").click();
-
 var details = sessionStorage.getItem("user");
 var role = JSON.parse(details).role;
 //Decides which Dash to link to
