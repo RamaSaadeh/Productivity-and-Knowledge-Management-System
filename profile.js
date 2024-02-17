@@ -5,34 +5,6 @@ var email = JSON.parse(details).email;
 
 var id = JSON.parse(details).id;
 
-
-//get comments
-$.ajax({
-    type: "POST",
-    url: "profile.php",
-    data: {
-        action: "get_comments",
-        id: id
-    },
-    success: function (response) {
-        var posts = JSON.parse(response);
-        if (posts.length == 0) document.getElementById("comments").innerHTML = "You haven't commented anything yet!";
-        posts.forEach(function (post) {
-            var postHTML = `
-							<a href="single-post.html?id=${post.PostID}"><b>${post.Topic}</b><br>
-							<h5>${post.Title}</h5><br>${post.CommentContent}<br>
-							<i class="far fa-calendar">  ${post.LastModified}</i>
-							<i class="fas fa-thumbs-up like-comment">  ${post.Likes}</i>
-							</a>
-						`;
-            document.getElementById("comments").innerHTML += postHTML;
-        });
-    },
-    error: function () {
-        alert("There was an error loading comments");
-    }
-});
-
 function toggle(event, tab) {
 
     var i = 0;
