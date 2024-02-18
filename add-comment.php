@@ -10,9 +10,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  //escape user inputs for security
 	$postID = mysqli_real_escape_string($conn, $_POST['id']); 
 
-    //hardcoded user id for testing 
+    
     $userID = mysqli_real_escape_string($conn, $_POST['userID']); //get user id from request
-    $commentContent = mysqli_real_escape_string($conn, $_POST['comment']);
+    $commentContent = mysqli_real_escape_string($conn, $_POST['comment']); //get comment content from request
 
     //insert comment into Comments table in database
     $sql = "INSERT INTO Comments (PostID, UserID, CommentContent) VALUES ('$postID', '$userID', '$commentContent')";
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 } else {
     //method not allowed
-    http_response_code(405); //method Not Allowed
+    http_response_code(405); 
     echo json_encode(['success' => false, 'error' => 'Method Not Allowed']);
 }
 

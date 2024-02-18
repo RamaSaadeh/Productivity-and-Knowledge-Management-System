@@ -7,7 +7,7 @@ include 'db.php';
 
 
 if (isset($_GET['id'])) {
-    $postID = mysqli_real_escape_string($conn, $_GET['id']);
+    $postID = mysqli_real_escape_string($conn, $_GET['id']); //get post id from request
     $userID = mysqli_real_escape_string($conn, $_GET['userID']); //get user id from request
 
     //sql statement to get all comments related to specific post
