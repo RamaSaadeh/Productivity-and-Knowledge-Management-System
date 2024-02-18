@@ -242,6 +242,17 @@ vertical-align: middle;
 
 /*End of css for navbar*/
 
+.container {
+  width: 100%;
+  height: 100%;
+  max-width: none; 
+  padding-left: 20px;
+  padding-right: 20px; 
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+
 
 textarea {
     width: 50%; 
@@ -734,16 +745,6 @@ textarea {
 
 
 
-
-
-.container {
-  width: 100%;
-  max-width: none; 
-  padding-left: 20px;
-  padding-right: 20px; 
-  margin-left: auto; 
-  margin-right: auto; 
-}
 
 
 .row {
