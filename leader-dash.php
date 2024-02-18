@@ -85,8 +85,6 @@
                 <label>Select your project to launch</label>
                 <select required id="select-proj" name="selected_project_ID">
                     <option value="" disabled selected>Select Project or Search by Typing</option>
-                    <div id="values">
-					</div>
                 </select>		
                 <button type="submit" id="exploreproj-btn" onclick="exploreClick()">Explore Project</button>
 
