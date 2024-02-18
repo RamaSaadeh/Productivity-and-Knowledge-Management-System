@@ -272,7 +272,21 @@ function newElement() {
     } else {
     // add new list item 
       document.getElementById("toDoUL").insertAdjacentElement('afterbegin', li);
-      // update the todolist table
+      // update the todolist table using jQuery AJAX
+      $.ajax({
+        url: 'add-to-do-item.php',
+        type: 'POST',
+        data: requestData,
+        success: function(response) {
+            // Handle the response from the server
+            console.log('Item added to db successfully');
+        },
+        error: function(xhr, status, error) {
+            // Handle errors
+            console.error('Error deleting item:', error);
+        }
+      });
+
 
     }
     document.getElementById("toDoInput").value = "";
