@@ -61,7 +61,7 @@ $.ajax({
         var projects = JSON.parse(response);
         alert(projects);
         projects.forEach(function (project) {
-            alert(typeof project);
+            alert(project);
             
             //document.getElementById("values").innerHTML += project;
         });
