@@ -76,6 +76,56 @@ dashboard.addEventListener("click", function() {
 });
 
 
+
+window.addEventListener('load', function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedProjectID = urlParams.get('selected_project_ID');
+
+  $.ajax({
+    type: "POST",
+    url: "load_project_todash.php",
+    data: {
+      ID: selectedProjectID
+    },
+    success: function (response) {
+      if (response === "invalid") {
+        alert("Something went wrong");
+      } else {	
+
+        var projectname = JSON.parse(response)[0];
+        var allTasks = JSON.parse(response)[1]; //[0] takes the first half of the encoded json array
+        var allStaff = JSON.parse(response)[2]; //[1] takes the first half of the encoded json array
+
+        document.getElementById("section_header").innerHTML = '<div class="section-header">' + projectname + '<button class="addtaskbtn" onclick="openaddtaskForm()">Add Task</button></div>';
+
+
+        for (var taskrow in allTasks) { //for every task returned, add each to the table
+          addtaskTotable(allTasks[taskrow][0],allTasks[taskrow][1],allTasks[taskrow][2],allTasks[taskrow][3],allTasks[taskrow][4],allTasks[taskrow][5],allTasks[taskrow][6]);
+        }
+
+
+        for (var staffrow in allStaff) { //for every staff returned, add each to the table
+          addStaffTotable(allStaff[staffrow][0],allStaff[staffrow][1],allStaff[staffrow][2],allStaff[staffrow][3]);
+        }
+      }
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function addtaskTotable(task_id,task_name,hrs_remaining,status,deadline,assigned_to,notes){
 
   var table = document.getElementById("taskstable");
@@ -117,38 +167,7 @@ function addStaffTotable(user_id,name,role,email){
 }
 
 
-const urlParams = new URLSearchParams(window.location.search);
-const selectedProjectID = urlParams.get('selected_project_ID');
 
-$.ajax({
-  type: "POST",
-  url: "load_project_todash.php",
-  data: {
-    ID: selectedProjectID
-  },
-  success: function (response) {
-    if (response === "invalid") {
-      alert("Something went wrong");
-    } else {	
-
-      var projectname = JSON.parse(response)[0];
-      var allTasks = JSON.parse(response)[1]; //[0] takes the first half of the encoded json array
-      var allStaff = JSON.parse(response)[2]; //[1] takes the first half of the encoded json array
-
-      document.getElementById("section_header").innerHTML = '<div class="section-header">' + projectname + '<button class="addtaskbtn" onclick="openaddtaskForm()">Add Task</button></div>';
-
-
-      for (var taskrow in allTasks) { //for every task returned, add each to the table
-        addtaskTotable(allTasks[taskrow][0],allTasks[taskrow][1],allTasks[taskrow][2],allTasks[taskrow][3],allTasks[taskrow][4],allTasks[taskrow][5],allTasks[taskrow][6]);
-      }
-
-
-      for (var staffrow in allStaff) { //for every staff returned, add each to the table
-        addStaffTotable(allStaff[staffrow][0],allStaff[staffrow][1],allStaff[staffrow][2],allStaff[staffrow][3]);
-      }
-    }
-  }
-});
 
 
 
