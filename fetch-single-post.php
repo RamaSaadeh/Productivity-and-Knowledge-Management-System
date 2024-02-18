@@ -13,7 +13,9 @@ if (isset($_GET['id'])) {
     $postId = mysqli_real_escape_string($conn, $_GET['id']);
     
     //query to retrieve the details of the specific post based on its ID
-    $sql = "SELECT p.PostID, p.Title, p.Content, p.DateCreated, p.DateLastModified, p.IsDraft, p.LikesCount, p.Topic, u.name AS AuthorName,
+    $sql = "SELECT p.PostID, p.Title, p.Content, 
+            DATE_FORMAT(p.DateCreated, '%M %d, %Y') as FormattedDateCreated, 
+            p.DateLastModified, p.IsDraft, p.LikesCount, p.Topic, u.name AS AuthorName,
             (p.UserID = ?) AS IsUserOwner,
             EXISTS(SELECT 1 FROM PostLikes pl WHERE pl.PostID = p.PostID AND pl.UserID = ?) AS IsLiked,
             (SELECT role FROM users WHERE user_id = ?) AS IsAdmin
@@ -35,6 +37,23 @@ if (isset($_GET['id'])) {
         $post['IsUserOwner'] = (bool)$post['IsUserOwner'];
         $post['IsLiked'] = (bool)$post['IsLiked'];
         $post['IsAdmin'] = ($post['IsAdmin'] === 'Admin');
+
+        //format DateLastModified if it's not NULL and different from DateCreated
+        if (!is_null($post['DateLastModified'])) {
+            $formattedDateLastModified = date('F d, Y', strtotime($post['DateLastModified']));
+            
+            //check if DateLastModified is different from DateCreated
+            if ($formattedDateLastModified !== $post['FormattedDateCreated']) {
+                $post['DateLastModified'] = $formattedDateLastModified . " (edited)";
+            } else {
+
+                //if dates are the same, just use the formatted DateCreated without "(edited)"
+                $post['DateLastModified'] = $post['FormattedDateCreated'];
+            }
+        } else {
+            //if DateLastModified is NULL, use DateCreated
+            $post['DateLastModified'] = $post['FormattedDateCreated'];
+        }
 
         //prepare and output the response
         echo json_encode([

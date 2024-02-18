@@ -134,7 +134,8 @@ document.addEventListener("DOMContentLoaded", function () {
 					$('#postTitle').text(post.Title);
 					$('#postContent').html(post.Content);
 					$('#authorName').text(post.AuthorName);
-					$('#postDate').text(post.DateCreated);
+					const displayDate = post.DateLastModified ? post.DateLastModified : post.DateCreated;
+					$('#postDate').text(displayDate);
 					$('#likeCount').text(post.LikesCount);
 
 					//show or hide edit and delete buttons based on `IsUserOwner` value
