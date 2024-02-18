@@ -96,6 +96,7 @@
         </div>
 
 		<div class="gotouser-flex">
+		    <div class="title">View Tasks</div> 
 			<button type="submit" id="viewtaskbtn" onclick="window.location.href='userdash.html'">View your tasks</button>
 		</div>
 
