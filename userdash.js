@@ -378,39 +378,3 @@ default:
 
 
 //End of js for navbar
-
-
-
-
-
-//js for add tasks button
-
-function openaddtaskForm() {
-    document.getElementById("addtaskopaquebg").style.display = "block";
-}
-
-function closeaddtaskForm() {
-    document.getElementById("addtaskopaquebg").style.display = "none";
-}
-
-
-
-
-function team2clicked(){
-
-    document.getElementById("taskTitle").innerHTML = `Audit Information System Tasks      <i class="fa fa-caret-down"></i>`;
-    document.getElementById("addTaskBttn").style.display = "block";
-    document.getElementById("taskTable").classList.add('hidden');
-    document.getElementById("auditTable").classList.remove("hidden");
-}
-
-
-function myTasksClicked(){
-    document.getElementById("taskTitle").innerHTML = `My Tasks      <i class="fa fa-caret-down"></i>`;
-    document.getElementById("addTaskBttn").style.display = "none";
-    document.getElementById("taskTable").classList.remove('hidden');
-    document.getElementById("auditTable").classList.add("hidden");
-}
-
-
-myTasksClicked();
