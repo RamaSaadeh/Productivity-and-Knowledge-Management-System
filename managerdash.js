@@ -319,12 +319,13 @@ function maketeamleader(){
         alert("Something went wrong");
       } 
 
-      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+      // window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+      window.location.reload(true);
     }
   });
 
   // now staff not in the team are loaded into the <select> we are going to open the form
-  document.getElementById("changeroleopaquebg").style.display = "none";
+  // document.getElementById("changeroleopaquebg").style.display = "none";
 }
 
 function closechangeroleForm() {
