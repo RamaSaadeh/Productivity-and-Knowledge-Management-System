@@ -647,8 +647,10 @@ function openedittaskForm(button){
   });
 }
 
-function save_changesto_task(){
+document.querySelector('.edittask-form').addEventListener('submit', function(event) {
+  // Prevent the default form submission behavior
   event.preventDefault();
+
   var task_id = document.getElementById("edit_taskID").value;
   var task_name = document.getElementById("edit_taskname").value;
   var task_hrs = document.getElementById("edit_hrs").value;
@@ -692,7 +694,59 @@ function save_changesto_task(){
         },
       });
   }
-}
+
+
+  // Handle the form submission using AJAX or other custom logic
+});
+
+// function save_changesto_task(){
+
+//   event.preventDefault();
+
+//   var task_id = document.getElementById("edit_taskID").value;
+//   var task_name = document.getElementById("edit_taskname").value;
+//   var task_hrs = document.getElementById("edit_hrs").value;
+//   var task_status = document.getElementById("edit_statusselect").value;
+//   var task_deadline = document.getElementById("edit_deadline").value;
+
+//   //to create an array of all staff assigned to this task
+//   var selectdropdown = document.getElementById("edit_choosestaff");
+//   var selectedOptions = selectdropdown.selectedOptions;
+//   var newtaskStaff = [];
+//   for (var i = 0; i < selectedOptions.length; i++) {
+//     newtaskStaff.push(selectedOptions[i].value);
+//   }
+
+  
+//   var confirmation = confirm("Are you sure you want to change task details?");
+
+//   if(confirmation){
+//     $.ajax({
+//         type: "POST",
+//         url: "change_task_details.php",
+//         data: {
+//           projectID: selectedProjectID,
+//           taskID: task_id,
+//           name: task_name,
+//           status: task_status,
+//           hrs: task_hrs,
+//           deadline: task_deadline,
+//           staff: newtaskStaff
+//         },
+//         success: function (response) {
+//           if (response === "invalid") {
+//             alert("Something went wrong");
+//           } else {
+          
+//               // Hide the task notes form
+//               document.getElementById("edittaskopaquebg").style.display = "none";
+//               // Redirect to the manager dashboard
+//               window.location.href = "managerdash.html?selected_project_ID=" + selectedProjectID;
+//           }
+//         },
+//       });
+//   }
+// }
 
 function delete_task(){
   var task_id = document.getElementById("edit_taskID").value;
