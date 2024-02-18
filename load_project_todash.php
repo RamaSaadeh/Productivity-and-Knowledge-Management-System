@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 }
 
 // SQL query that fetches all tasks from our specified project 
-$sql = "SELECT task_id, task_name, hrs_remaining, status, deadline,assigned_to, notes FROM `tasks` WHERE project_id='$project_ID_toload';";
+$sql = "SELECT task_id, task_name, hrs_remaining, status, deadline, notes FROM `tasks` WHERE project_id='$project_ID_toload';";
 
 $result = $conn->query($sql);
 
@@ -26,13 +26,15 @@ $alltasks = array();
 if ($result->num_rows > 0) {
     while ($task = $result->fetch_assoc()) {
 
+        $assigned_to = find_staffassigned($conn, $project_ID_toload, $task['task_id']);
+
         $eachtask = array(
             $task['task_id'],
             $task['task_name'],
             $task['hrs_remaining'],
             $task['status'],
             $task['deadline'],
-            $task['assigned_to'],
+            $assigned_to,
             $task['notes']
         );
         
@@ -40,7 +42,33 @@ if ($result->num_rows > 0) {
         array_push($alltasks, $eachtask);
     }
 }
-// echo json_encode($alltasks);
+
+
+function find_staffassigned($conn, $project_ID_toload, $task_id) {
+
+    $sql = "SELECT users.user_id, users.name FROM users JOIN task_staff ON task_staff.project_id = '$project_ID_toload' AND task_staff.task_id = '$task_id' AND users.user_id = task_staff.user_id;";
+
+    $result = $conn->query($sql);
+
+
+    $assigned_to = "";
+
+    if ($result->num_rows > 0) {
+        while ($user = $result->fetch_assoc()) {
+
+            $assigned_to .= '#' . $user['user_id'] . ' - ' . $user['name'] . '<br>';
+
+            }
+    }
+
+    //test
+    // return "John Doe<br>John Doe";
+    return $assigned_to;
+}
+
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Now Load staff with same connection
 
@@ -94,9 +122,6 @@ array_push($tasks_and_staff, $alltasks);
 array_push($tasks_and_staff, $allstaff);
 
 echo json_encode($tasks_and_staff);
-
-
-
 
 
 
