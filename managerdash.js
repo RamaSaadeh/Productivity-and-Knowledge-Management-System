@@ -1,27 +1,27 @@
-function checkLogin() {
-    try {
-        var details = sessionStorage.getItem("user");
-        var role = JSON.parse(details).role;
-        switch (role) {
-            case "a":
-                window.location.replace("permission-denied.html");
-                break;
-            case "g":
-                window.location.replace("permission-denied.html");
-                break;
-            case "m":
-                break;
-            case "l":
-                break;
-            default:
-                window.location.replace("login.html");
-                break;
-        }
-    }
-    catch {
-        window.location.replace("login.html");
-    }
-}
+// function checkLogin() {
+//     try {
+//         var details = sessionStorage.getItem("user");
+//         var role = JSON.parse(details).role;
+//         switch (role) {
+//             case "a":
+//                 window.location.replace("permission-denied.html");
+//                 break;
+//             case "g":
+//                 window.location.replace("permission-denied.html");
+//                 break;
+//             case "m":
+//                 break;
+//             case "l":
+//                 break;
+//             default:
+//                 window.location.replace("login.html");
+//                 break;
+//         }
+//     }
+//     catch {
+//         window.location.replace("login.html");
+//     }
+// }
 
 //Nav Java
 var inviteForm = document.getElementById("inviteuseropaquebg");
