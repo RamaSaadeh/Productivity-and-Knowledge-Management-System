@@ -59,7 +59,9 @@ $.ajax({
     },
     success: function (response) {
         var projects = JSON.parse(response);
+        alert(projects);
         projects.forEach(function (project) {
+            alert(project);
             document.getElementById("values").innerHTML += project;
         });
     },

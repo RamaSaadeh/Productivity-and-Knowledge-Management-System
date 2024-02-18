@@ -5,6 +5,8 @@ $username = "host";
 $dbpassword = "Team017FTW!";
 $database = "makeitall";
 
+$id = $_POST['id'];
+
 $conn = new mysqli($servername, $username, $dbpassword, $database);
 
 // SQL query to fetch options from the database
@@ -16,9 +18,6 @@ $array = array();
 while ($row = $result->fetch_assoc()) {
     array_push($array, '<option value="' . $row['project_id'] . '">' . $row['project_id'] .': '. $row['proj_name'] . '</option>');
 }
-
-// Add the closing </select> tag
-$array[] = '</select>';
 
 echo json_encode($array);
 
