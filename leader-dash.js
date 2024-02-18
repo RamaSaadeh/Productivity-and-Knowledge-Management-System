@@ -58,8 +58,9 @@ $.ajax({
         id: id
     },
     success: function (response) {
-        alert(response);
-        response.forEach(function (project) {
+        var projects = JSON.parse(response);
+        alert(projects);
+        projects.forEach(function (project) {
             alert(project);
             document.getElementById("values").innerHTML += project;
         });
