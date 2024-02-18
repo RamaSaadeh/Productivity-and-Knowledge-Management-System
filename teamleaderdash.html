@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-  <title>TeamLeaderDashboard</title>
+  <title>ManagerDashboard</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
@@ -18,7 +18,7 @@
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
-  <link href="teamleaderdash.css" rel="stylesheet"></script>
+  <link href="managerdash.css" rel="stylesheet"></script>
 </head>
 
 <body onload="checkLogin()">
@@ -77,11 +77,25 @@
 
 
 <div id="pageheader">
-	Team Leader Dashboard
+	Management Dashboard
 	<div class="SwitchProject">
 		<a href="accessproject.php"><button class="switchprojbtn" onclick="toggleSwitchProjDropdown()">Switch Project <span id="switchsymbol" class="material-symbols-outlined">sync_alt</span></button></a>
 		<button id="ToDoListbtn" onclick="openToDoList()">My To-Do List<span id="listsymbol" class="material-symbols-outlined">list</span></button>
 	</div>
+</div>
+
+<div class="popup-background" id="addnewprojopaquebg">
+	<form class="addnewproj-form" action="javascript:getData()" method="get">
+		<div class="form-title">
+			<button type="button" id="cancel-formbtn" onclick="closeaddnewprojForm()">Cancel</button>
+			<div id="formheader">Create New Project</div>
+		</div>
+		<div id="formcontent">
+			<label>Enter the name that your project will be known as</label>
+			<input type="text" placeholder="Enter Name" id="newprojname" required>
+			<button type="submit" id="createnewproj-formbtn" onclick="closeaddnewprojForm()">Create</button>
+		</div>
+	</form>
 </div>
 
 <div class="popup-background" id="ToDoListopaquebg">
@@ -257,6 +271,7 @@
 		<div class="section-header">Team
 			<button id="removememberbtn" onclick="openremovestaffForm()">Remove member</button>
 			<button id="addmemberbtn" onclick="openaddstaffForm()">Add member</button>
+			<button id="changeteamrolesbtn" onclick="openchangeroleForm()">Change Roles</button>
 		</div>
 		
 		<div class="tablediv">
@@ -303,6 +318,24 @@
 			</select>			
 
 			<button type="submit" id="removestaff-formbtn">Remove</button>
+		</div>
+	</form>
+	</div>
+
+	<div class="popup-background" id="changeroleopaquebg">
+	<form class="changerole-form" onsubmit="maketeamleader()" method="get">
+		<div class="form-title">
+			<button type="button" id="cancel-formbtn" onclick="closechangeroleForm()">Cancel</button>
+			<div id="formheader">Change Role</div>
+		</div>	
+		<div id="formcontent">
+			<label>Select member below to make them the project Team Leader</label>
+
+			<select required id="select_changerole">
+				<option value="" disabled selected>Select Member</option>
+			</select>		
+
+			<button type="submit" id="changerole-formbtn">Make Team Leader</button>
 		</div>
 	</form>
 	</div>
@@ -355,7 +388,7 @@
 <script>
 
 </script>
-<script src="teamleaderdash.html"></script>
+<script src="managerdash.js"></script>
 
 </body>
 </html>
