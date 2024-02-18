@@ -219,6 +219,9 @@ function openaddstaffForm() {
 }
 
 function addstaff_toteam(){
+
+  event.preventDefault();
+  
   var selectedUserID = document.getElementById("select_addstaff").value;
 
   $.ajax({
@@ -286,6 +289,9 @@ function openchangeroleForm() {
 }
 
 function maketeamleader(){
+
+  event.preventDefault();
+
   var selectedUserID = document.getElementById("select_changerole").value;
 
   $.ajax({
@@ -354,7 +360,7 @@ function openremovestaffForm(){
 function remove_fromteam(){
 
   event.preventDefault();
-  
+
   var selectedUserID = document.getElementById("select_removestaff").value;
 
   $.ajax({
