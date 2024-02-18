@@ -6,6 +6,7 @@
   var staffData; // to store the users data in json format
   var toDoListArray;
   var user_id = 3;
+  var max_item_id = 0;
 
   if (sessionStorage.getItem("user")){
     user_id = sessionStorage.getItem("user")["id"];
@@ -26,26 +27,34 @@
           console.log('todo list returned successfully');
           document.getElementById("toDoUL").innerHTML = "";
           toDoListArray.forEach(function(itemData){
-            var li = document.createElement("li");
-            var p = document.createElement("p");
-            p.textContent = itemData['description'];
-            li.appendChild(p);
-            if (itemData['checked'] == '1'){
-              li.classList.add('checked');
-            }
-            li.setAttribute("id", itemData['item_id']);
-            var span = document.createElement("SPAN");
-            var txt = document.createTextNode("\u{1F5D1}");
-            span.className = "close";
-            span.appendChild(txt);
-            li.appendChild(span);
-            document.getElementById("toDoUL").appendChild(li);
+                // if item_id > max_item_id then replace max_item_id
+                if(parseInt(itemData['item_id']) > max_item_id){
+                  max_item_id = parseInt(itemData['item_id']);
+                }
+
+                //
+                var li = document.createElement("li");
+                var p = document.createElement("p");
+                p.textContent = itemData['description'];
+                li.appendChild(p);
+                if (itemData['checked'] == '1'){
+                  li.classList.add('checked');
+                }
+                li.setAttribute("id", itemData['item_id']);
+                var span = document.createElement("SPAN");
+                var txt = document.createTextNode("\u{1F5D1}");
+                span.className = "close";
+                span.appendChild(txt);
+                li.appendChild(span);
+                document.getElementById("toDoUL").appendChild(li);
           })
           addOnDeleteFunc();
+          console.log(max_item_id);
+
       },
       error: function(xhr, status, error) {
           // Handle errors
-          console.error('Error deleting item:', error);
+          console.error('Error accessing to do items:', error);
       }
     });
 
@@ -321,24 +330,26 @@ function newElement() {
     var t = document.createTextNode(inputValue);
     p.appendChild(t);
     li.appendChild(p);
+    var itemId = max_item_id + 1;
+    max_item_id +=1;
+    li.setAttribute("id", itemId);
     if (inputValue === '') {
       // they didn't type anything
     } else {
     // add new list item 
       document.getElementById("toDoUL").insertAdjacentElement('afterbegin', li);
-      newItemData = {};
       // update the todolist table using jQuery AJAX
       $.ajax({
         url: 'add-to-do-item.php',
         type: 'POST',
-        data: newItemData,
+        data: {'item_id': itemId, 'user_id': user_id, 'description': inputValue},
         success: function(response) {
             // Handle the response from the server
             console.log('Item added to db successfully');
         },
         error: function(xhr, status, error) {
             // Handle errors
-            console.error('Error deleting item:', error);
+            console.error('Error creating item:', error);
         }
       });
 
