@@ -61,12 +61,8 @@ $.ajax({
         var projects = JSON.parse(response);
         alert(projects);
         projects.forEach(function (project) {
-            alert(project);
-            if (typeof project === 'string') {
-                document.getElementById("values").innerHTML += project;
-            } else {
-                console.error("Invalid project format:", project);
-            }
+            alert(typeof project);
+            
             //document.getElementById("values").innerHTML += project;
         });
     },
