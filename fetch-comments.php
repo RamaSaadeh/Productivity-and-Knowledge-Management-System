@@ -34,7 +34,7 @@ if (isset($_GET['id'])) {
             //add each comment to the comments array
             $row['IsUserOwner'] = $row['IsUserOwner'] == 1 ? true : false;
             $row['HasLiked'] = $row['HasLiked'] == 1 ? true : false;
-            $row['IsAdmin'] = ($row['IsAdmin'] === 'admin');
+            $row['IsAdmin'] = ($row['IsAdmin'] === 'Admin');
             $comments[] = $row;
         }
        
