@@ -269,8 +269,7 @@ function addOnDeleteFunc(){
               // item has an id attribute set - delete from database
                   var requestData = {
                     itemId: li.id,
-                    //userId: userIdsessionStorage.getItem("user")[id]
-                    userId: 3
+                    userId: user_id
                   };
                   li.style.display = "none";
                   // Make the AJAX request
