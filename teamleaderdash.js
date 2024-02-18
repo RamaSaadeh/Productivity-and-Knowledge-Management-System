@@ -177,116 +177,116 @@ $.ajax({
 
 
 
-function openaddstaffForm() {
+// function openaddstaffForm() {
 
-  $.ajax({
-    type: "POST",
-    url: "loadstaff_not_in_proj.php",
-    data: {
-      ID: selectedProjectID
-    },
-    success: function (response) {
-      if (response === "invalid") {
-        alert("Something went wrong");
-      } else {	
+//   $.ajax({
+//     type: "POST",
+//     url: "loadstaff_not_in_proj.php",
+//     data: {
+//       ID: selectedProjectID
+//     },
+//     success: function (response) {
+//       if (response === "invalid") {
+//         alert("Something went wrong");
+//       } else {	
         
-        var allStaff = JSON.parse(response); //[0] takes the first half of the encoded json array
+//         var allStaff = JSON.parse(response); //[0] takes the first half of the encoded json array
 
-        var selectDropdown = document.getElementById("select_addstaff");
-        //we want to overwrite the select/reset it each time so we dont just add to what was already there
-        selectDropdown.innerHTML = '<option value="" disabled selected>Select staff member to add to project</option>';
+//         var selectDropdown = document.getElementById("select_addstaff");
+//         //we want to overwrite the select/reset it each time so we dont just add to what was already there
+//         selectDropdown.innerHTML = '<option value="" disabled selected>Select staff member to add to project</option>';
 
 
-        for (var staffrow in allStaff) { //for every staff returned, add each to the table
+//         for (var staffrow in allStaff) { //for every staff returned, add each to the table
 
-          var option = document.createElement("option");
+//           var option = document.createElement("option");
 
-            // Set the value of the option to user_id
-            option.value = allStaff[staffrow][0];
+//             // Set the value of the option to user_id
+//             option.value = allStaff[staffrow][0];
             
-            // Concatenate name and email and set it as the text of the option
-            option.text = "#" + allStaff[staffrow][0] + "        |         " + allStaff[staffrow][1] + "         |         " + allStaff[staffrow][2];
+//             // Concatenate name and email and set it as the text of the option
+//             option.text = "#" + allStaff[staffrow][0] + "        |         " + allStaff[staffrow][1] + "         |         " + allStaff[staffrow][2];
             
-            selectDropdown.appendChild(option);
-        }
-      }
-    }
-  });
+//             selectDropdown.appendChild(option);
+//         }
+//       }
+//     }
+//   });
 
-// now staff not in the team are loaded into the <select> we are going to open the form
- document.getElementById("addstaffopaquebg").style.display = "block";
+// // now staff not in the team are loaded into the <select> we are going to open the form
+//  document.getElementById("addstaffopaquebg").style.display = "block";
  
-}
+// }
 
-function addstaff_toteam(){
+// function addstaff_toteam(){
 
-  event.preventDefault();
+//   event.preventDefault();
   
-  var selectedUserID = document.getElementById("select_addstaff").value;
+//   var selectedUserID = document.getElementById("select_addstaff").value;
 
-  $.ajax({
-    type: "POST",
-    url: "add_team_member.php",
-    data: {
-      projectID: selectedProjectID,
-      userID: selectedUserID
-    },
-    success: function (response) {
-      if (response === "invalid") {
-        alert("Something went wrong");
-      } 
+//   $.ajax({
+//     type: "POST",
+//     url: "add_team_member.php",
+//     data: {
+//       projectID: selectedProjectID,
+//       userID: selectedUserID
+//     },
+//     success: function (response) {
+//       if (response === "invalid") {
+//         alert("Something went wrong");
+//       } 
 
-      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
-    }
-  });
+//       window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+//     }
+//   });
 
-  // now staff not in the team are loaded into the <select> we are going to open the form
-  document.getElementById("addstaffopaquebg").style.display = "none";
-}
+//   // now staff not in the team are loaded into the <select> we are going to open the form
+//   document.getElementById("addstaffopaquebg").style.display = "none";
+// }
 
-function closeaddstaffForm(){
- document.getElementById("addstaffopaquebg").style.display = "none";
-}
+// function closeaddstaffForm(){
+//  document.getElementById("addstaffopaquebg").style.display = "none";
+// }
 
-function openchangeroleForm() {
+// function openchangeroleForm() {
 
-  $.ajax({
-    type: "POST",
-    url: "loadstaff_in_proj.php",
-    data: {
-      ID: selectedProjectID
-    },
-    success: function (response) {
-      if (response === "invalid") {
-        alert("Something went wrong");
-      } else {	
+//   $.ajax({
+//     type: "POST",
+//     url: "loadstaff_in_proj.php",
+//     data: {
+//       ID: selectedProjectID
+//     },
+//     success: function (response) {
+//       if (response === "invalid") {
+//         alert("Something went wrong");
+//       } else {	
 
-        var allStaff = JSON.parse(response);
+//         var allStaff = JSON.parse(response);
 
-        var selectDropdown = document.getElementById("select_changerole");
-        //we want to overwrite the select/reset it each time so we dont just add to what was already there
-        selectDropdown.innerHTML = '<option value="" disabled selected>Select staff member to add to project</option>';
+//         var selectDropdown = document.getElementById("select_changerole");
+//         //we want to overwrite the select/reset it each time so we dont just add to what was already there
+//         selectDropdown.innerHTML = '<option value="" disabled selected>Select staff member to add to project</option>';
 
 
-        for (var staffrow in allStaff) { //for every staff returned, add each to the table
+//         for (var staffrow in allStaff) { //for every staff returned, add each to the table
 
-          var option = document.createElement("option");
+//           var option = document.createElement("option");
 
-            // Set the value of the option to user_id
-            option.value = allStaff[staffrow][0];
+//             // Set the value of the option to user_id
+//             option.value = allStaff[staffrow][0];
             
-            // Concatenate name and email and set it as the text of the option
-            option.text = "#" + allStaff[staffrow][0] + "        |         " + allStaff[staffrow][1] + "         |         " + allStaff[staffrow][2];
+//             // Concatenate name and email and set it as the text of the option
+//             option.text = "#" + allStaff[staffrow][0] + "        |         " + allStaff[staffrow][1] + "         |         " + allStaff[staffrow][2];
             
-            selectDropdown.appendChild(option);
-        }
-      }
-    }
-  });
+//             selectDropdown.appendChild(option);
+//         }
+//       }
+//     }
+//   });
 
-// now staff not in the team are loaded into the <select> we are going to open the form
- document.getElementById("changeroleopaquebg").style.display = "block";
-}
+// // now staff not in the team are loaded into the <select> we are going to open the form
+//  document.getElementById("changeroleopaquebg").style.display = "block";
+// }
 
 // function maketeamleader(){
 
