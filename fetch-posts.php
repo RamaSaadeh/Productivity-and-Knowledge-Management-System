@@ -8,17 +8,15 @@ $userID = mysqli_real_escape_string($conn, $_GET['userID']); //get user id from 
 
 //query to get valid post information from Posts table
 $sql = "SELECT p.PostID, p.Title, p.Content, 
-        DATE_FORMAT(p.DateCreated, '%M %d, %Y') as DateCreated, 
-        CASE 
-            WHEN p.DatePublished IS NOT NULL THEN DATE_FORMAT(p.DatePublished, '%M %d, %Y')
-            ELSE NULL 
-        END as DatePublished, 
+        p.DateCreated as FullDateCreated, 
+        DATE_FORMAT(p.DateCreated, '%M %d, %Y') as FormattedDateCreated, 
         p.IsDraft, p.LikesCount, p.Topic, u.name as AuthorName,
         CASE WHEN pl.PostID IS NOT NULL THEN 'true' ELSE 'false' END as IsLiked
         FROM Posts p
         INNER JOIN users u ON p.UserID = u.user_id
         LEFT JOIN PostLikes pl ON p.PostID = pl.PostID AND pl.UserID = $userID
-        WHERE p.IsDraft = 0";
+        WHERE p.IsDraft = 0
+        ORDER BY p.PostID DESC";   
 
 
 

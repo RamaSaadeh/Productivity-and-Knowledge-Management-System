@@ -67,7 +67,7 @@ function addtaskTotable(task_id,task_name,hrs_remaining,status,deadline,assigned
   deadlinecell.innerHTML = deadline;  
   staffassignedcell.innerHTML = assigned_to; 
 
-  taskactionscell.innerHTML = '<button class = "notesbtn" onclick="opentasknotesForm()">Notes</button><button class="editbtn" onclick="loadtasktoform(this)"><span id="editsymbol" class="material-symbols-outlined">edit</span></button>';
+  taskactionscell.innerHTML = '<button class = "notesbtn" onclick="opentasknotesForm(this)">Notes</button><button class="editbtn" onclick="openedittaskForm(this)"><span id="editsymbol" class="material-symbols-outlined">edit</span></button>';
   }
 
 
@@ -346,6 +346,357 @@ function closeremovestaffForm() {
   document.getElementById("removestaffopaquebg").style.display = "none";
 }
 
+function openaddtaskForm() {
+
+  $.ajax({
+    type: "POST",
+    url: "find_new_taskID.php",
+    data: {
+      ID: selectedProjectID
+    },
+    success: function (response) {
+      if (response === "invalid") {
+        alert("Something went wrong");
+      } else {	
+
+        var newtaskID = JSON.parse(response);
+        var newtaskID_textbox = document.getElementById("new_taskID");
+
+        //we want to overwrite the select/reset it each time so we dont just add to what was already there
+        newtaskID_textbox.value = newtaskID;
+
+
+        //once the first ajax returns then load the second ajax
+        $.ajax({
+          type: "POST",
+          url: "loadstaff_in_proj.php",
+          data: {
+            ID: selectedProjectID
+          },
+          success: function (response) {
+            if (response === "invalid") {
+              alert("Something went wrong");
+            } else {	
+      
+              var allStaff = JSON.parse(response);
+      
+              var selectDropdown = document.getElementById("new_choosestaff_select");
+              //we want to overwrite the select/reset it each time so we dont just add to what was already there
+              selectDropdown.innerHTML = '';
+      
+      
+              for (var staffrow in allStaff) { //for every staff returned, add each to the table
+      
+                var option = document.createElement("option");
+      
+                  // Set the value of the option to user_id
+                  option.value = allStaff[staffrow][0];
+                  
+                  // Concatenate name and email and set it as the text of the option
+                  option.text = "#" + allStaff[staffrow][0] + "        |         " + allStaff[staffrow][1] + "         |         " + allStaff[staffrow][2];
+                  
+                  selectDropdown.appendChild(option);
+              }
+      
+            //placed inside the success so that only displays form after loaded
+            document.getElementById("addtaskopaquebg").style.display = "block";
+            }
+          }
+        });
+
+
+
+
+
+      }
+    }
+  });
+}
+
+function isValidDateString(str) {
+  // Split the string by hyphens
+  var parts = str.split('-');
+
+  // Check if there are exactly three parts
+  if (parts.length !== 3) {
+    return false;
+  }
+
+  // Check if each part is a valid integer
+  for (var i = 0; i < 3; i++) {
+    // Parse the part as an integer
+    var num = parseInt(parts[i], 10);
+
+    // Check if the parsed number is a valid integer
+    if (isNaN(num)) {
+      return false;
+    }
+  }
+
+  // Check if the year, month, and day are in the valid range
+  var year = parseInt(parts[0], 10);
+  var month = parseInt(parts[1], 10);
+  var day = parseInt(parts[2], 10);
+
+  if (year < 1000 || year > 9999 || month < 1 || month > 12 || day < 1 || day > 31) {
+    return false;
+  }
+
+  return true;
+}
+
+function addnewtask() {
+
+  event.preventDefault();
+
+  var newtaskID = document.getElementById("new_taskID").value;
+  var newtaskName = document.getElementById("new_taskname").value;
+  var newtaskStatus = document.getElementById("new_statusselect").value; 
+  var newhrs = document.getElementById("new_hrs").value; 
+  var newtaskDeadline = document.getElementById("new_deadline").value; 
+
+  //to create an array of all staff assigned to this task
+  var selectdropdown = document.getElementById("new_choosestaff_select");
+  var selectedOptions = selectdropdown.selectedOptions;
+  var newtaskStaff = [];
+  for (var i = 0; i < selectedOptions.length; i++) {
+    newtaskStaff.push(selectedOptions[i].value);
+  }
+
+
+  
+ if(isValidDateString(newtaskDeadline)){
+  $.ajax({
+    type: "POST",
+    url: "add_new_task.php",
+    data: {
+      projectID: selectedProjectID,
+      taskID: newtaskID,
+      name: newtaskName,
+      status: newtaskStatus,
+      hrs: newhrs,
+      deadline: newtaskDeadline,
+      staff: newtaskStaff
+    },
+    success: function (response) {
+      if (response === "invalid") {
+        alert("Something went wrong");
+      } 
+
+      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+    }
+  });
+
+  // now staff not in the team are loaded into the <select> we are going to open the form
+  document.getElementById("addtaskopaquebg").style.display = "none";
+ } else{
+  alert("Invalid date entered");
+  // window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+ }
+}
+
+function closeaddtaskForm() {
+  document.getElementById("addtaskopaquebg").style.display = "none";
+}
+
+var current_tasks_id; // Declare a global variable to store the current task ID
+
+function opentasknotesForm(button) {
+  var row = button.parentNode.parentNode;
+
+  // Get the data from the cells of the row
+  var this_tasks_id = row.cells[0].innerText;
+ 
+  $.ajax({
+    type: "POST",
+    url: "load_tasknotes.php",
+    data: {
+      ID: selectedProjectID,
+      taskid: this_tasks_id
+    },
+    success: function (response) {
+      if (response === "invalid") {
+        alert("Something went wrong");
+      } else {  
+        var task_notes = JSON.parse(response);
+
+        // Store the task ID in the global variable
+        current_tasks_id = this_tasks_id;
+
+        document.getElementById("tasknotescontent").value = task_notes;
+
+        // Show the task notes form
+        document.getElementById("tasknotesopaquebg").style.display = "block";
+      }
+    },
+  });
+}
+
+function updatetasknotes() {
+  var tasknotes = document.getElementById("tasknotescontent").value;
+
+  var confirmation = confirm("Are you sure you want to update the task notes?");
+
+  if(confirmation){
+    $.ajax({
+        type: "POST",
+        url: "change_tasknotes.php",
+        data: {
+          projectID: selectedProjectID,
+          taskid: current_tasks_id, // Use the current_tasks_id variable
+          notes: tasknotes
+        },
+        success: function (response) {
+          if (response === "invalid") {
+            alert("Something went wrong");
+          } else {
+          
+              // Hide the task notes form
+              document.getElementById("tasknotesopaquebg").style.display = "none";
+              // Redirect to the manager dashboard
+              window.location.href = "managerdash.html?selected_project_ID=" + selectedProjectID;
+          }
+        },
+      });
+  }
+}
+
+function closetasknotesForm() {
+  document.getElementById("tasknotesopaquebg").style.display = "none";
+}
+
+function openedittaskForm(button){
+  var row = button.parentNode.parentNode;
+
+  // Get the data from the cells of the row
+  var row_id = row.cells[0].innerText;
+  var row_taskname = row.cells[1].innerText;
+  var row_hrs = row.cells[2].innerText;
+  var row_status =  row.cells[3].innerText;
+  var row_deadline = row.cells[4].innerText;
+
+
+  document.getElementById("edit_taskID").value = row_id;
+  document.getElementById("edit_taskname").value = row_taskname;
+  document.getElementById("edit_hrs").value = row_hrs;
+  document.getElementById("edit_statusselect").value = row_status;
+  document.getElementById("edit_deadline").value = row_deadline;
+  
+  $.ajax({
+    type: "POST",
+    url: "loadstaff_in_proj.php",
+    data: {
+      ID: selectedProjectID
+    },
+    success: function (response) {
+      if (response === "invalid") {
+        alert("Something went wrong");
+      } else {	
+
+        var allStaff = JSON.parse(response);
+
+        var selectDropdown = document.getElementById("edit_choosestaff");
+        //we want to overwrite the select/reset it each time so we dont just add to what was already there
+        selectDropdown.innerHTML = '';
+
+
+        for (var staffrow in allStaff) { //for every staff returned, add each to the table
+
+          var option = document.createElement("option");
+
+            // Set the value of the option to user_id
+            option.value = allStaff[staffrow][0];
+            
+            // Concatenate name and email and set it as the text of the option
+            option.text = "#" + allStaff[staffrow][0] + "        |         " + allStaff[staffrow][1] + "         |         " + allStaff[staffrow][2];
+            
+            selectDropdown.appendChild(option);
+        }
+
+      //placed inside the success so that only displays form after loaded
+      document.getElementById("edittaskopaquebg").style.display = "block";
+      }
+    }
+  });
+}
+
+function save_changesto_task(){
+  var task_id = document.getElementById("edit_taskID").value;
+  var task_name = document.getElementById("edit_taskname").value;
+  var task_hrs = document.getElementById("edit_hrs").value;
+  var task_status = document.getElementById("edit_statusselect").value;
+  var task_deadline = document.getElementById("edit_deadline").value;
+
+  //to create an array of all staff assigned to this task
+  var selectdropdown = document.getElementById("edit_choosestaff");
+  var selectedOptions = selectdropdown.selectedOptions;
+  var newtaskStaff = [];
+  for (var i = 0; i < selectedOptions.length; i++) {
+    newtaskStaff.push(selectedOptions[i].value);
+  }
+
+  
+  var confirmation = confirm("Are you sure you want to change task details?");
+
+  if(confirmation){
+    $.ajax({
+        type: "POST",
+        url: "change_task_details.php",
+        data: {
+          projectID: selectedProjectID,
+          taskID: task_id,
+          name: task_name,
+          status: task_status,
+          hrs: task_hrs,
+          deadline: task_deadline,
+          staff: newtaskStaff
+        },
+        success: function (response) {
+          if (response === "invalid") {
+            alert("Something went wrong");
+          } else {
+          
+              // Hide the task notes form
+              document.getElementById("edittaskopaquebg").style.display = "none";
+              // Redirect to the manager dashboard
+              window.location.href = "managerdash.html?selected_project_ID=" + selectedProjectID;
+          }
+        },
+      });
+  }
+}
+
+function delete_task(){
+  var task_id = document.getElementById("edit_taskID").value;
+
+  var confirmation = confirm("Are you sure you want to delete this task?");
+  
+  if(confirmation){
+    $.ajax({
+        type: "POST",
+        url: "delete_task.php",
+        data: {
+          projectID: selectedProjectID,
+          taskID: task_id,
+        },
+        success: function (response) {
+          if (response === "invalid") {
+            alert("Something went wrong");
+          } else {
+          
+              // Hide the task notes form
+              document.getElementById("edittaskopaquebg").style.display = "none";
+              // Redirect to the manager dashboard
+              window.location.href = "managerdash.html?selected_project_ID=" + selectedProjectID;
+          }
+        },
+      });
+  }
+}
+
+function closeedittaskForm() {
+  document.getElementById("edittaskopaquebg").style.display = "none";
+}
 
 
 
@@ -372,26 +723,11 @@ function closeToDoList() {
   document.getElementById("ToDoListopaquebg").style.display = "none";
 }
 
-function openaddtaskForm() {
-  document.getElementById("addtaskopaquebg").style.display = "block";
-}
-function closeaddtaskForm() {
-  document.getElementById("addtaskopaquebg").style.display = "none";
-}
 
-function opentasknotesForm() {
-  document.getElementById("tasknotesopaquebg").style.display = "block";
-}
-function closetasknotesForm() {
-  document.getElementById("tasknotesopaquebg").style.display = "none";
-}
 
-function openedittaskForm() {
-  document.getElementById("edittaskopaquebg").style.display = "block";
-}
-function closeedittaskForm() {
-  document.getElementById("edittaskopaquebg").style.display = "none";
-}
+
+
+
 
   
 function addLinkToDiv() {
@@ -406,38 +742,40 @@ function addLinkToDiv() {
   tempdiv.appendChild(newproj);
 }
   
-function addnewtaskTotable(){
-  var table = document.getElementById("taskstable");
-  var row = table.insertRow(1);
-  var taskname = row.insertCell(0);
-  var currentstatus = row.insertCell(1);
-  var deadline = row.insertCell(2);
-  var staffassigned = row.insertCell(3);
-  var taskactions = row.insertCell(4);
+// function addnewtaskTotable(){
+//   var table = document.getElementById("taskstable");
+//   var row = table.insertRow(1);
+//   var taskname = row.insertCell(0);
+//   var currentstatus = row.insertCell(1);
+//   var deadline = row.insertCell(2);
+//   var staffassigned = row.insertCell(3);
+//   var taskactions = row.insertCell(4);
   
-  taskname.innerHTML = document.getElementById("taskname").value;
-  currentstatus.innerHTML = document.getElementById("statusselect").value;
-  deadline.innerHTML = document.getElementById("deadline").value;     
+//   taskname.innerHTML = document.getElementById("taskname").value;
+//   currentstatus.innerHTML = document.getElementById("statusselect").value;
+//   deadline.innerHTML = document.getElementById("deadline").value;     
 
-  var Listofstaff = Array.from(document.getElementById("choosestaff").selectedOptions).map(option => option.value);
-  var ListofStaffwithbreaks = Listofstaff.join("<br>");
+//   var Listofstaff = Array.from(document.getElementById("choosestaff").selectedOptions).map(option => option.value);
+//   var ListofStaffwithbreaks = Listofstaff.join("<br>");
 
-  staffassigned.innerHTML = ListofStaffwithbreaks;  
-  taskactions.innerHTML = '<button class = "notesbtn" onclick="opentasknotesForm()">Notes</button><button class="editbtn" onclick="loadtasktoform(this)"><span id="editsymbol" class="material-symbols-outlined">edit</span></button>';
+//   staffassigned.innerHTML = ListofStaffwithbreaks;  
+//   taskactions.innerHTML = '<button class = "notesbtn" onclick="opentasknotesForm()">Notes</button><button class="editbtn" onclick="loadtasktoform(this)"><span id="editsymbol" class="material-symbols-outlined">edit</span></button>';
 
-  closeaddtaskForm();
-}
+//   closeaddtaskForm();
+// }
+
+
   
-var currentrowopened = null; //used so that we can use the same row throughout loadtasktoform() and makechangestotasktable()
-function loadtasktoform(button){
-  var row = button.parentNode.parentNode;
-  currentrowopened = row;
-  document.getElementById("taskname-edit").value = row.cells[0].textContent;
-  document.getElementById("statusselect-edit").value = row.cells[1].textContent;
-  document.getElementById("deadline-edit").value = row.cells[2].textContent;
+// var currentrowopened = null; //used so that we can use the same row throughout loadtasktoform() and makechangestotasktable()
+// function loadtasktoform(button){
+//   var row = button.parentNode.parentNode;
+//   currentrowopened = row;
+//   document.getElementById("taskname-edit").value = row.cells[0].textContent;
+//   document.getElementById("statusselect-edit").value = row.cells[1].textContent;
+//   document.getElementById("deadline-edit").value = row.cells[2].textContent;
 
-  openedittaskForm();
-}
+//   openedittaskForm();
+// }
   
 function makechangestotasktable(){
   currentrowopened.cells[0].textContent =  document.getElementById("taskname-edit").value;
@@ -471,10 +809,7 @@ function removemember(){
   
   
   
-/*All event Listeners*/
-document.getElementById("createnewproj-formbtn").addEventListener("click", addLinkToDiv);
-
-document.getElementById("addtask-formbtn").addEventListener("click", addnewtaskTotable);
+// document.getElementById("addtask-formbtn").addEventListener("click", addnewtaskTotable);
   
 
 
@@ -519,46 +854,54 @@ $(document).ready(function() {
 });
   
   
+function find_workload(callback) {
+  $.ajax({
+    type: "POST",
+    url: "get_workload.php",
+    data: {
+      ID: selectedProjectID,
+    },
+    success: function (response) {
+      if (response === "invalid") {
+        alert("Something went wrong");
+      } else {
+        var data = JSON.parse(response);
+        callback(data[0], data[1]);
+      }
+    }
+  });
+}
   
-/*WorkloadGraph*/
-var workload = [1,4,6,8,2,0,5];
-var staffnames = ["John", "Claire", "Steve", "Anne", "Martin", "Jack", "Ben"];
-
-new Chart("workload-chart", {
-  type: "horizontalBar",
-  data: {
-  labels: staffnames,
-  datasets: [{
-    backgroundColor: "#efbf1a",
-    data: workload
-  }]
-},
-  options: {
-
-    legend: {display: false},
-    scales: {
-      xAxes: [{
-        scaleLabel: {
+find_workload(function(workload, staffnames) {
+  new Chart("workload-chart", {
+    type: "horizontalBar",
+    data: {
+      labels: staffnames,
+      datasets: [{
+        backgroundColor: "#efbf1a",
+        data: workload
+      }]
+    },
+    options: {
+      legend: { display: false },
+      scales: {
+        xAxes: [{
+          scaleLabel: {
             display: true,
-            labelString: 'Number of Tasks',
+            labelString: 'Hrs of Work Remaining',
             fontColor: "white",
             fontSize: 18
-        },
-        gridLines: {display: false},
-        ticks: {
-            display: false,
-            min: 0, max:10,
-            }
-            }],
+          },
+          gridLines: { display: false },
+          ticks: { display: false, min: 0, max: 80 }
+        }],
         yAxes: [{
-        gridLines: {display: false},
-        ticks: {
-            fontColor: "white",
-            fontSize: 20
-            }
-            }]
+          gridLines: { display: false },
+          ticks: { fontColor: "white", fontSize: 18 }
+        }]
+      }
     }
-  }
+  });
 });
   
   
