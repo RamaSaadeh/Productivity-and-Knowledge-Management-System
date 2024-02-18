@@ -62,8 +62,7 @@ $.ajax({
         alert(projects);
         projects.forEach(function (project) {
             alert(project);
-            document.getElementById("select-proj").innerHTML += "<option value='poop'>2: poop></option>";
-            //document.getElementById("values").innerHTML += project;
+            document.getElementById("select-proj").innerHTML += project;
         });
     },
     error: function () {
