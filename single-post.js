@@ -251,8 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
             						<div class="comment-user-date">
                 						<i class="far fa-user">${comment.AuthorName}</i>
                 						&nbsp;
-                						<i class="far fa-calendar">${comment.LastModified}</i>
-                						<span class="comment-edited" style="display: none;">(edited)</span>
+                						<i class="far fa-calendar">${comment.IsEdited ? comment.LastModified + ' (edited)' : comment.LastModified}</i>
             						</div>
             						<div class="comment-actions">
                 						${editDeleteIcons}
@@ -1032,8 +1031,7 @@ document.addEventListener("DOMContentLoaded", function () {
 						 		<div class="comment-user-date">
 							 		<i class="far fa-user">${comment.AuthorName}</i>
 									&nbsp;
-							 		<i class="far fa-calendar">${comment.LastModified}</i>
-							 		<span class="comment-edited" style="display: none;">(edited)</span>
+									<i class="far fa-calendar">${comment.IsEdited ? comment.LastModified + ' (edited)' : comment.LastModified}</i>
 						 		</div>
 						 		<div class="comment-actions">
 							 		${editDeleteIcons}
