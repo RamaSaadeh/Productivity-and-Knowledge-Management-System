@@ -60,14 +60,13 @@ $.ajax({
     success: function (response) {
         var projects = JSON.parse(response);
         alert(projects);
-        var valuesContainer = document.getElementById("values");
 
         projects.forEach(function (project) {
             alert(project);
-            var option = document.createElement("option");
-            option.value = project.value;
-            option.text = project.text;
-            valuesContainer.appendChild(option);
+            var postHTML = `
+			    <option value="${project.project_id}">${project.project_id}: ${project.proj_name}></option>		
+			`;
+            document.getElementById("values").innerHTML += postHTML;
         });
     },
     error: function () {
