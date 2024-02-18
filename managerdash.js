@@ -75,6 +75,56 @@ dashboard.addEventListener("click", function() {
   }
 });
 
+var selectedProjectID = 0;
+
+window.addEventListener('load', function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  selectedProjectID = urlParams.get('selected_project_ID');
+
+  $.ajax({
+    type: "POST",
+    url: "load_project_todash.php",
+    data: {
+      ID: selectedProjectID
+    },
+    success: function (response) {
+      if (response === "invalid") {
+        alert("Something went wrong");
+      } else {	
+
+        var projectname = JSON.parse(response)[0];
+        var allTasks = JSON.parse(response)[1]; //[0] takes the first half of the encoded json array
+        var allStaff = JSON.parse(response)[2]; //[1] takes the first half of the encoded json array
+
+        document.getElementById("section_header").innerHTML = '<div class="section-header">' + projectname + '<button class="addtaskbtn" onclick="openaddtaskForm()">Add Task</button></div>';
+
+
+        for (var taskrow in allTasks) { //for every task returned, add each to the table
+          addtaskTotable(allTasks[taskrow][0],allTasks[taskrow][1],allTasks[taskrow][2],allTasks[taskrow][3],allTasks[taskrow][4],allTasks[taskrow][5],allTasks[taskrow][6]);
+        }
+
+
+        for (var staffrow in allStaff) { //for every staff returned, add each to the table
+          addStaffTotable(allStaff[staffrow][0],allStaff[staffrow][1],allStaff[staffrow][2],allStaff[staffrow][3]);
+        }
+      }
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function addtaskTotable(task_id,task_name,hrs_remaining,status,deadline,assigned_to,notes){
 
@@ -117,38 +167,7 @@ function addStaffTotable(user_id,name,role,email){
 }
 
 
-const urlParams = new URLSearchParams(window.location.search);
-const selectedProjectID = urlParams.get('selected_project_ID');
 
-$.ajax({
-  type: "POST",
-  url: "load_project_todash.php",
-  data: {
-    ID: selectedProjectID
-  },
-  success: function (response) {
-    if (response === "invalid") {
-      alert("Something went wrong");
-    } else {	
-
-      var projectname = JSON.parse(response)[0];
-      var allTasks = JSON.parse(response)[1]; //[0] takes the first half of the encoded json array
-      var allStaff = JSON.parse(response)[2]; //[1] takes the first half of the encoded json array
-
-      document.getElementById("section_header").innerHTML = '<div class="section-header">' + projectname + '<button class="addtaskbtn" onclick="openaddtaskForm()">Add Task</button></div>';
-
-
-      for (var taskrow in allTasks) { //for every task returned, add each to the table
-        addtaskTotable(allTasks[taskrow][0],allTasks[taskrow][1],allTasks[taskrow][2],allTasks[taskrow][3],allTasks[taskrow][4],allTasks[taskrow][5],allTasks[taskrow][6]);
-      }
-
-
-      for (var staffrow in allStaff) { //for every staff returned, add each to the table
-        addStaffTotable(allStaff[staffrow][0],allStaff[staffrow][1],allStaff[staffrow][2],allStaff[staffrow][3]);
-      }
-    }
-  }
-});
 
 
 
@@ -300,12 +319,13 @@ function maketeamleader(){
         alert("Something went wrong");
       } 
 
-      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+      // window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+      window.location.reload(true);
     }
   });
 
   // now staff not in the team are loaded into the <select> we are going to open the form
-  document.getElementById("changeroleopaquebg").style.display = "none";
+  // document.getElementById("changeroleopaquebg").style.display = "none";
 }
 
 function closechangeroleForm() {
@@ -473,10 +493,9 @@ function isValidDateString(str) {
 }
 
 
-
 document.querySelector('.addtask-form').addEventListener('submit', function(event) {
   // Prevent the default form submission behavior
-  event.preventDefault();
+  // event.preventDefault();
 
   var newtaskID = document.getElementById("new_taskID").value;
   var newtaskName = document.getElementById("new_taskname").value;
