@@ -22,9 +22,26 @@
       data: { user_id: user_id },
       success: function(data) {
           // Handle the response from the server
-          console.log('todo list returned successfully');
           toDoListArray = data;
-          console.log(toDoListArray);
+          console.log('todo list returned successfully');
+          document.getElementById("toDoUL").innerHTML = "";
+          toDoListArray.forEach(function(itemData){
+            var li = document.createElement("li");
+            var p = document.createElement("p");
+            p.textContent = itemData['description'];
+            li.appendChild(p);
+            if (itemData['checked'] == '1'){
+              li.classList.add('checked');
+            }
+            li.setAttribute("id", itemData['item_id']);
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u{1F5D1}");
+            span.className = "close";
+            span.appendChild(txt);
+            li.appendChild(span);
+            document.getElementById("toDoUL").appendChild(li);
+          })
+          addOnDeleteFunc();
       },
       error: function(xhr, status, error) {
           // Handle errors
@@ -309,11 +326,12 @@ function newElement() {
     } else {
     // add new list item 
       document.getElementById("toDoUL").insertAdjacentElement('afterbegin', li);
+      newItemData = {};
       // update the todolist table using jQuery AJAX
       $.ajax({
         url: 'add-to-do-item.php',
         type: 'POST',
-        data: requestData,
+        data: newItemData,
         success: function(response) {
             // Handle the response from the server
             console.log('Item added to db successfully');
