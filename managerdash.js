@@ -75,7 +75,7 @@ dashboard.addEventListener("click", function() {
   }
 });
 
-const selectedProjectID = 0;
+var selectedProjectID = 0;
 
 window.addEventListener('load', function() {
   const urlParams = new URLSearchParams(window.location.search);
