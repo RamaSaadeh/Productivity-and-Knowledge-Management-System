@@ -68,7 +68,7 @@ $(document).ready(function() {
             posts.forEach(function(post) {
                 var postClass = post.Topic.toLowerCase().replace(/\s+/g, '-');
                 var postHTML = `
-                    <div class="post ${postClass}">
+                    <div class="post ${postClass}" data-date-created="${post.FullDateCreated}">
                         <div class="media-body">
                             <h3 class="post-topic">${post.Topic}</h3>
                             <h2 class="post-title">${post.Title}</h2>
@@ -80,7 +80,7 @@ $(document).ready(function() {
                         <div class="comment-metadata">
                             <div class="comment-user-date">
                                 <i class="far fa-user">${post.AuthorName}</i> &nbsp;
-                                <i class="far fa-calendar">${post.DateCreated}</i>
+                                <i class="far fa-calendar">${post.FormattedDateCreated}</i>                               
                             </div>
                             <div class="comment-actions">
                                 <i class="fas fa-thumbs-up like-comment ${post.IsLiked ? 'liked' : ''}" title="Like" data-post-id="${post.PostID}" data-liked="${post.IsLiked ? 'true' : 'false'}"></i>
@@ -260,35 +260,30 @@ $(document).ready(function() {
 
 
 		//sort by newest comments
-	function sortByNewest() {
-	  const posts = document.querySelectorAll('.all-content > .post');
-	  const dateRegex = /\b(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\b \d{1,2}, \d{4}/;
-	  
-	  const sortedPosts = Array.from(posts).sort((a, b) => {
-		let dateA = a.querySelector('.fa-calendar').parentNode.textContent.match(dateRegex);
-		let dateB = b.querySelector('.fa-calendar').parentNode.textContent.match(dateRegex);
-
-		//convert the extracted date strings to Date objects
-		dateA = dateA ? new Date(dateA[0]) : new Date(0); // fallback to epoch if nothing matches
-		dateB = dateB ? new Date(dateB[0]) : new Date(0); // fallback to epoch if nothing matches
-
-		return dateB - dateA; // sort by descending date order (newest first)
-	  });
-
-	
-	  const container = document.querySelector('.all-content');
-	  if (container) {
-		//remove all post elements from the DOM
-		posts.forEach(post => post.remove());
-
-		//append sorted posts back to the container
-		sortedPosts.forEach(post => {
-		  container.appendChild(post);
-		});
-	  } else {
-		console.error('Posts container not found.');
-	  }
-	}
+    function sortByNewest() {
+      const posts = document.querySelectorAll('.all-content > .post');
+      
+      const sortedPosts = Array.from(posts).sort((a, b) => {
+        // Use the data-date-created attribute for sorting
+        let dateA = new Date(a.getAttribute('data-date-created'));
+        let dateB = new Date(b.getAttribute('data-date-created'));
+    
+        return dateB - dateA; //sort by descending date order (newest first)
+      });
+    
+      const container = document.querySelector('.all-content');
+      if (container) {
+        //remove all post elements from the DOM
+        posts.forEach(post => post.remove());
+    
+        //append sorted posts back to the container
+        sortedPosts.forEach(post => {
+          container.appendChild(post);
+        });
+      } else {
+        console.error('Posts container not found.');
+      }
+    }
 
 		
 	// Call the function once the page content has loaded
