@@ -127,7 +127,8 @@ $(document).ready(function() {
             });
 
             //determine if the post matches the current search term
-            var matchesSearch = !currentSearchTerm || title.startsWith(currentSearchTerm);
+            var matchesSearch = !currentSearchTerm || title.startsWith(currentSearchTerm.trim().toLowerCase());
+
 
             //determine if the post matches the current topic
             var matchesTopic = currentTopic === 'all' || postClass === currentTopic;
