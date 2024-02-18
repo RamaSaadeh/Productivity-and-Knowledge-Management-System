@@ -298,14 +298,18 @@ function addOnDeleteFunc(){
      }
     }
 
+
+
 // Add a "checked" symbol when clicking on a list item
+// action when to do list item clicked
 var list = document.getElementById("toDoList").querySelector('ul');
 list.addEventListener('click', function(ev) {
     if (ev.target.tagName === 'LI' || ev.target.tagName === 'P') {
         const listItem = (ev.target.tagName === 'LI') ? ev.target : ev.target.closest('li');
-        if (listItem) {
-          var description = listItem.querySelector('p').textContent;
+        var description = listItem.querySelector('p').textContent;
           var checked = 0;
+        if (listItem) {
+          
           if (listItem.classList.contains("checked")){
             // if the item was checked then update db and adjust position
             checked = 1; 
@@ -324,10 +328,36 @@ list.addEventListener('click', function(ev) {
             }
           });
           
-          listItem.classList.toggle('checked');
+          moveToDoItem(listItem.id, description, checked);
         }
     }
   }, false);
+
+function moveToDoItem(id, description, checked){
+  oldItem = document.getElementById(id);
+  document.getElementById("toDoUL").removeChild(oldItem);
+  li = document.createElement("li");
+  li.setAttribute("id", id);
+  p = document.createElement("p");
+  p.appendChild(document.createTextNode(description));
+  li.appendChild(p);
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u{1F5D1}");
+  span.className = "close";
+  span.appendChild(txt);
+  li.appendChild(span);
+  if (checked == '0'){
+    // unchecked -> checked
+    li.classList.add("checked");
+    // append item to end of the list
+    document.getElementById("toDoUL").appendChild(li);
+  } else {
+    // add item to the start of the list
+    document.getElementById("toDoUL").insertAdjacentElement('afterbegin', li);
+  }
+  addOnDeleteFunc();
+
+}
 
 
  function keyPressed(event) {
@@ -355,7 +385,7 @@ function newElement() {
     if (inputValue === '') {
       // they didn't type anything
     } else {
-    // add new list item 
+    // add new item to the start of the list 
       document.getElementById("toDoUL").insertAdjacentElement('afterbegin', li);
       // update the todolist table using jQuery AJAX
       $.ajax({
