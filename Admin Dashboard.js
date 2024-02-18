@@ -1,6 +1,45 @@
+  
+
+  
   // requesting staff info  on page load
 
   var staffData; // to store the users data in json format
+  var toDoListArray;
+  var user_id = 3;
+
+  if (sessionStorage.getItem("user")){
+    user_id = sessionStorage.getItem("user")["id"];
+  }
+  //alert("user id: " + user_id);
+
+
+  function populateToDoList(){
+    // request to-do list data for user asynchronously
+    $.ajax({
+      url: 'return-to-do.php',
+      dataType: "json",
+      type: 'POST',
+      data: { user_id: user_id },
+      success: function(data) {
+          // Handle the response from the server
+          console.log('todo list returned successfully');
+          toDoListArray = data;
+          console.log(toDoListArray);
+      },
+      error: function(xhr, status, error) {
+          // Handle errors
+          console.error('Error deleting item:', error);
+      }
+    });
+
+
+  }
+  
+  
+  
+
+
+
 
   function populateStaffTable(){
     var staffTable = document.getElementById("staffInfo");
@@ -67,7 +106,7 @@
   }
 
   $(document).ready(function(){
-
+    populateToDoList();
     addOnDeleteFunc();
       $.ajax({ 
           url: "return-all-staff.php",
