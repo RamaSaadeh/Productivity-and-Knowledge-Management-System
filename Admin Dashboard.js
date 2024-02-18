@@ -244,6 +244,18 @@
      }
    }
  }, false);
+
+
+ function keyPressed(event) {
+  // Check if the pressed key is Enter (key code 13)
+  if (event.keyCode === 13) {
+      // Call the newElement() function
+      newElement();
+  }
+}
+
+// Add event listener for key press on document
+document.addEventListener('keypress', keyPressed);
      
      // Create a new list item when clicking on the "Add" button
      function newElement() {
@@ -256,7 +268,10 @@
        if (inputValue === '') {
          // they didn't type anything
        } else {
+        // add new list item 
          document.getElementById("toDoUL").appendChild(li);
+         // update the todolist table
+
        }
        document.getElementById("toDoInput").value = "";
      
