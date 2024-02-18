@@ -95,6 +95,9 @@
             <div id="or-word">Or</div>
         </div>
 
+		<div class="gotouser-flex">
+			<button type="submit" id="viewtaskbtn" onclick="window.location.href='userdash.html'">View your tasks</button>
+		</div>
 
     </div>
 	
