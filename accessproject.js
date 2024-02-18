@@ -1,5 +1,28 @@
 var inviteForm = document.getElementById("inviteuseropaquebg");
 
+function checkLogin() {
+    try {
+        var details = sessionStorage.getItem("user");
+        var role = JSON.parse(details).role;
+        switch (role) {
+            case "a":
+                break;
+            case "g":
+                break;
+            case "m":
+                break;
+            case "l":
+                break;
+            default:
+                window.location.replace("login.html");
+                break;
+        }
+    }
+    catch {
+        window.location.replace("login.html");
+    }
+}
+
 function openForm() {
     inviteForm.style.display = "block";
 }

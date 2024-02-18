@@ -1,6 +1,29 @@
 var details = sessionStorage.getItem("user");
 var role = JSON.parse(details).role;
 
+function checkLogin() {
+    try {
+        var details = sessionStorage.getItem("user");
+        var role = JSON.parse(details).role;
+        switch (role) {
+            case "a":
+                break;
+            case "g":
+                break;
+            case "m":
+                break;
+            case "l":
+                break;
+            default:
+                window.location.replace("login.html");
+                break;
+        }
+    }
+    catch {
+        window.location.replace("login.html");
+    }
+}
+
 var email = JSON.parse(details).email;
 
 var id = JSON.parse(details).id;
