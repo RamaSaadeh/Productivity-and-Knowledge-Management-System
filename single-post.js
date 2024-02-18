@@ -950,9 +950,9 @@ document.addEventListener("DOMContentLoaded", function () {
 						lastModifiedElement.textContent = data.lastModified;
 					}
 	
-					//show the "(edited)" tag if the comment is edited
+					//show the "(edited)" tag
 					const editedSpan = commentElement.querySelector('.comment-user-date .comment-edited');
-					if (editedSpan && data.lastModified !== dateCreated) {
+					if (editedSpan) {
 						editedSpan.style.display = 'inline';
 					}
 	
@@ -970,7 +970,6 @@ document.addEventListener("DOMContentLoaded", function () {
 			alert('Error updating comment.');
 		});
 	}
-
 
 	//edit comments
 	function addComment(commentText, postID) {
