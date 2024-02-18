@@ -14,10 +14,12 @@ $result = $conn->query($sql);
 $array = array();
 // Generate values for each option in the dropdown
 while ($row = $result->fetch_assoc()) {
-    array_push($array,`'<option value="' . $row['project_id'] . '">' . $row['project_id'] .': '. $row['proj_name'] . '</option>'`);
+    array_push($array, '<option value="' . $row['project_id'] . '">' . $row['project_id'] .': '. $row['proj_name'] . '</option>');
 }
 
-array_push($array,"'</select>'");
+// Add the closing </select> tag
+$array[] = '</select>';
+
 echo json_encode($array);
 
 $conn->close();
