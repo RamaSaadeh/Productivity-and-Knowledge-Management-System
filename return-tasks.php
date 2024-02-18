@@ -5,7 +5,7 @@ include "db_config.php";
 
 // Create connection
 $conn = new mysqli($servername, $username, $dbpassword, $database);
-
+$user_id = intval($_POST['user_id']);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -15,7 +15,7 @@ $sql = "SELECT DISTINCT tasks.*, task_staff.user_id, projects.proj_name
 FROM tasks
 INNER JOIN task_staff ON tasks.task_id = task_staff.task_id
 INNER JOIN projects ON tasks.project_id = projects.project_id
-WHERE task_staff.user_id = 1;";
+WHERE task_staff.user_id = $user_id;";
 
 $result = $conn->query($sql);
 

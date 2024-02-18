@@ -1,9 +1,10 @@
   // requesting staff info  on page load
 
-  var staffData; // to store the users data in json format
+  var tasksData;
   var toDoListArray;
   var user_id = 1;
   var max_item_id = 0;
+
 
   if (sessionStorage.getItem("user")){
     user_id = sessionStorage.getItem("user")["id"];
@@ -64,6 +65,7 @@
 $(document).ready(function(){
     populateToDoList();
     addOnDeleteFunc();
+    getUserTasks();
 }); 
 
 
@@ -243,6 +245,41 @@ function newElement() {
 }
 
 
+// code for user tasks
+
+function getUserTasks(){
+
+    $.ajax({
+        url: 'return-tasks.php',
+        type: 'POST',
+        data: {'user_id': user_id},
+        success: function(data) {
+            // Handle the response from the server
+            console.log('tasks retrieved successfully');
+            tasksData = data;
+            console.log(tasksData);
+        },
+        error: function(xhr, status, error) {
+            // Handle errors
+            console.error('Error retrieving tasks:', error);
+        }
+      });
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// end of code for user tasks
 
 
 
