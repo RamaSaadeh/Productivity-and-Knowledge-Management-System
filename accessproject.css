@@ -51,7 +51,7 @@
     outline: none;
     }
     .inviteuser-form .btn {
-    background-color: #be6b25;
+    background-color: #efbf1a;
     color: white;
     padding: 16px 20px;
     border: none;
@@ -238,17 +238,17 @@
 }
 
 .title {
-    color: orange;
+    color: #5e5d5a;
     font-size: 26;
     font-weight: bold;
     border-bottom: 1px solid grey;
-	padding-bottom: 5px;
+    padding-bottom: 5px;
 }
 
 
 #exploreproj-btn {
 	width: 100%;
-	background-color: rgb(255, 149, 35);
+	background-color: #efbf1a;
 	border-radius: 15px;
 	border: none;
 	color: white;
@@ -286,7 +286,7 @@
 
 #newproj-btn {
 	width: 100%;
-	background-color: rgb(255, 149, 35);
+	background-color: #efbf1a;
 	border-radius: 15px;
 	border: none;
 	color: white;
