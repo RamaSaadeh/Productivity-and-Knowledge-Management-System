@@ -940,28 +940,29 @@ document.addEventListener("DOMContentLoaded", function () {
 		.then(response => response.json())
 		.then(data => {
 			if (data.success) {
-				//update the comment content in the HTML
+				
 				document.querySelector(`.comment[data-comment-id="${commentId}"] .comment-content`).textContent = updatedContent;
 				
-				//update the LastModified date in the HTML
-				const lastModifiedDateElement = document.querySelector(`.comment[data-comment-id="${commentId}"] .far.fa-calendar`);
-				if (lastModifiedDateElement) {
-					lastModifiedDateElement.nextSibling.textContent = ` ${data.lastModified}`; 
+			
+				const lastModifiedElement = document.querySelector(`.comment[data-comment-id="${commentId}"] .far.fa-calendar`);
+				if (lastModifiedElement) {
+				
+					lastModifiedElement.textContent = data.lastModified; 
 				}
-
+		
+				const editedSpan = document.querySelector(`.comment[data-comment-id="${commentId}"] .comment-edited`);
+				if (editedSpan) {
+					editedSpan.style.display = 'inline'; 
+				}
+		
 				//hide the edit modal
 				document.getElementById('editCommentModal').style.display = 'none';
 			} else {
 				alert('Failed to update comment: ' + data.message);
 			}
 		})
-		.catch(error => {
-			console.error('Error:', error);
-			alert('Error updating comment.');
-		});
-	}
 
-	
+	}
 
 
 	//edit comments
