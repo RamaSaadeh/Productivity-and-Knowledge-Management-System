@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					$('#likeCount').text(post.LikesCount);
 
 					//show or hide edit and delete buttons based on `IsUserOwner` value
-					if (post.IsUserOwner) {
+					if (post.IsUserOwner || post.IsAdmin) {
 
 						$('.edit-post, .delete-post').show();
 					} else {
@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					//loop through comments and append to the sidebar
 					comments.forEach(function(comment) {
 
-                    	const editDeleteIcons = comment.IsUserOwner ? `
+                    	const editDeleteIcons = (comment.IsUserOwner || comment.IsAdmin) ? `
                         	<i class="fas fa-edit edit-comment" title="Edit"></i>
                         	<i class="fas fa-trash-alt delete-comment" title="Delete"></i>` : '';
 
@@ -959,7 +959,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					//loop through comments and append to sidebar 
 					comments.forEach(function(comment) {
 
-						const editDeleteIcons = comment.IsUserOwner ? `
+						const editDeleteIcons = (comment.IsUserOwner || comment.IsAdmin) ? `
 						  <i class="fas fa-edit edit-comment" title="Edit"></i>
 						  <i class="fas fa-trash-alt delete-comment" title="Delete"></i>` : '';
 

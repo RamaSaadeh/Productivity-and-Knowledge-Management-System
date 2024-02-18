@@ -13,7 +13,8 @@ if (isset($_GET['id'])) {
     //sql statement to get all comments related to specific post
     $sql = "SELECT c.CommentID, c.PostID, c.UserID, c.CommentContent, c.Likes, c.LastModified, u.name AS AuthorName,
             (c.UserID = $userID) AS IsUserOwner,
-            CL.UserID IS NOT NULL AS HasLiked
+            CL.UserID IS NOT NULL AS HasLiked,
+            (SELECT role FROM users WHERE user_id = $userID) AS IsAdmin
             FROM Comments c
             INNER JOIN users u ON c.UserID = u.user_id
             LEFT JOIN CommentLikes CL ON c.CommentID = CL.CommentID AND CL.UserID = $userID
@@ -33,6 +34,7 @@ if (isset($_GET['id'])) {
             //add each comment to the comments array
             $row['IsUserOwner'] = $row['IsUserOwner'] == 1 ? true : false;
             $row['HasLiked'] = $row['HasLiked'] == 1 ? true : false;
+            $row['IsAdmin'] = ($row['IsAdmin'] === 'admin');
             $comments[] = $row;
         }
        

@@ -15,14 +15,15 @@ if (isset($_GET['id'])) {
     //query to retrieve the details of the specific post based on its ID
     $sql = "SELECT p.PostID, p.Title, p.Content, p.DateCreated, p.DateLastModified, p.IsDraft, p.LikesCount, p.Topic, u.name AS AuthorName,
             (p.UserID = ?) AS IsUserOwner,
-            EXISTS(SELECT 1 FROM PostLikes pl WHERE pl.PostID = p.PostID AND pl.UserID = ?) AS IsLiked
+            EXISTS(SELECT 1 FROM PostLikes pl WHERE pl.PostID = p.PostID AND pl.UserID = ?) AS IsLiked,
+            (SELECT role FROM users WHERE user_id = ?) AS IsAdmin
             FROM Posts p
             INNER JOIN users u ON p.UserID = u.user_id
             WHERE p.PostID = ?";
 
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iii", $userID, $userID, $postId); //bind both userID and postId
+    $stmt->bind_param("iiii", $userID, $userID, $userID, $postId);
     $stmt->execute();
     $result = $stmt->get_result();
     
@@ -33,6 +34,7 @@ if (isset($_GET['id'])) {
         //convert the IsUserOwner and IsLiked values from integer/exists result to boolean
         $post['IsUserOwner'] = (bool)$post['IsUserOwner'];
         $post['IsLiked'] = (bool)$post['IsLiked'];
+        $post['IsAdmin'] = ($post['IsAdmin'] === 'Admin');
 
         //prepare and output the response
         echo json_encode([
