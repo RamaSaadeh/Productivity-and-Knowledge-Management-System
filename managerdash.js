@@ -477,6 +477,7 @@ function isValidDateString(str) {
 document.querySelector('.addtask-form').addEventListener('submit', function(event) {
   // Prevent the default form submission behavior
   event.preventDefault();
+
   var newtaskID = document.getElementById("new_taskID").value;
   var newtaskName = document.getElementById("new_taskname").value;
   var newtaskStatus = document.getElementById("new_statusselect").value; 
@@ -491,8 +492,6 @@ document.querySelector('.addtask-form').addEventListener('submit', function(even
     newtaskStaff.push(selectedOptions[i].value);
   }
 
-
-  
  if(isValidDateString(newtaskDeadline)){
   $.ajax({
     type: "POST",
@@ -510,13 +509,11 @@ document.querySelector('.addtask-form').addEventListener('submit', function(even
       if (response === "invalid") {
         alert("Something went wrong");
       } 
-
+      document.getElementById("addtaskopaquebg").style.display = "none";
       window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
     }
   });
 
-  // now staff not in the team are loaded into the <select> we are going to open the form
-  document.getElementById("addtaskopaquebg").style.display = "none";
  } else{
   alert("Invalid date entered");
  }
