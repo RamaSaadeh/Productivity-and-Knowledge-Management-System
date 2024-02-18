@@ -648,6 +648,7 @@ function openedittaskForm(button){
 }
 
 function save_changesto_task(){
+  event.preventDefault();
   var task_id = document.getElementById("edit_taskID").value;
   var task_name = document.getElementById("edit_taskname").value;
   var task_hrs = document.getElementById("edit_hrs").value;
