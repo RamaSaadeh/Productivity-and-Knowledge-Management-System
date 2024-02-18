@@ -80,13 +80,13 @@
         <div class="myprojects-flex">
 		
             <div class="title">My Projects</div>   
-            <form id="form-selectproject" action="managerdash.html" method="get">
+            <form id="form-selectproject" action="teamleaderdash.html" method="get">
                 
                 <label>Select your project to launch</label>
                 <select required id="select-proj" name="selected_project_ID">
                     <option value="" disabled selected>Select Project or Search by Typing</option>
                 </select>		
-                <button type="submit" id="exploreproj-btn" onclick="exploreClick()">Explore Project</button>
+                <button type="submit" id="exploreproj-btn">Explore Project</button>
 
             </form>
         </div>
