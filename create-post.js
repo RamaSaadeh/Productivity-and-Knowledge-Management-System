@@ -270,16 +270,6 @@ function saveDraft(postTitle, postTopic, postBody) {
 	            return;
 	        }
 	
-	        //update the last modified date
-	        const currentDate = new Date();
-	        const dateString = currentDate.toLocaleDateString(undefined, {
-	            year: 'numeric',
-	            month: 'long',
-	            day: 'numeric',
-	            hour: '2-digit',
-	            minute: '2-digit'
-	        });
-	        draftElement.find('.draft-last-modified').text(dateString);
 	
 	        //send AJAX request to update the draft contents in database
 	        $.ajax({
@@ -294,6 +284,20 @@ function saveDraft(postTitle, postTopic, postBody) {
 	            dataType: "json",
 	            success: function(response) {
 	                if (response.success) {
+
+						let formattedDate = new Date(response.dateLastModified).toLocaleDateString(undefined, {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+
+						// Check if the 'dateLastModified' field has a value
+						let displayText = formattedDate;
+						if (response.dateLastModified) {
+							displayText += " (edited)"; //append "(edited)" if the draft has been modified
+						}
+                        draftElement.find('.draft-last-modified').text(formattedDate); //use formattedDate
+
 	                    displayPopup('Draft saved successfully!');
 	                } else {
 	                    displayPopup('Error saving draft. Please try again later.');
