@@ -40,20 +40,15 @@ if (isset($_GET['id'])) {
 
         //format DateLastModified if it's not NULL and different from DateCreated
         if (!is_null($post['DateLastModified'])) {
-            $formattedDateLastModified = date('F d, Y H:i:s', strtotime($post['DateLastModified']));
-            $formattedDateCreated = date('F d, Y H:i:s', strtotime($post['DateCreated']));
-            
             //check if DateLastModified is different from DateCreated
-            if ($formattedDateLastModified !== $formattedDateCreated) {
-                $post['DateLastModified'] = date('F d, Y', strtotime($post['DateLastModified'])) . " (edited)";
+            if ($post['DateLastModified'] !== $post['DateCreated']) {
+                $formattedDateLastModified = date('F d, Y', strtotime($post['DateLastModified'])) . " (edited)";
+                $post['DateLastModified'] = $formattedDateLastModified;
             } else {
-
-                //if dates are the same, just use the formatted DateCreated without "(edited)"
-                $post['DateLastModified'] = date('F d, Y', strtotime($post['DateCreated']));
+                $post['DateLastModified'] = $post['FormattedDateCreated']; //use DateCreated if dates are the same
             }
         } else {
-            //if DateLastModified is NULL, use DateCreated
-            $post['DateLastModified'] = date('F d, Y', strtotime($post['DateCreated']));
+            $post['DateLastModified'] = $post['FormattedDateCreated']; //use DateCreated if DateLastModified is NULL
         }
 
         //prepare and output the response

@@ -477,7 +477,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		const isEditing = editIcon.classList.contains('fa-edit');
 		editIcon.classList.toggle('fa-save', isEditing);
 		editIcon.classList.toggle('fa-edit', !isEditing);
-
+	
 		const elements = [
 			{selector: '#postTitle', limit: 40},
 			{selector: '#postTopic', limit: 40},
@@ -486,6 +486,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		
 		elements.forEach(({selector, limit}) => {
 			const element = document.querySelector(selector);
+			const charsLeftElement = document.querySelector('#contentCharsLeft');
 			const isEditable = element.isContentEditable;
 			element.contentEditable = !isEditable;
 			
@@ -494,22 +495,20 @@ document.addEventListener("DOMContentLoaded", function () {
 				
 				//add event listener for character limit
 				const enforceLimit = function() {
-					const charsLeftElement = document.querySelector('#contentCharsLeft');
 					let charsUsed = this.textContent.length;
 					let charsLeft = limit - charsUsed;
 					
-					//update the displayed remaining characters
+					//update the displayed remaining characters with context for content
 					if (selector === '#postContent') {
-						charsLeftElement.textContent = `${charsLeft} characters left`;
+						charsLeftElement.textContent = `${charsLeft} characters left for Content`;
 					}
-
+	
 					if (charsUsed > limit) {
 						//prevent additional characters
 						this.textContent = this.textContent.substring(0, limit);
-						charsUsed = limit; 
+						charsUsed = limit; // Update charsUsed after truncation
 						charsLeft = limit - charsUsed;
-						charsLeftElement.textContent = `${charsLeft} characters left`;
-
+						charsLeftElement.textContent = `${charsLeft} characters left for Content`;
 						
 						const range = document.createRange();
 						const sel = window.getSelection();
@@ -519,32 +518,39 @@ document.addEventListener("DOMContentLoaded", function () {
 						sel.addRange(range);
 					}
 				};
-
+	
 				if (!element.enforceLimitListener) {
 					element.addEventListener('input', enforceLimit);
 					element.enforceLimitListener = enforceLimit;
 				}
-
-				//initialize the character count display
+	
+				//initialize the character count display specifically for content when editing starts
 				if(selector === '#postContent') {
 					enforceLimit.call(element);
 				}
-
-				if (selector === '#postContent') element.focus();
+	
+				if (selector === '#postContent') element.focus(); 
 			} else {
 				//remove the listener if it exists to prevent duplication
 				if (element.enforceLimitListener) {
 					element.removeEventListener('input', element.enforceLimitListener);
-					delete element.enforceLimitListener;
+					delete element.enforceLimitListener; 
 				}
 			}
 		});
-
+	
 		//if switching from edit to save, handle accordingly
 		if (!isEditing) openSaveConfirmationModal();
 	}
 
-		  
+	document.addEventListener('DOMContentLoaded', () => {
+		const contentElement = document.querySelector('#postContent');
+		const charsLeftElement = document.querySelector('#contentCharsLeft');
+		const initialCharsUsed = contentElement.textContent.trim().length;
+		const maxChars = 1500; //maximum characters allowed for content
+		const charsLeft = maxChars - initialCharsUsed;
+		charsLeftElement.textContent = `${charsLeft} characters left for Content`;
+	});
 				
 		//close the modal
 		function closeModal() {
