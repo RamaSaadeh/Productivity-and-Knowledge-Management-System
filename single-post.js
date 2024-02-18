@@ -939,28 +939,36 @@ document.addEventListener("DOMContentLoaded", function () {
 		.then(response => response.json())
 		.then(data => {
 			if (data.success) {
-				
-				document.querySelector(`.comment[data-comment-id="${commentId}"] .comment-content`).textContent = updatedContent;
-				
-			
-				const lastModifiedElement = document.querySelector(`.comment[data-comment-id="${commentId}"] .far.fa-calendar`);
-				if (lastModifiedElement) {
-				
-					lastModifiedElement.textContent = data.lastModified; 
+				const commentElement = document.querySelector(`.comment[data-comment-id="${commentId}"]`);
+				if (commentElement) {
+					//update the comment content
+					commentElement.querySelector('.comment-content').textContent = updatedContent;
+	
+					//update the last modified timestamp
+					const lastModifiedElement = commentElement.querySelector('.comment-user-date .far.fa-calendar');
+					if (lastModifiedElement) {
+						lastModifiedElement.textContent = data.lastModified;
+					}
+	
+					//show the "(edited)" tag if the comment is edited
+					const editedSpan = commentElement.querySelector('.comment-user-date .comment-edited');
+					if (editedSpan && data.lastModified !== data.dateCreated) {
+						editedSpan.style.display = 'inline';
+					}
+	
+					//hide the edit modal
+					document.getElementById('editCommentModal').style.display = 'none';
+				} else {
+					alert('Failed to find the comment element.');
 				}
-		
-				const editedSpan = document.querySelector(`.comment[data-comment-id="${commentId}"] .comment-edited`);
-				if (editedSpan) {
-					editedSpan.style.display = 'inline'; 
-				}
-		
-				//hide the edit modal
-				document.getElementById('editCommentModal').style.display = 'none';
 			} else {
 				alert('Failed to update comment: ' + data.message);
 			}
 		})
-
+		.catch(error => {
+			console.error('Error:', error);
+			alert('Error updating comment.');
+		});
 	}
 
 
