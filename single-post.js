@@ -952,7 +952,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 					//show the "(edited)" tag if the comment is edited
 					const editedSpan = commentElement.querySelector('.comment-user-date .comment-edited');
-					if (editedSpan && data.lastModified !== data.dateCreated) {
+					if (editedSpan && data.lastModified !== dateCreated) {
 						editedSpan.style.display = 'inline';
 					}
 	

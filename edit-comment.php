@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['commentID']) && isset(
     //sanitize and validate input data
     $commentID = mysqli_real_escape_string($conn, $_POST['commentID']);
     $newContent = mysqli_real_escape_string($conn, $_POST['newContent']);
+    $dateCreated = mysqli_real_escape_string($conn, $_POST['dateCreated']);
     $currentDate = date('Y-m-d H:i:s'); // Get current date and time
 
     //prepare and execute the SQL query to update the comment content and LastModified field
