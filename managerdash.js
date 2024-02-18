@@ -518,7 +518,6 @@ function addnewtask() {
   document.getElementById("addtaskopaquebg").style.display = "none";
  } else{
   alert("Invalid date entered");
-  // window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
  }
 }
 
@@ -560,6 +559,7 @@ function opentasknotesForm(button) {
 }
 
 function updatetasknotes() {
+  event.preventDefault();
   var tasknotes = document.getElementById("tasknotescontent").value;
 
   var confirmation = confirm("Are you sure you want to update the task notes?");
