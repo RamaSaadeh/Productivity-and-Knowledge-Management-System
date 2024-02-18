@@ -75,6 +75,7 @@ dashboard.addEventListener("click", function () {
 
 // single-post.js
 document.addEventListener("DOMContentLoaded", function () {
+	hideCharCountDisplay();
    
     const urlParams = new URLSearchParams(window.location.search);
     let messageTimeout; //variable to store timeout
@@ -151,6 +152,10 @@ document.addEventListener("DOMContentLoaded", function () {
 						$('.like-post').addClass('liked').attr('data-liked', 'true').attr('title', 'Unlike');
 					} else {
 						$('.like-post').removeClass('liked').attr('data-liked', 'false').attr('title', 'Like');
+					}
+
+					if (!post.DateLastModified) {
+						$('.edited-mark').remove();
 					}
 					
 				} else {
