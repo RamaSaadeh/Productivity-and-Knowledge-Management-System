@@ -18,7 +18,8 @@ $sql = "SELECT p.PostID, p.Title, p.Content,
         FROM Posts p
         INNER JOIN users u ON p.UserID = u.user_id
         LEFT JOIN PostLikes pl ON p.PostID = pl.PostID AND pl.UserID = $userID
-        WHERE p.IsDraft = 0";
+        WHERE p.IsDraft = 0
+        ORDER BY p.PostID DESC";
 
 
 
