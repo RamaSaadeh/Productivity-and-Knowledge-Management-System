@@ -156,8 +156,8 @@ $('#draftButton').click(function() {
         return;
     }
 
-    if (draftCounter >= 2) {
-        errorMessage.text("Max 2 saved drafts allowed.");
+    if (draftCounter >= 5) {
+        errorMessage.text("Max 5 saved drafts allowed.");
         errorMessage.addClass('show');
         setTimeout(function() {
             errorMessage.removeClass('show');
@@ -175,8 +175,8 @@ $('#draftButton').click(function() {
             //test log
             console.log(response);
             
-            if (response && response.draftCount && response.draftCount >= 2) {
-                errorMessage.text("Maximum of 2 saved drafts allowed.");
+            if (response && response.draftCount && response.draftCount >= 5) {
+                errorMessage.text("Maximum of 5 saved drafts allowed.");
                 errorMessage.addClass('show');
                 setTimeout(() => { errorMessage.removeClass('show'); }, 5000);
             } else {
