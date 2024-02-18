@@ -131,6 +131,7 @@
 		<div class="section-header">Project XXX
 			<button class="addtaskbtn" onclick="openaddtaskForm()">Add Task</button>
 		</div>	
+
 		<div class="tablediv">
 			<table id="taskstable">
 				  <tr>
@@ -173,66 +174,77 @@
 </div>
 
 <div class="popup-background" id="addtaskopaquebg">
-	<form class="addtask-form" action="javascript:getData()" method="get">
+	<form class="addtask-form" onsubmit="addnewtask()" method="get">
 		<div class="form-title">
 			<button type="button" id="cancel-formbtn" onclick="closeaddtaskForm()">Cancel</button>
 			<div id="formheader">New Task</div>
 		</div>
 		
 		<div id="formcontent">
-			<input type="text" placeholder="Enter Task Name" id="taskname" required>
+			<label class="addtaskform_labels">Task ID</label>
+			<input type="text" value="" id="new_taskID" readonly>
+
+			<label class="addtaskform_labels">Task Name</label>
+			<input type="text" placeholder="Enter Task Name" id="new_taskname" required>
 			
-			<select required id="statusselect">
+			<label class="addtaskform_labels">Hours task will take</label>
+			<input type="text" placeholder="Hours: e.g. 5" id="new_hrs" required>
+
+			<label class="addtaskform_labels">Task Status</label>
+			<select required id="new_statusselect">
 				<option value="" disabled selected hidden>Choose Status...</option>
 				<option value="Not Started">Not Started</option>
 				<option value="On Track">On Track</option>
 				<option value="Overdue">Overdue</option>
 				<option value="Completed">Completed</option>
 			</select>
-			<input type="text" placeholder="Deadline: dd/mm/yyyy" id="deadline" required>
-			<label id="choosestafflabel">Hold ctrl to select multiple staff</label>
-			<select multiple required id="choosestaff">
-				<option value="John Doe">John Doe</option>
-				<option value="Claire Owens">Claire Owens</option>
-				<option value="Steve Jobs">Steve Jobs</option>
-				<option value="Anne Levy">Anne Levy</option>
-				<option value="Martin Keown">Martin Keown</option>
-				<option value="Jack Richards">Jack Richards</option>
-				<option value="Ben Potts">Ben Potts</option>
-			</select>		
+
+			<label class="addtaskform_labels">Task Deadline</label>
+			<input type="text" placeholder="Deadline: yyyy-mm-dd" id="new_deadline" required>
+
+			<label class="addtaskform_labels">Hold ctrl to select multiple staff</label>
+			<select multiple required id="new_choosestaff_select">
+			</select>	
+
 			<button type="submit" id="addtask-formbtn">Add new task</button>
 		</div>
 	</form>
 </div>
 
 <div class="popup-background" id="tasknotesopaquebg">
-	<form class="tasknotes-form" action="javascript:getData()" method="get">
+	<form class="tasknotes-form" onsubmit="updatetasknotes()" method="get">
 		<div class="form-title">
 			<button type="button" id="cancel-formbtn" onclick="closetasknotesForm()">Cancel</button>
 			<div id="formheader">Task Notes</div>
 		</div>
 		<div id="formcontent">
 			<label id="tasknoteslabel">Below are the Notes for this Task</label>
-			<textarea id="tasknotescontent" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"></textarea>
-			<button type="submit" id="savenoteschanges-formbtn" onclick="closetasknotesForm()">Save Changes</button>
-			<button id="closenotesbtn" onclick="closetasknotesForm()">Close without saving changes</button>
+			<textarea id="tasknotescontent"></textarea>
+			<button type="submit" id="savenoteschanges-formbtn">Save Changes</button>
+			<button type="button" id="closenotesbtn" onclick="closetasknotesForm()">Close without saving changes</button>
 		</div>
 	</form>
 </div>
 
 <div class="popup-background" id="edittaskopaquebg">
-	<form class="edittask-form" action="javascript:getData()" method="get">
+	<form class="edittask-form" onsubmit="save_changesto_task()" method="get">
 		<div class="form-title">
 			<button type="button" id="cancel-formbtn" onclick="closeedittaskForm()">Cancel</button>
 			<div id="formheader">Edit Task</div>
 		</div>
 		<div id="formcontent">
 
-			<label>Name</label>
-			<input type="text" placeholder="Enter Task Name" id="taskname-edit" required>
+			<label class="addtaskform_labels">Task ID</label>
+			<input type="text" value="" id="edit_taskID" readonly>
 
-			<label>Status</label>
-			<select required id="statusselect-edit">
+			<label class="addtaskform_labels">Task Name</label>
+			<input type="text" placeholder="Enter Task Name" id="edit_taskname" required>
+
+			<label class="addtaskform_labels">Hours task will take</label>
+			<input type="text" placeholder="Hours: e.g. 5" id="edit_hrs" required>
+
+			<label class="addtaskform_labels">Status</label>
+			<select required id="edit_statusselect">
 				<option value="" disabled selected hidden>Choose Status...</option>
 				<option value="Not Started">Not Started</option>
 				<option value="On Track">On Track</option>
@@ -240,22 +252,16 @@
 				<option value="Completed">Completed</option>
 			</select>
 
-			<label>Deadline</label>
-			<input type="text" placeholder="Deadline: dd/mm/yyyy" id="deadline-edit" required>
+			<label class="addtaskform_labels">Deadline</label>
+			<input type="text" value="" id="edit_deadline" required>
 
-			<label id="choosestafflabel">This will overwrite currently assigned staff</label>
-			<select multiple required id="choosestaff-edit">
-				<option value="John Doe">John Doe</option>
-				<option value="Claire Owens">Claire Owens</option>
-				<option value="Steve Jobs">Steve Jobs</option>
-				<option value="Anne Levy">Anne Levy</option>
-				<option value="Martin Keown">Martin Keown</option>
-				<option value="Jack Richards">Jack Richards</option>
-				<option value="Ben Potts">Ben Potts</option>
+			<label class="addtaskform_labels">Hold ctrl to deselect or select as needed- this will overwrite currently assigned staff!</label>
+			<select multiple required id="edit_choosestaff">
 			</select>
 
-			<button type="submit" id="saveedittask-formbtn" onclick="makechangestotasktable()">Save Changes</button>
-			<button id="closeedittaskbtn" onclick="closeedittaskForm()">Close without saving changes</button>
+			<button type="submit" id="saveedittask_formbtn">Save Changes</button>
+			<button type="button" id="closeedittaskbtn" onclick="closeedittaskForm()">Close without saving changes</button>
+			<button type="button" id="deletetaskbtn" onclick="delete_task()">Delete this Task</button>
 		</div>
 	</form>  
 </div>
