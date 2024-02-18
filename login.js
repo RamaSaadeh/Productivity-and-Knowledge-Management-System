@@ -32,7 +32,7 @@ async function getData() {
 						break;
 					case 'Leader':
 						array[1] = 'l';
-						window.location.replace("accessproject.php");
+						window.location.replace("leader-dash.php");
 						break;
 				}
 				let obj = { id: array[0], role: array[1], email: array[2]};
