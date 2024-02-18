@@ -21,11 +21,14 @@ while ($row = $result->fetch_assoc()) {
     $dateCreated = $row['DateCreated'];
     $dateLastModified = $row['DateLastModified'];
     
-    //check if the draft has been modified
-    $isEdited = ($dateCreated != $dateLastModified);
-
-    //choose the appropriate date to display
-    $dateToDisplay = $isEdited ? $dateLastModified : $dateCreated;
+    //if DateLastModified is NULL, use DateCreated instead
+    if ($dateLastModified === NULL) {
+        $dateToDisplay = $dateCreated;
+        $isEdited = false; //as DateLastModified is NULL, the draft has not been edited
+    } else {
+        $isEdited = ($dateCreated != $dateLastModified);
+        $dateToDisplay = $isEdited ? $dateLastModified : $dateCreated;
+    }
     
     //format the date for display
     $formattedDate = date('d F Y \a\t H:i', strtotime($dateToDisplay)); // e.g., "18 February 2024 at 14:29"

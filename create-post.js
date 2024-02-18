@@ -307,18 +307,16 @@ function saveDraft(postTitle, postTopic, postBody) {
 	            success: function(response) {
 	                if (response.success) {
 
-						let formattedDate = new Date(response.dateLastModified).toLocaleDateString(undefined, {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        });
+						let formattedDate = "Last Modified: " + new Date(response.dateLastModified).toLocaleString('default', {
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric',
+							hour: '2-digit',
+							minute: '2-digit'
+						}) + " (edited)";
 
-						// Check if the 'dateLastModified' field has a value
-						let displayText = formattedDate;
-						if (response.dateLastModified) {
-							displayText += " (edited)"; //append "(edited)" if the draft has been modified
-						}
-                        draftElement.find('.draft-last-modified').text(formattedDate); //use formattedDate
+
+                        $(`.draft[data-post-id="${postID}"]`).find('.draft-date').text(formattedDate);
 
 	                    displayPopup('Draft saved successfully!');
 	                } else {
@@ -484,7 +482,7 @@ function appendDraftToSidebar(draft) {
 		    <button class="delete-draft">Delete</button>
 		</div>
 		<div class="draft-date">
-		    Last Modified: <span class="draft-last-modified">${draft.lastModified}</span>
+			${draft.lastModified}
 		</div>
 	    </div>
 	</div>
