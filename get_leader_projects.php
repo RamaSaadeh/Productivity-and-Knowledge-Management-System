@@ -16,8 +16,7 @@ $result = $conn->query($sql);
 $array = array();
 // Generate values for each option in the dropdown
 while ($row = $result->fetch_assoc()) {
-   //array_push($array, '<option value="' . $row['project_id'] . '">' . $row['project_id'] .': '. $row['proj_name'] . '</option>');
-   $array[] = $row;
+   array_push($array, '<option value="' . $row['project_id'] . '">' . $row['project_id'] .': '. $row['proj_name'] . '</option>');
 }
 
 echo json_encode($array);

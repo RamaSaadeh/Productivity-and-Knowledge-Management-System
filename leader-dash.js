@@ -58,15 +58,10 @@ $.ajax({
         id: id
     },
     success: function (response) {
-        var projects = JSON.parse(response);
-        alert(projects);
-
-        projects.forEach(function (project) {
+        alert(response);
+        response.forEach(function (project) {
             alert(project);
-            var postHTML = `
-			    <option value="${project.project_id}">${project.project_id}: ${project.proj_name}></option>		
-			`;
-            document.getElementById("values").innerHTML += postHTML;
+            document.getElementById("values").innerHTML += project;
         });
     },
     error: function () {
