@@ -70,7 +70,7 @@
 
   $(document).ready(function(){
 
-
+    addOnDeleteFunc();
       $.ajax({ 
           url: "return-all-staff.php",
           dataType: "json", // Specify the expected data type of the response
@@ -189,6 +189,7 @@
        myNodelist[i].appendChild(span);
      }
      
+function addOnDeleteFunc(){     
      // Click on a close button to hide the current list item
      var close = document.getElementsByClassName("close");
      var i;
@@ -233,17 +234,18 @@
          
        }
      }
-     
-     // Add a "checked" symbol when clicking on a list item
-     var list = document.getElementById("toDoList").querySelector('ul');
-     list.addEventListener('click', function(ev) {
-   if (ev.target.tagName === 'LI' || ev.target.tagName === 'P') {
-     const listItem = (ev.target.tagName === 'LI') ? ev.target : ev.target.closest('li');
-     if (listItem) {
-       listItem.classList.toggle('checked');
-     }
-   }
- }, false);
+    }
+
+// Add a "checked" symbol when clicking on a list item
+var list = document.getElementById("toDoList").querySelector('ul');
+list.addEventListener('click', function(ev) {
+    if (ev.target.tagName === 'LI' || ev.target.tagName === 'P') {
+        const listItem = (ev.target.tagName === 'LI') ? ev.target : ev.target.closest('li');
+        if (listItem) {
+          listItem.classList.toggle('checked');
+        }
+    }
+  }, false);
 
 
  function keyPressed(event) {
@@ -257,37 +259,32 @@
 // Add event listener for key press on document
 document.addEventListener('keypress', keyPressed);
      
-     // Create a new list item when clicking on the "Add" button
-     function newElement() {
-       var li = document.createElement("li");
-       var p = document.createElement("p");
-       var inputValue = document.getElementById("toDoInput").value;
-       var t = document.createTextNode(inputValue);
-       p.appendChild(t);
-       li.appendChild(p);
-       if (inputValue === '') {
-         // they didn't type anything
-       } else {
-        // add new list item 
-         document.getElementById("toDoUL").appendChild(li);
-         // update the todolist table
+// Create a new list item when clicking on the "Add" button
+function newElement() {
+    var li = document.createElement("li");
+    var p = document.createElement("p");
+    var inputValue = document.getElementById("toDoInput").value;
+    var t = document.createTextNode(inputValue);
+    p.appendChild(t);
+    li.appendChild(p);
+    if (inputValue === '') {
+      // they didn't type anything
+    } else {
+    // add new list item 
+      document.getElementById("toDoUL").insertAdjacentElement('afterbegin', li);
+      // update the todolist table
 
-       }
-       document.getElementById("toDoInput").value = "";
-     
-       var span = document.createElement("SPAN");
-       var txt = document.createTextNode("\u{1F5D1}");
-       span.className = "close";
-       span.appendChild(txt);
-       li.appendChild(span);
-     
-       for (i = 0; i < close.length; i++) {
-         close[i].onclick = function() {
-           var div = this.parentElement;
-           div.style.display = "none";
-         }
-       }
-     }
+    }
+    document.getElementById("toDoInput").value = "";
+
+    var span = document.createElement("SPAN");
+    var txt = document.createTextNode("\u{1F5D1}");
+    span.className = "close";
+    span.appendChild(txt);
+    li.appendChild(span);
+
+    addOnDeleteFunc();
+}
 
 
 
