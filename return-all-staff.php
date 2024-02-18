@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 
 // Execute SQL queries to fetch users data
 $sql1 = "SELECT user_id, name, email, role FROM users;";
-$sql2 = "SELECT project_id, manager_id, leader_id FROM projects;";
+$sql2 = "SELECT project_id, leader_id FROM projects;";
 $result1 = $conn->query($sql1);
 $result2 = $conn -> query($sql2);
 
@@ -38,17 +38,14 @@ if ($result2 -> num_rows > 0){
 
 // add team membership info to each associative array in staffData
 foreach($staffData as &$user){
-    $managing = array();
     $leading = array();
     foreach ($teamsData as $team){
-        if ($team['manager_id'] == $user['user_id']){
-            $managing[] = $team['project_id'];
-        }
+        
         if($team['leader_id'] == $user['user_id']){
             $leading[] = $team['project_id'];
         }
     }
-    $user['managing'] = $managing;
+
     $user['leading'] = $leading;
 }
 
