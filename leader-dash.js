@@ -59,9 +59,11 @@ $.ajax({
     },
     success: function (response) {
         var projects = JSON.parse(response);
+        alert(projects);
         var valuesContainer = document.getElementById("values");
 
         projects.forEach(function (project) {
+            alert(project);
             var option = document.createElement("option");
             option.value = project.value;
             option.text = project.text;
