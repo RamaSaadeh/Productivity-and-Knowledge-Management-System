@@ -19,10 +19,23 @@ $drafts = array();
 //fetch drafts and store them in the array
 while ($row = $result->fetch_assoc()) {
     
-    $dateToDisplay = isset($row['DateLastModified']) ? $row['DateLastModified'] : $row['DateCreated'];
+    $dateCreated = $row['DateCreated'];
+    $dateLastModified = $row['DateLastModified'];
+    
+    //check if the draft has been modified
+    $isEdited = ($dateCreated != $dateLastModified);
+
+    //choose the appropriate date to display
+    $dateToDisplay = $isEdited ? $dateLastModified : $dateCreated;
     
     //format the date for display
-    $formattedDate = date('d F Y \a\t H:i', strtotime($dateToDisplay)); // e.g., "18 February 2024 at 14:29"
+    $formattedDate = date('d F Y \a\t H:i', strtotime($dateToDisplay)); //e.g., "18 February 2024 at 14:29"
+
+    //append '(edited)' if the draft has been modified
+    $editedTag = $isEdited ? ' (edited)' : '';
+
+    //construct the display string
+    $displayString = "Last Modified: $formattedDate$editedTag";
 
     //add each draft to the drafts array
     $drafts[] = array(
@@ -30,7 +43,7 @@ while ($row = $result->fetch_assoc()) {
         'title' => $row['Title'],
         'body' => $row['Content'],
         'topic' => $row['Topic'], 
-        'lastModified' => $formattedDate 
+        'lastModified' => $displayString 
     );
 }
 
