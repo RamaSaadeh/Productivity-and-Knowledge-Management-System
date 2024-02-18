@@ -6,7 +6,7 @@ include 'db.php';
 
 $userID = mysqli_real_escape_string($conn, $_GET['userID']); //get user id from request
 
-//query to get valid post information from Posts table
+//query to get valid post information from Posts table. ALso get formatted date
 $sql = "SELECT p.PostID, p.Title, p.Content, 
         p.DateCreated as FullDateCreated, 
         DATE_FORMAT(p.DateCreated, '%M %d, %Y') as FormattedDateCreated, 
@@ -22,6 +22,7 @@ $sql = "SELECT p.PostID, p.Title, p.Content,
 
 $result = $conn->query($sql);
 
+//store list of posts in an array
 $posts = array();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -35,5 +36,6 @@ if ($result->num_rows > 0) {
     echo json_encode([]); //if no posts found, return an empty array
 }
 
+//close database connection
 $conn->close();
 ?>

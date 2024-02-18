@@ -3,11 +3,12 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+//connect to database
 include 'db.php';
 
 $userID = mysqli_real_escape_string($conn, $_GET['userID']); //get user id from request
 
-// query for counting number of drafts user has
+//query for counting number of drafts user has
 $sql = "SELECT COUNT(*) AS draftCount FROM Posts WHERE UserID = ? AND IsDraft = 1";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $userID);

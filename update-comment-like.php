@@ -41,5 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['commentID'])) {
     echo json_encode(['success' => false, 'message' => 'Invalid request or missing comment ID.']);
 }
 
+//close db connection
 $conn->close();
 ?>

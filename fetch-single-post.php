@@ -2,10 +2,8 @@
 
 header('Content-Type: application/json');
 
+//connect to database
 include 'db.php';
-
-
-
 
 
 //check if the Post ID is in the request
@@ -48,6 +46,6 @@ if (isset($_GET['id'])) {
     echo json_encode(['success' => false, 'error' => 'Post ID not provided']); //if post id not provided from url, return an error
 }
 
-
+//close database connection
 $conn->close();
 ?>

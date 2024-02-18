@@ -5,7 +5,7 @@ include 'db.php';
 
 //check if PostID is set and is a valid integer
 if (isset($_POST['postID']) && is_numeric($_POST['postID'])) {
-    // Sanitize input
+    //sanitize input
     $postID = $_POST['postID'];
     
     //prepare SQL statement to update the isDraft field

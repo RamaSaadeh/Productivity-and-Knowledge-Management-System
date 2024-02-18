@@ -1,6 +1,8 @@
 <?php
 
 header('Content-Type: application/json');
+
+//connect to database
 include 'db.php'; 
 
 //check if it is a "POST" request method and get comment id
@@ -32,5 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['commentID'])) {
     echo json_encode(['success' => false, 'message' => 'Invalid request.']);
 }
 
+//close db connection
 $conn->close();
 ?>

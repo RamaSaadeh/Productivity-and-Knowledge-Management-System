@@ -1,6 +1,6 @@
 <?php
 
-
+//db connection details
 $servername = "localhost";
 $username = "host";
 $password = "Team017FTW!";

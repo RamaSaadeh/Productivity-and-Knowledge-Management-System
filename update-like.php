@@ -5,7 +5,7 @@ include 'db.php';
 //check if request method is a post
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //get post ID from the request
-    $postID = mysqli_real_escape_string($conn, $_POST['postID']);
+    $postID = mysqli_real_escape_string($conn, $_POST['postID']); //get post id from request
     $userID = mysqli_real_escape_string($conn, $_POST['userID']); //get user id from request
 
    
