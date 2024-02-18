@@ -472,10 +472,11 @@ function isValidDateString(str) {
   return true;
 }
 
-function addnewtask() {
 
+
+document.querySelector('.addtask-form').addEventListener('submit', function(event) {
+  // Prevent the default form submission behavior
   event.preventDefault();
-
   var newtaskID = document.getElementById("new_taskID").value;
   var newtaskName = document.getElementById("new_taskname").value;
   var newtaskStatus = document.getElementById("new_statusselect").value; 
@@ -519,7 +520,60 @@ function addnewtask() {
  } else{
   alert("Invalid date entered");
  }
-}
+
+});
+
+
+
+
+// function addnewtask() {
+
+//   event.preventDefault();
+
+//   var newtaskID = document.getElementById("new_taskID").value;
+//   var newtaskName = document.getElementById("new_taskname").value;
+//   var newtaskStatus = document.getElementById("new_statusselect").value; 
+//   var newhrs = document.getElementById("new_hrs").value; 
+//   var newtaskDeadline = document.getElementById("new_deadline").value; 
+
+//   //to create an array of all staff assigned to this task
+//   var selectdropdown = document.getElementById("new_choosestaff_select");
+//   var selectedOptions = selectdropdown.selectedOptions;
+//   var newtaskStaff = [];
+//   for (var i = 0; i < selectedOptions.length; i++) {
+//     newtaskStaff.push(selectedOptions[i].value);
+//   }
+
+
+  
+//  if(isValidDateString(newtaskDeadline)){
+//   $.ajax({
+//     type: "POST",
+//     url: "add_new_task.php",
+//     data: {
+//       projectID: selectedProjectID,
+//       taskID: newtaskID,
+//       name: newtaskName,
+//       status: newtaskStatus,
+//       hrs: newhrs,
+//       deadline: newtaskDeadline,
+//       staff: newtaskStaff
+//     },
+//     success: function (response) {
+//       if (response === "invalid") {
+//         alert("Something went wrong");
+//       } 
+
+//       window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+//     }
+//   });
+
+//   // now staff not in the team are loaded into the <select> we are going to open the form
+//   document.getElementById("addtaskopaquebg").style.display = "none";
+//  } else{
+//   alert("Invalid date entered");
+//  }
+// }
 
 function closeaddtaskForm() {
   document.getElementById("addtaskopaquebg").style.display = "none";
