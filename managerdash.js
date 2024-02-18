@@ -509,6 +509,7 @@ document.querySelector('.addtask-form').addEventListener('submit', function(even
       if (response === "invalid") {
         alert("Something went wrong");
       } 
+      alert("hi");
       document.getElementById("addtaskopaquebg").style.display = "none";
       window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
     }
