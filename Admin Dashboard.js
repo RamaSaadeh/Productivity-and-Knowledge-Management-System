@@ -29,9 +29,7 @@
           var leadingCell = document.createElement("td");
           leadingCell.classList.add("teamLeading");
           leadingCell.textContent = item['leading'];
-          var managingCell = document.createElement("td");
-          managingCell.classList.add("teamManaging");
-          managingCell.textContent = item['managing'];
+          
 
         // create a edit user button
         var editCell = document.createElement("td");
@@ -59,7 +57,7 @@
           newRow.appendChild(roleCell);
           newRow.appendChild(emailCell);
           newRow.appendChild(leadingCell);
-          newRow.appendChild(managingCell);
+          
           newRow.appendChild(editCell);
           newRow.appendChild(deleteCell);
 
@@ -84,7 +82,7 @@
           error: function(xhr, status, error) { // Function to handle errors
               alert("An error occurred while fetching users data: " + error);
           }
-      }); 
+    }); 
 
 
         //replacing staffData with a different json array (for ease of testing)
@@ -319,7 +317,7 @@ function newElement() {
             userLevel = tr[i].getElementsByClassName("userLevel")[0];
             staffId = tr[i].getElementsByClassName("staffId")[0];
             teamLead = tr[i].getElementsByClassName("teamLeading")[0];
-            teamMan = tr[i].getElementsByClassName("teamManaging")[0];
+
             
             if (fullName && fullName.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
@@ -353,16 +351,14 @@ function newElement() {
     
             var projectName = tr[i].getElementsByClassName("projectName")[0];
             var projectId = tr[i].getElementsByClassName("projectId")[0];
-            var teamManager = tr[i].getElementsByClassName("teamManager")[0];
+            
             var teamLeader = tr[i].getElementsByClassName("teamLeader")[0];
             
             if (projectName && projectName.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
             } else if (projectId && projectId.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
-            } else if (teamManager && teamManager.textContent.toUpperCase().trim().indexOf(filter) > -1){
-                tr[i].style.display = "";
-            } else if (teamLeader && teamLeader.textContent.toUpperCase().trim().indexOf(filter) > -1){
+            }  else if (teamLeader && teamLeader.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
             } else{
                 tr[i].style.display = "none";
