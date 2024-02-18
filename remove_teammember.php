@@ -22,6 +22,11 @@ $sql = "DELETE FROM task_staff WHERE project_id = '$project_ID_toremovefrom' AND
 
 $result = $conn->query($sql);
 
+$sql = "UPDATE projects SET leader_id = 0 WHERE project_id = '$project_ID_toremovefrom' AND leader_id = '$user_ID_to_remove';";
+
+$result = $conn->query($sql);
+
+
 $conn->close();
 
 ?>
