@@ -92,7 +92,7 @@ background-color: #ddd;
 outline: none;
 }
 .inviteuser-form .btn {
-background-color: #be6b25;
+background-color: #efbf1a;
 color: white;
 padding: 16px 20px;
 border: none;
@@ -112,13 +112,12 @@ opacity: 1;
 
 .nav{
   max-width: fit-content;
-  max-height: fit-content;
+  max-height: 90px;
 }
 
 .navbar{
 height: 90px;
 border: none;
-
 }
 
 .navbar-brand {
@@ -290,7 +289,7 @@ textarea {
 /* Style the submit button */
 #postButton, #draftButton {
   
-	background: #007bff;
+	background: #2980B9;
     color: white; 
     padding: 10px 20px; 
     border: none; 
@@ -322,7 +321,7 @@ textarea {
 
 
 #postButton:hover {
-    background-color: #0056b3;
+    background-color: #216a9b;
 }
 
 #draftButton:hover {
@@ -537,7 +536,7 @@ textarea {
 }
 
 .save-draft:hover{
-    background-color: green; 
+    background-color: #52ab0c; 
     color: white;
 
 }
@@ -549,7 +548,7 @@ textarea {
 }
 
 .post-draft{
-	background: #007bff; 
+	background: #2980B9; 
     color: white;
     border: none;
     cursor: pointer;
@@ -561,7 +560,7 @@ textarea {
 }
 
 .post-draft:hover{
-    background-color: #0056b3;
+    background-color: #216a9b;
     color: #dbe300;
 
 }
@@ -730,45 +729,32 @@ textarea {
     margin-bottom: 5px;
 }
 
-
+/*Footer Content*/
 .footer {
-    background: #303036;
-    color: #d3d3d3;
-    height: 140px;
-    position: relative;
+  background: #303036;
+  color: #d3d3d3;
+  height: 140px;
+  position: relative;
 }
-
 .footer .footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    margin-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin-left: 2vw;
 }
-
 .footer-title {
-    font-family: 'Churchward Design Bold'; 
-    font-size: 40px; 
-    margin-bottom: 20px;  
+  font-family: 'Churchward Design Bold'; 
+  font-size: 3vh;  
+  margin-bottom: 0.5vh; 
 }
-
-
 .footer .footer-content .footer-section {
-    flex: 1;
-    padding: 2px;
+  flex: 1;
+  padding: 2px;
 }
-
-
-
 .footer .footer-content .about .contact-details span {
-    display: block;
-    font-size: 1.1em;
-}
-
-.footer-section.about .footer-title {
-
-  margin-right: 10px; /* Adds some space on the right */
-
+  display: block;
+  font-size: 1.1em;
 }
 
 #notification-popup {

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Include FontAwesome CSS -->
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
@@ -92,8 +93,21 @@
 		</div>
 	  </div>
 	</div>
-	
-	
+
+	<!-- Edit Comment Modal -->
+	<div id="editCommentModal" class="modal">
+		<div class="modal-content">
+			<h4>Edit Comment</h4>
+			<textarea id="editedCommentContent" rows="4" cols="50" placeholder="Enter your edited comment"></textarea>
+			<div class="modal-actions">
+				<button id="confirmEdit" class="modal-yes">Save Changes</button>
+				<button id="cancelEdit" class="modal-no">Cancel</button>
+			</div>
+		</div>
+	</div>
+
+
+
 	   <!-- modal content for deleting posts -->
 	<div id="deletePostModal" class="modal">
 	  <div class="modal-content">
@@ -134,8 +148,8 @@
 			  
 			  <div class="comment-metadata">
 				<div class="comment-user-date">
-				  <i class="far fa-user"> id="authorName"</i>
-				  &nbsp;
+				  <i class="far fa-user" id="authorName"></i>					
+ 				  &nbsp;				 
 				  <i class="far fa-calendar" id="postDate"></i>
 				  <span class="date-text"></span> 
 				</div>

@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					$('#postTitle').text(post.Title);
 					$('#postContent').html(post.Content);
 					$('#authorName').text(post.AuthorName);
-					$('#postDate').text(post.DatePublished);
+					$('#postDate').text(post.DateCreated);
 					$('#likeCount').text(post.LikesCount);
 
 					//show or hide edit and delete buttons based on `IsUserOwner` value
@@ -140,6 +140,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 		//handles liking posts
 		$('.like-post').click(function() {
+			var details = sessionStorage.getItem("user");
+			var userID = JSON.parse(details).id;
 			const isLiked = $(this).hasClass('liked');
 
 			$.ajax({
@@ -147,6 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				type: 'POST',
 				dataType: 'json',
 				data: {
+					userID: userID,
 					postID: postID,
 					isLiked: isLiked
 				},
@@ -177,6 +180,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 	
 	$(document).ready(function() {
+		//get user id
+		var details = sessionStorage.getItem("user");
+		var userID = JSON.parse(details).id;
+
 		//extract postID from the URL parameters
 		const urlParams = new URLSearchParams(window.location.search);
 	
@@ -187,7 +194,9 @@ document.addEventListener("DOMContentLoaded", function () {
 				url: "fetch-comments.php",
 				type: "GET",
 				dataType: "json",
-				data: { id: postID },
+				data: { id: postID, 
+						userID: userID
+				},
 				 success: function(responseComments) {
 					//clear previous comments
 					$('#previousComments').empty();
@@ -908,11 +917,16 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 		//function to fetch comments for a post
 		function fetchComments(postID) {
+			var details = sessionStorage.getItem("user");
+			var userID = JSON.parse(details).id;
+
 			$.ajax({
 				url: "fetch-comments.php",
 				type: "GET",
 				dataType: "json",
-				data: { id: postID },
+				data: { id: postID,
+						userID: userID
+				},
 				 success: function(responseComments) {
 					//clear previous comments
 					$('#previousComments').empty();
@@ -921,35 +935,41 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 					//loop through comments and append to sidebar 
 					comments.forEach(function(comment) {
+
+						const editDeleteIcons = comment.IsUserOwner ? `
+						  <i class="fas fa-edit edit-comment" title="Edit"></i>
+						  <i class="fas fa-trash-alt delete-comment" title="Delete"></i>` : '';
+
+					   	const likeButtonClass = comment.HasLiked ? 'like-comment liked' : 'like-comment';
+						const likeButtonTitle = comment.HasLiked ? 'Unlike' : 'Like';
+
 						$('#previousComments').append(`
-							<div class="media comment" data-comment-id="${comment.CommentID}">
-								<div class="media-body comment-content">${comment.CommentContent}</div>
-								<div class="comment-metadata">
-									<div class="comment-user-date">
-										<i class="far fa-user">${comment.AuthorName}</i>
-										&nbsp;
-										<i class="far fa-calendar">${comment.LastModified}</i>
-										<span class="comment-edited" style="display: none;">(edited)</span>
-									</div>
-									<div class="comment-actions">
-										<i class="fas fa-edit edit-comment" title="Edit"></i>
-										<i class="fas fa-trash-alt delete-comment" title="Delete"></i>
-										<i class="fas fa-thumbs-up like-comment" title="Like"></i>
-										<span class="like-count">${comment.Likes}</span>
-									</div>
-								</div>
+						<div class="media comment" data-comment-id="${comment.CommentID}">
+							<div class="media-body comment-content">${comment.CommentContent}</div>
+							<div class="comment-metadata">
+						 		<div class="comment-user-date">
+							 		<i class="far fa-user">${comment.AuthorName}</i>
+									&nbsp;
+							 		<i class="far fa-calendar">${comment.LastModified}</i>
+							 		<span class="comment-edited" style="display: none;">(edited)</span>
+						 		</div>
+						 		<div class="comment-actions">
+							 		${editDeleteIcons}
+							 		<i class="fas fa-thumbs-up ${likeButtonClass}" title="${likeButtonTitle}"></i>
+							 		<span class="like-count">${comment.Likes}</span>
+						 		</div>
 							</div>
-						`);
-					});
-				},
-				error: function(xhr, status, error) {
-					console.error("Error fetching comments: " + error);
-				}
-			});
-		}
+				 		</div>
+					`);
+				});
+			},
+			error: function(xhr, status, error) {
+				console.error("Error fetching comments: " + error);
+			}
+		});
 	
 	}
-	
+}
 
 	function sortByTop() {
 		//sort the comments based on the like count

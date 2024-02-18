@@ -40,6 +40,7 @@ function specialCheck() {
 }
 
 function submitClick() {
+	event.preventDefault();
 	colour = "#D2D2D2";
 	document.getElementById("password").style.borderColor = colour;
 	$("#passwordDetails").slideUp();
@@ -60,13 +61,12 @@ function submitClick() {
 	else {
 		$.ajax({
 			type: "POST",
-			url: "register.php",
+			url: "Register.php",
 			data: {
 				action: "check_email",
 				email: email
 			},
 			success: function (response) {
-				alert(response);
 				if (response == "exists") {
 					registerError.innerHTML = "Email address is already in use";
 					colour = "red";
@@ -76,7 +76,7 @@ function submitClick() {
 				else {
 					$.ajax({
 						type: "POST",
-						url: "register.php",
+						url: "Register.php",
 						data: {
 							action: "register_user",
 							firstName: firstName,
@@ -95,6 +95,15 @@ function submitClick() {
 				alert("error");
 			}
 		});
+		/*$.ajax({
+			url: 'test_connection.php',
+			success: function (response) {
+				alert(response);
+			},
+			error: function () {
+				alert("error");
+			}
+		});*/
 	}
 }
 

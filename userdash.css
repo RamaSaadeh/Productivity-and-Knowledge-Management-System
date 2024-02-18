@@ -70,7 +70,7 @@ background-color: #ccc;
 }
 
 .container input:checked ~ .radio {
-background-color: #be6b25;
+background-color: #2980B9;
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -230,7 +230,7 @@ opacity: 1;
 
 .nav{
   max-width: fit-content;
-  max-height: fit-content;
+  max-height: 90px;
 }
 
 .navbar{
@@ -553,7 +553,7 @@ tr:nth-child(odd){
 }
 
 th{
-  background-color: #f5d384;
+  background-color: #f6dc80;
   font-size: 90%;
 }
 
@@ -659,7 +659,7 @@ user-select: none;
 
 /* Darker background-color on hover */
 #toDoUL li:hover {
-  background: #eec46b;
+  background: #f6dc80;
 }
 
 #toDoUL li {

@@ -22,7 +22,7 @@ async function getData() {
 						array[1] = 'a';
 						window.location.replace("AdminDashboard.html");
 						break;
-					case 'General':
+					case 'General Staff':
 						array[1] = 'g';
 						window.location.replace("userdash.html");
 						break;

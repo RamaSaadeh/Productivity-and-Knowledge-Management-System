@@ -61,7 +61,10 @@ $(document).ready(function() {
         type: "GET",
         dataType: "json", //this ensures jQuery treats the response as JSON.
         data: {userID: userID},
-        success: function(posts) {
+		success: function (posts) {
+			if (posts.length == 0) {
+				$('.all-content').append("<br><br><h3>There are currently no posts!</h3>");
+			}
             posts.forEach(function(post) {
                 var postClass = post.Topic.toLowerCase().replace(/\s+/g, '-');
                 var postHTML = `
