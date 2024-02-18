@@ -137,8 +137,27 @@
 
 	<script>
 		document.getElementById("openTab").click();
-        var details = sessionStorage.getItem("user");
-        var role = JSON.parse(details).role;
+        try {
+            var details = sessionStorage.getItem("user");
+            var role = JSON.parse(details).role;
+            switch (role) {
+                case "a":
+                    break;
+                case "g":
+                    break;
+                case "m":
+                    break;
+                case "l":
+                    break;
+                default:
+                    window.location.replace("login.html");
+                    break;
+            }
+        }
+        catch {
+            window.location.replace("login.html");
+        }
+
         var email = JSON.parse(details).email;
         //Decides which Dash to link to
         dashboard.addEventListener("click", function () {
