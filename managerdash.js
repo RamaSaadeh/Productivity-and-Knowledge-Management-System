@@ -75,56 +75,6 @@ dashboard.addEventListener("click", function() {
   }
 });
 
-var selectedProjectID = 0;
-
-window.addEventListener('load', function() {
-  const urlParams = new URLSearchParams(window.location.search);
-  selectedProjectID = urlParams.get('selected_project_ID');
-
-  $.ajax({
-    type: "POST",
-    url: "load_project_todash.php",
-    data: {
-      ID: selectedProjectID
-    },
-    success: function (response) {
-      if (response === "invalid") {
-        alert("Something went wrong");
-      } else {	
-
-        var projectname = JSON.parse(response)[0];
-        var allTasks = JSON.parse(response)[1]; //[0] takes the first half of the encoded json array
-        var allStaff = JSON.parse(response)[2]; //[1] takes the first half of the encoded json array
-
-        document.getElementById("section_header").innerHTML = '<div class="section-header">' + projectname + '<button class="addtaskbtn" onclick="openaddtaskForm()">Add Task</button></div>';
-
-
-        for (var taskrow in allTasks) { //for every task returned, add each to the table
-          addtaskTotable(allTasks[taskrow][0],allTasks[taskrow][1],allTasks[taskrow][2],allTasks[taskrow][3],allTasks[taskrow][4],allTasks[taskrow][5],allTasks[taskrow][6]);
-        }
-
-
-        for (var staffrow in allStaff) { //for every staff returned, add each to the table
-          addStaffTotable(allStaff[staffrow][0],allStaff[staffrow][1],allStaff[staffrow][2],allStaff[staffrow][3]);
-        }
-      }
-    }
-  });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function addtaskTotable(task_id,task_name,hrs_remaining,status,deadline,assigned_to,notes){
 
@@ -167,7 +117,38 @@ function addStaffTotable(user_id,name,role,email){
 }
 
 
+const urlParams = new URLSearchParams(window.location.search);
+const selectedProjectID = urlParams.get('selected_project_ID');
 
+$.ajax({
+  type: "POST",
+  url: "load_project_todash.php",
+  data: {
+    ID: selectedProjectID
+  },
+  success: function (response) {
+    if (response === "invalid") {
+      alert("Something went wrong");
+    } else {	
+
+      var projectname = JSON.parse(response)[0];
+      var allTasks = JSON.parse(response)[1]; //[0] takes the first half of the encoded json array
+      var allStaff = JSON.parse(response)[2]; //[1] takes the first half of the encoded json array
+
+      document.getElementById("section_header").innerHTML = '<div class="section-header">' + projectname + '<button class="addtaskbtn" onclick="openaddtaskForm()">Add Task</button></div>';
+
+
+      for (var taskrow in allTasks) { //for every task returned, add each to the table
+        addtaskTotable(allTasks[taskrow][0],allTasks[taskrow][1],allTasks[taskrow][2],allTasks[taskrow][3],allTasks[taskrow][4],allTasks[taskrow][5],allTasks[taskrow][6]);
+      }
+
+
+      for (var staffrow in allStaff) { //for every staff returned, add each to the table
+        addStaffTotable(allStaff[staffrow][0],allStaff[staffrow][1],allStaff[staffrow][2],allStaff[staffrow][3]);
+      }
+    }
+  }
+});
 
 
 
@@ -251,9 +232,8 @@ function addstaff_toteam(){
       if (response === "invalid") {
         alert("Something went wrong");
       } 
-      
-      window.location.reload(true);
-      // window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+
+      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
     }
   });
 
@@ -320,13 +300,12 @@ function maketeamleader(){
         alert("Something went wrong");
       } 
 
-      // window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
-      window.location.reload(true);
+      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
     }
   });
 
   // now staff not in the team are loaded into the <select> we are going to open the form
-  // document.getElementById("changeroleopaquebg").style.display = "none";
+  document.getElementById("changeroleopaquebg").style.display = "none";
 }
 
 function closechangeroleForm() {
@@ -386,13 +365,13 @@ function remove_fromteam(){
       if (response === "invalid") {
         alert("Something went wrong");
       } 
-      window.location.reload(true);
-      // window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+
+      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
     }
   });
 
   // now staff not in the team are loaded into the <select> we are going to open the form
-  // document.getElementById("removestaffopaquebg").style.display = "none";
+  document.getElementById("removestaffopaquebg").style.display = "none";
 }
 
 function closeremovestaffForm() {
@@ -493,60 +472,9 @@ function isValidDateString(str) {
   return true;
 }
 
-
-// document.querySelector('.addtask-form').addEventListener('submit', function(event) {
-//   // Prevent the default form submission behavior
-//   // event.preventDefault();
-
-//   var newtaskID = document.getElementById("new_taskID").value;
-//   var newtaskName = document.getElementById("new_taskname").value;
-//   var newtaskStatus = document.getElementById("new_statusselect").value; 
-//   var newhrs = document.getElementById("new_hrs").value; 
-//   var newtaskDeadline = document.getElementById("new_deadline").value; 
-
-//   //to create an array of all staff assigned to this task
-//   var selectdropdown = document.getElementById("new_choosestaff_select");
-//   var selectedOptions = selectdropdown.selectedOptions;
-//   var newtaskStaff = [];
-//   for (var i = 0; i < selectedOptions.length; i++) {
-//     newtaskStaff.push(selectedOptions[i].value);
-//   }
-
-//  if(isValidDateString(newtaskDeadline)){
-//   $.ajax({
-//     type: "POST",
-//     url: "add_new_task.php",
-//     data: {
-//       projectID: selectedProjectID,
-//       taskID: newtaskID,
-//       name: newtaskName,
-//       status: newtaskStatus,
-//       hrs: newhrs,
-//       deadline: newtaskDeadline,
-//       staff: newtaskStaff
-//     },
-//     success: function (response) {
-//       if (response === "invalid") {
-//         alert("Something went wrong");
-//       } 
-//       alert("hi");
-//       document.getElementById("addtaskopaquebg").style.display = "none";
-//       window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
-//     }
-//   });
-
-//  } else{
-//   alert("Invalid date entered");
-//  }
-
-// });
-
-
-
-
 function addnewtask() {
 
-  // event.preventDefault();
+  event.preventDefault();
 
   var newtaskID = document.getElementById("new_taskID").value;
   var newtaskName = document.getElementById("new_taskname").value;
@@ -582,12 +510,12 @@ function addnewtask() {
         alert("Something went wrong");
       } 
 
-      // window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
-      window.location.reload(true);
+      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
     }
   });
 
-  // document.getElementById("addtaskopaquebg").style.display = "none";
+  // now staff not in the team are loaded into the <select> we are going to open the form
+  document.getElementById("addtaskopaquebg").style.display = "none";
  } else{
   alert("Invalid date entered");
  }
@@ -719,10 +647,7 @@ function openedittaskForm(button){
   });
 }
 
-document.querySelector('.edittask-form').addEventListener('submit', function(event) {
-  // Prevent the default form submission behavior
-  event.preventDefault();
-
+function save_changesto_task(){
   var task_id = document.getElementById("edit_taskID").value;
   var task_name = document.getElementById("edit_taskname").value;
   var task_hrs = document.getElementById("edit_hrs").value;
@@ -766,59 +691,7 @@ document.querySelector('.edittask-form').addEventListener('submit', function(eve
         },
       });
   }
-
-
-  // Handle the form submission using AJAX or other custom logic
-});
-
-// function save_changesto_task(){
-
-//   event.preventDefault();
-
-//   var task_id = document.getElementById("edit_taskID").value;
-//   var task_name = document.getElementById("edit_taskname").value;
-//   var task_hrs = document.getElementById("edit_hrs").value;
-//   var task_status = document.getElementById("edit_statusselect").value;
-//   var task_deadline = document.getElementById("edit_deadline").value;
-
-//   //to create an array of all staff assigned to this task
-//   var selectdropdown = document.getElementById("edit_choosestaff");
-//   var selectedOptions = selectdropdown.selectedOptions;
-//   var newtaskStaff = [];
-//   for (var i = 0; i < selectedOptions.length; i++) {
-//     newtaskStaff.push(selectedOptions[i].value);
-//   }
-
-  
-//   var confirmation = confirm("Are you sure you want to change task details?");
-
-//   if(confirmation){
-//     $.ajax({
-//         type: "POST",
-//         url: "change_task_details.php",
-//         data: {
-//           projectID: selectedProjectID,
-//           taskID: task_id,
-//           name: task_name,
-//           status: task_status,
-//           hrs: task_hrs,
-//           deadline: task_deadline,
-//           staff: newtaskStaff
-//         },
-//         success: function (response) {
-//           if (response === "invalid") {
-//             alert("Something went wrong");
-//           } else {
-          
-//               // Hide the task notes form
-//               document.getElementById("edittaskopaquebg").style.display = "none";
-//               // Redirect to the manager dashboard
-//               window.location.href = "managerdash.html?selected_project_ID=" + selectedProjectID;
-//           }
-//         },
-//       });
-//   }
-// }
+}
 
 function delete_task(){
   var task_id = document.getElementById("edit_taskID").value;
