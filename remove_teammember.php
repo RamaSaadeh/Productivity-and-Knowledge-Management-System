@@ -16,6 +16,12 @@ $sql = "DELETE FROM project_staff WHERE project_id = '$project_ID_toremovefrom' 
 
 $result = $conn->query($sql);
 
+
+//SQL query that deletes the user off all tasks they're assigned to 
+$sql = "DELETE FROM task_staff WHERE project_id = '$project_ID_toremovefrom' AND user_id = '$user_ID_to_remove';";
+
+$result = $conn->query($sql);
+
 $conn->close();
 
 ?>

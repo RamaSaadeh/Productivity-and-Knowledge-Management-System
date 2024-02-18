@@ -12,6 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         mysqli_begin_transaction($conn);
 
         try {
+            
+            //delete comment likes associated with comments deleted
+            $deleteCommentLikesSql = "DELETE FROM CommentLikes WHERE CommentID IN (SELECT CommentID FROM Comments WHERE PostID = '$postId')";
+            if (!mysqli_query($conn, $deleteCommentLikesSql)) {
+                throw new Exception('Failed to delete comment likes');
+            }
+
             //delete comments associated to specific post
             $deleteCommentsSql = "DELETE FROM Comments WHERE PostID = '$postId'";
             if (!mysqli_query($conn, $deleteCommentsSql)) {

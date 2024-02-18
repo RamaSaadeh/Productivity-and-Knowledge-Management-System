@@ -36,12 +36,6 @@ if (isset($_GET['id'])) {
             $comments[] = $row;
         }
        
-           
-
-          
-      
-
-
         //close the connection
         $conn->close();
 
