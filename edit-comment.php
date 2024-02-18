@@ -16,9 +16,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['commentID']) && isset(
 
     if ($result) {
         //comment updated successfully
-        echo json_encode(['success' => true, 'message' => 'Comment updated successfully.']);
+        $fetchQuery = "SELECT LastModified FROM Comments WHERE CommentID = '$commentID'";
+        $fetchResult = mysqli_query($conn, $fetchQuery);
+        $row = mysqli_fetch_assoc($fetchResult);
+        $lastModified = $row['LastModified'];
+
+        echo json_encode([
+            'success' => true, 
+            'message' => 'Comment updated successfully.',
+            'lastModified' => $lastModified
+        ]);
     } else {
-        //error updating comment
+        // Error updating comment
         echo json_encode(['success' => false, 'message' => 'Failed to update comment.']);
     }
 } else {

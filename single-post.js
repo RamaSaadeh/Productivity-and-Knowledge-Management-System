@@ -927,25 +927,30 @@ document.addEventListener("DOMContentLoaded", function () {
 		document.getElementById('editCommentModal').style.display = 'none'; // Hide the edit modal
 	});
 	
-	// Function to update the comment
+	
+	//function to update the comment
 	function updateComment(commentId, updatedContent) {
-		// Send an AJAX request to update the comment in the database
 		fetch('edit-comment.php', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
 			},
-			// Make sure the keys match what the PHP script expects
 			body: `commentID=${encodeURIComponent(commentId)}&newContent=${encodeURIComponent(updatedContent)}`
 		})
 		.then(response => response.json())
 		.then(data => {
-			if (data.success) {			
-				// Update the comment content in the HTML
+			if (data.success) {
+				//update the comment content in the HTML
 				document.querySelector(`.comment[data-comment-id="${commentId}"] .comment-content`).textContent = updatedContent;
-				// Hide the edit modal
+				
+				//update the LastModified date in the HTML
+				const lastModifiedDateElement = document.querySelector(`.comment[data-comment-id="${commentId}"] .far.fa-calendar`);
+				if (lastModifiedDateElement) {
+					lastModifiedDateElement.nextSibling.textContent = ` ${data.lastModified}`; 
+				}
+
+				//hide the edit modal
 				document.getElementById('editCommentModal').style.display = 'none';
-				fetchComments(postID); 
 			} else {
 				alert('Failed to update comment: ' + data.message);
 			}
@@ -954,10 +959,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			console.error('Error:', error);
 			alert('Error updating comment.');
 		});
-
-
-		
 	}
+
 	
 
 
