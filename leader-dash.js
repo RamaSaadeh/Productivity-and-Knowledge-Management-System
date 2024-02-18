@@ -63,7 +63,7 @@ $.ajax({
         var array = [1, 2, 3, 4, 5];
         array.forEach(function (project) {
             alert(project);
-            document.getElementById("values").innerHTML += project;
+            //document.getElementById("values").innerHTML += project;
         });
     },
     error: function () {
