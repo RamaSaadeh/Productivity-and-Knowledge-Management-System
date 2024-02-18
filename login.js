@@ -41,3 +41,8 @@ async function getData() {
 		}
 	});	
 }
+
+function clearSessionStorage() {
+	let obj = { id: "none", role: "none", email: "none" };
+	sessionStorage.setItem("user", JSON.stringify(obj));
+}
