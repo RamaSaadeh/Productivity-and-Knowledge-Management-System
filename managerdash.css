@@ -413,7 +413,14 @@ body {
 	border-radius:15px;
 	height: 400px;
 }
-.section-header {
+#section_header {
+	font-size: 25;
+	font-weight: 100;
+	color: white;
+	margin-left: 0.5%;
+}
+
+.section-header{
 	font-size: 25;
 	font-weight: 100;
 	color: white;

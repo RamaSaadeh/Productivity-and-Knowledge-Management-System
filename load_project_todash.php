@@ -14,6 +14,24 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+$tasks_and_staff = array();
+
+
+$sql = "SELECT proj_name FROM projects WHERE project_id='$project_ID_toload';";
+
+$result = $conn->query($sql);
+
+$projectname = "";
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $projectname = $row['proj_name'];
+    }
+}
+
+array_push($tasks_and_staff, $projectname);
+
+
 // SQL query that fetches all tasks from our specified project 
 $sql = "SELECT task_id, task_name, hrs_remaining, status, deadline, notes FROM `tasks` WHERE project_id='$project_ID_toload';";
 
@@ -116,7 +134,6 @@ if ($result->num_rows > 0) {
     }
 }
 
-$tasks_and_staff = array();
 
 array_push($tasks_and_staff, $alltasks);
 array_push($tasks_and_staff, $allstaff);
