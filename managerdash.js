@@ -29,9 +29,10 @@ function sendInvite() {
 
 //Decides which Dash to Link to
 dashboard.addEventListener("click", function() {
-  var user = sessionStorage.getItem("user");
+  var details = sessionStorage.getItem("user");
+  var role = JSON.parse(details).role;
   var a = document.getElementById("dashboard");
-  switch (user) {
+  switch (role) {
     case "a":
       a.href = "AdminDashboard.html";
       break;
@@ -39,7 +40,10 @@ dashboard.addEventListener("click", function() {
       a.href = "userdash.html";
       break;					
     case "m":
-      a.href = "managerdash.html";
+      a.href = "accessproject.php";
+      break;
+    case "l":
+      a.href = "accessproject.php";
       break;
     default:
       a.href = "#";
