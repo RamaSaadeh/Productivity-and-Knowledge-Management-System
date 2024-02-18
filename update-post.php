@@ -11,6 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = isset($_POST['title']) ? mysqli_real_escape_string($conn, $_POST['title']) : '';
     $content = isset($_POST['content']) ? mysqli_real_escape_string($conn, $_POST['content']) : '';
 
+    //enforce character limits
+    if (strlen($topic) > 40 || strlen($title) > 40 || strlen($content) > 1500) {
+        echo json_encode(['success' => false, 'message' => 'Character limit exceeded']);
+        exit; //stop execution if any limit is exceeded
+    }
+
     //check if all required fields are provided
     if (!empty($postId) && !empty($topic) && !empty($title) && !empty($content)) {
         //SQL query to update post thats changed by user

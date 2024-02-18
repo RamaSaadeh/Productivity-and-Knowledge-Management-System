@@ -470,30 +470,80 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
-		//function to toggle content editable state and enforce character limit
-			//function to toggle content editable state and enforce character limit
-			function editPost(editIcon) {
-				//toggle edit/save icon
-				  const isEditing = editIcon.classList.contains('fa-edit');
-				  editIcon.classList.toggle('fa-save', isEditing);
-				  editIcon.classList.toggle('fa-edit', !isEditing);
-		  
-			   //toggle content editable state
-				  const elements = ['#postTitle', '#postTopic', '#postContent'];
-				  elements.forEach(selector => {
-					  const element = document.querySelector(selector);
-					  const isEditable = element.isContentEditable;
-					  element.contentEditable = !isEditable;
-		  
-					  if (isEditing) { 
-						  element.setAttribute('data-original-content', element.textContent);
-						  if (selector === '#postContent') element.focus(); // Focus on content by default
-					  }
-				  });
-		  
-			  //if switching from edit to save, open confirmation modal
-				  if (!isEditing) openSaveConfirmationModal();
-			  }
+	
+	//function to toggle content editable state and enforce character limit
+	function editPost(editIcon) {
+		//toggle edit/save icon
+		const isEditing = editIcon.classList.contains('fa-edit');
+		editIcon.classList.toggle('fa-save', isEditing);
+		editIcon.classList.toggle('fa-edit', !isEditing);
+
+		const elements = [
+			{selector: '#postTitle', limit: 40},
+			{selector: '#postTopic', limit: 40},
+			{selector: '#postContent', limit: 1500}
+		];
+		
+		elements.forEach(({selector, limit}) => {
+			const element = document.querySelector(selector);
+			const isEditable = element.isContentEditable;
+			element.contentEditable = !isEditable;
+			
+			if (isEditing) {
+				element.setAttribute('data-original-content', element.textContent);
+				
+				//add event listener for character limit
+				const enforceLimit = function() {
+					const charsLeftElement = document.querySelector('#contentCharsLeft');
+					let charsUsed = this.textContent.length;
+					let charsLeft = limit - charsUsed;
+					
+					//update the displayed remaining characters
+					if (selector === '#postContent') {
+						charsLeftElement.textContent = `${charsLeft} characters left`;
+					}
+
+					if (charsUsed > limit) {
+						//prevent additional characters
+						this.textContent = this.textContent.substring(0, limit);
+						charsUsed = limit; 
+						charsLeft = limit - charsUsed;
+						charsLeftElement.textContent = `${charsLeft} characters left`;
+
+						
+						const range = document.createRange();
+						const sel = window.getSelection();
+						range.selectNodeContents(this);
+						range.collapse(false);
+						sel.removeAllRanges();
+						sel.addRange(range);
+					}
+				};
+
+				if (!element.enforceLimitListener) {
+					element.addEventListener('input', enforceLimit);
+					element.enforceLimitListener = enforceLimit;
+				}
+
+				//initialize the character count display
+				if(selector === '#postContent') {
+					enforceLimit.call(element);
+				}
+
+				if (selector === '#postContent') element.focus();
+			} else {
+				//remove the listener if it exists to prevent duplication
+				if (element.enforceLimitListener) {
+					element.removeEventListener('input', element.enforceLimitListener);
+					delete element.enforceLimitListener;
+				}
+			}
+		});
+
+		//if switching from edit to save, handle accordingly
+		if (!isEditing) openSaveConfirmationModal();
+	}
+
 		  
 				
 		//close the modal
