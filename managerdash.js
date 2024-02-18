@@ -648,6 +648,8 @@ function openedittaskForm(button){
 }
 
 function save_changesto_task(){
+  event.preventDefault();
+
   var task_id = document.getElementById("edit_taskID").value;
   var task_name = document.getElementById("edit_taskname").value;
   var task_hrs = document.getElementById("edit_hrs").value;
@@ -682,15 +684,15 @@ function save_changesto_task(){
           if (response === "invalid") {
             alert("Something went wrong");
           } else {
-          
-              // Hide the task notes form
-              document.getElementById("edittaskopaquebg").style.display = "none";
+              
               // Redirect to the manager dashboard
               window.location.href = "managerdash.html?selected_project_ID=" + selectedProjectID;
+
           }
         },
       });
   }
+  document.getElementById("edittaskopaquebg").style.display = "none";
 }
 
 function delete_task(){
