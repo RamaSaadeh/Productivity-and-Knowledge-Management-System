@@ -59,11 +59,8 @@ $.ajax({
     },
     success: function (response) {
         var projects = JSON.parse(response);
-        var projArray = projects.split(',');
-        alert(projArray);
-        projArray.forEach(function (project) {
-            alert(project);
-            document.getElementById("values").innerHTML += project;
+        projects.forEach(function (project) {
+            document.getElementById("select-proj").innerHTML += project;
         });
     },
     error: function () {

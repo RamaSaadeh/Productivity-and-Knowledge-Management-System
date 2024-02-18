@@ -85,8 +85,6 @@
                 <label>Select your project to launch</label>
                 <select required id="select-proj" name="selected_project_ID">
                     <option value="" disabled selected>Select Project or Search by Typing</option>
-                    <div id="values">
-					</div>
                 </select>		
                 <button type="submit" id="exploreproj-btn" onclick="exploreClick()">Explore Project</button>
 
@@ -97,6 +95,10 @@
             <div id="or-word">Or</div>
         </div>
 
+		<div class="gotouser-flex">
+		    <div class="title">View Tasks</div> 
+			<button type="submit" id="viewtaskbtn" onclick="window.location.href='userdash.html'">View your tasks</button>
+		</div>
 
     </div>
 	

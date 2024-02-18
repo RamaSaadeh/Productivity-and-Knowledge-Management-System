@@ -211,6 +211,15 @@ body {
     height: 50%;
 }
 
+.gotouser-flex {
+    flex: 40%;
+    margin: 0.5%;
+    background-color: #d3d3d3;
+    padding: 15px;
+    border-radius: 15px;
+    height: 50%;
+}
+
 .or-flex {
     flex: 15%;
     margin: 0.5%;
@@ -245,6 +254,20 @@ body {
     margin: 4px 2px;
     cursor: pointer;
     margin-top: 5px;
+}
+
+#viewtaskbtn {
+    width: 100%;
+    height: 70px;
+    background-color: #efbf1a;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    margin-top: 20%;
 }
 
 #select-proj {
