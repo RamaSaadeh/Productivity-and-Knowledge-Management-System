@@ -194,8 +194,12 @@
      var i;
      for (i = 0; i < close.length; i++) {
        close[i].onclick = function() {
-         var div = this.parentElement;
-         div.style.display = "none";
+        // remove to do list item
+         var li = this.parentElement;
+         if (confirm(li.textContent + "\nAre you sure you want to delete this item?" )){
+          li.style.display = "none";
+         }
+         
        }
      }
      
