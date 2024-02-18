@@ -252,12 +252,14 @@ function getUserTasks(){
     $.ajax({
         url: 'return-tasks.php',
         type: 'POST',
+        dataType: "json",
         data: {'user_id': user_id},
         success: function(data) {
             // Handle the response from the server
             console.log('tasks retrieved successfully');
             tasksData = data;
             console.log(tasksData);
+            populateTasksTable();
         },
         error: function(xhr, status, error) {
             // Handle errors
@@ -268,6 +270,95 @@ function getUserTasks(){
 }
 
 
+function populateTasksTable(){
+    //replace sample content with user tasks
+    document.getElementById("taskTable").innerHTML = "";
+    var header = document.createElement("tr");
+    var heading1 = document.createElement("th");
+    heading1.classList.add("details");
+    heading1.textContent = "Details";
+    var heading2 = document.createElement("th");
+    heading2.classList.add("status");
+    heading2.textContent = "Status";
+    header.appendChild(heading1);
+    header.appendChild(heading2);
+    document.getElementById("taskTable").appendChild(header);
+    tasksData.forEach(function(task){
+        // accessing variables 
+        var task_id = document.createElement("h5");
+        task_id.textContent = "Task ID #" + task['task_id'];
+        var task_name = document.createElement("h4");
+        task_name.textContent = task['task_name'];
+        var hrs_left = document.createElement("h5");
+        hrs_left.textContent = "Hours remaining: " +task['hrs_remaining'];
+        var status = task['status'];
+        var deadline = document.createElement("h5");
+        deadline.textContent = "Deadline: " +task['deadline'];
+        var notes = document.createElement("h5");
+        var em = document.createElement("em");
+        notes.appendChild(em);
+        notes.textContent = task['notes'];
+        var proj_name = document.createElement("h5")
+        proj_name.textContent = "Project Name: " + task['proj_name'];
+
+        // populating table cells
+
+        var row = document.createElement("tr");
+        row.setAttribute("id", (String(task['task_id']) + String(task['project_id'])) );
+        leftCell = document.createElement("td");
+        leftCell.classList.add("details");
+        rightCell = document.createElement("td");
+        rightCell.classList.add("status");
+
+        // populate leftCell
+        leftCell.appendChild(task_name);
+        leftCell.appendChild(task_id);
+        leftCell.appendChild(proj_name);
+        leftCell.appendChild(deadline);
+        leftCell.appendChild(hrs_left);
+        leftCell.appendChild(notes);
+        row.appendChild(leftCell);
+
+        // populate rightCell
+
+        
+        rightCell.innerHTML = `
+            <label class="container">Not Started
+            <input type="radio" id="notStarted${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}" checked="true">
+            <span class="radio"></span>
+            </label>
+            <label class="container">On Track
+                <input type="radio" id="onTrack${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}">
+                <span class="radio"></span>
+            </label>
+            <label class="container">Completed
+                <input type="radio" id="completed${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}">
+                <span class="radio"></span>
+            </label>
+            <label class="container">Overdue
+                <input type="radio" id="overdue${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}">
+                <span class="radio"></span>
+            </label>
+            <br>
+            <input type="submit" class="submitButton" value="Save" onclick="saved(${task['task_id']}${task['project_id']})">
+            <h5 id="submitted${task['task_id']}${task['project_id']}" style="color: #2fe617; display: none">Status updated</h5> 
+            <br>
+            <h5 style="margin-top: 13px">Report Problem</h5>
+            <input name="problem" type="text" id="problem${task['task_id']}${task['project_id']}"><br>
+            <input type="submit" class="submitButton" value="Report" onclick="reportTaskProblem(1)">
+            <h5 id="reported${task['task_id']}${task['project_id']}" style="color: #2fe617; display: none">Problem reported</h5>
+            <br><br>
+            <h5>Request Training</h5>
+            <input name="training" type="text" id="training${task['task_id']}${task['project_id']}"><br>
+            <input type="submit" class="submitButton" value="Request" onclick="suggestTraining(${task['task_id']}${task['project_id']})">
+            <h5 id="requested" style="color: #2fe617; display: none">Training requested</h5>
+            <br>`;
+            row.appendChild(rightCell);
+            document.getElementById("taskTable").appendChild(row);
+          
+
+    });
+}
 
 
 
