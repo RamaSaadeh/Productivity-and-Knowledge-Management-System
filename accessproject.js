@@ -25,3 +25,26 @@ function sendInvite() {
     }
 }
 
+
+
+function create_newproj(){
+    
+    var newprojname = document.getElementById("newprojname").value;
+    alert(newprojname);
+
+    $.ajax({
+      type: "POST",
+      url: "create_newproj.php",
+      data: {
+        name: newprojname
+      },
+      success: function (response) {
+        if (response === "invalid") {
+          alert("Something went wrong");
+        } 
+        var selectedProjectID = JSON.parse(response);
+  
+        window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+      }
+    });
+}

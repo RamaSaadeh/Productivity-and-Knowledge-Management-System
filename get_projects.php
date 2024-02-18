@@ -1,11 +1,11 @@
 <?php
 
 $servername = "localhost";
-$username = "team017";
-$password = "xngk4RgUqJxMjKX3EMak";
-$database = "team017";
+$username = "host";
+$dbpassword = "Team017FTW!";
+$database = "makeitall";
 
-$conn = new mysqli($servername, $username, $password, $database);
+$conn = new mysqli($servername, $username, $dbpassword, $database);
 
 // SQL query to fetch options from the database
 $sql = "SELECT project_id, proj_name FROM `projects`;";

@@ -102,8 +102,11 @@ $.ajax({
       alert("Something went wrong");
     } else {	
 
-      var allTasks = JSON.parse(response)[0]; //[0] takes the first half of the encoded json array
-      var allStaff = JSON.parse(response)[1]; //[1] takes the first half of the encoded json array
+      var projectname = JSON.parse(response)[0];
+      var allTasks = JSON.parse(response)[1]; //[0] takes the first half of the encoded json array
+      var allStaff = JSON.parse(response)[2]; //[1] takes the first half of the encoded json array
+
+      document.getElementById("section_header").innerHTML = '<div class="section-header">' + projectname + '<button class="addtaskbtn" onclick="openaddtaskForm()">Add Task</button></div>';
 
 
       for (var taskrow in allTasks) { //for every task returned, add each to the table
@@ -403,11 +406,6 @@ function openaddtaskForm() {
             }
           }
         });
-
-
-
-
-
       }
     }
   });
@@ -709,13 +707,6 @@ function toggleTaskSortbyDropdown() {
   document.getElementById("tasksortbydropdown").classList.toggle("show");
 }
 
-function openaddnewprojForm() {
-  document.getElementById("addnewprojopaquebg").style.display = "block";
-}
-function closeaddnewprojForm() {
-  document.getElementById("addnewprojopaquebg").style.display = "none";
-}
-
 function openToDoList() {
   document.getElementById("ToDoListopaquebg").style.display = "block";
 }
@@ -725,93 +716,65 @@ function closeToDoList() {
 
 
 
-
-
-
-
   
-function addLinkToDiv() {
-  // Create a new <a> element
-  var newproj = document.createElement("a");
+function sorttasks_byAlphabetical() {
+  var table = document.getElementById("taskstable");
+  var rows = table.rows;
+  var switching = true;
 
-  newproj.href = "#"; // Replace with the project URL at later date
-  newproj.textContent = document.getElementById("newprojname").value;
-
-  var tempdiv = document.getElementById("switchproj-dropdown");
-
-  tempdiv.appendChild(newproj);
-}
-  
-// function addnewtaskTotable(){
-//   var table = document.getElementById("taskstable");
-//   var row = table.insertRow(1);
-//   var taskname = row.insertCell(0);
-//   var currentstatus = row.insertCell(1);
-//   var deadline = row.insertCell(2);
-//   var staffassigned = row.insertCell(3);
-//   var taskactions = row.insertCell(4);
-  
-//   taskname.innerHTML = document.getElementById("taskname").value;
-//   currentstatus.innerHTML = document.getElementById("statusselect").value;
-//   deadline.innerHTML = document.getElementById("deadline").value;     
-
-//   var Listofstaff = Array.from(document.getElementById("choosestaff").selectedOptions).map(option => option.value);
-//   var ListofStaffwithbreaks = Listofstaff.join("<br>");
-
-//   staffassigned.innerHTML = ListofStaffwithbreaks;  
-//   taskactions.innerHTML = '<button class = "notesbtn" onclick="opentasknotesForm()">Notes</button><button class="editbtn" onclick="loadtasktoform(this)"><span id="editsymbol" class="material-symbols-outlined">edit</span></button>';
-
-//   closeaddtaskForm();
-// }
-
-
-  
-// var currentrowopened = null; //used so that we can use the same row throughout loadtasktoform() and makechangestotasktable()
-// function loadtasktoform(button){
-//   var row = button.parentNode.parentNode;
-//   currentrowopened = row;
-//   document.getElementById("taskname-edit").value = row.cells[0].textContent;
-//   document.getElementById("statusselect-edit").value = row.cells[1].textContent;
-//   document.getElementById("deadline-edit").value = row.cells[2].textContent;
-
-//   openedittaskForm();
-// }
-  
-function makechangestotasktable(){
-  currentrowopened.cells[0].textContent =  document.getElementById("taskname-edit").value;
-  currentrowopened.cells[1].textContent =  document.getElementById("statusselect-edit").value;
-  currentrowopened.cells[2].textContent = document.getElementById("deadline-edit").value;  
-
-  var Listofstaff = Array.from(document.getElementById("choosestaff-edit").selectedOptions).map(option => option.value);
-  var ListofStaffwithbreaks = Listofstaff.join("<br>");
-  
-  currentrowopened.cells[3].innerHTML = ListofStaffwithbreaks;
-
-  closeedittaskForm();
-}
-  
-  
-function removemember(){	
-  var membertoremove = document.getElementById("select-removestaff").value;
-  var Allstafftable = document.getElementById("StaffTable");
-
-  var rows = Allstafftable.getElementsByTagName("tr");
-
-  for (var i = 1; i < rows.length; i++) { //loop through all rows of table
-
-      var currentrowstaffname = rows[i].getElementsByTagName("td")[0];
-      if (currentrowstaffname.textContent.includes(membertoremove)) {
-          Allstafftable.deleteRow(i);
+  while (switching) {
+      switching = false;
+      for (var i = 1; i < (rows.length - 1); i++) {
+          var shouldSwitch = false;
+          var currentCell = rows[i].getElementsByTagName("td")[1]; // Change 1 to the index of the desired cell
+          var nextCell = rows[i + 1].getElementsByTagName("td")[1]; // Change 1 to the index of the desired cell
+          if (currentCell.innerHTML.toLowerCase() > nextCell.innerHTML.toLowerCase()) {
+              shouldSwitch = true;
+              break;
+          }
+      }
+      if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
       }
   }
 }
-  
-  
-  
-  
-// document.getElementById("addtask-formbtn").addEventListener("click", addnewtaskTotable);
-  
 
+function customSort(a, b) {
+  const order = { "Overdue": 0, "On Track": 1, "Not Started": 2, "Completed": 3 };
+  return order[a.cells[3].innerText] - order[b.cells[3].innerText];
+}
+
+function sorttasks_byCompletion() {
+  const table = document.getElementById("taskstable");
+  const tbody = table.querySelector("tbody");
+  const rows = Array.from(tbody.querySelectorAll("tr"));
+  
+  rows.sort(customSort);
+
+  tbody.innerHTML = ""; // Clear the existing table body
+
+  rows.forEach(row => {
+    tbody.appendChild(row); // Append sorted rows to the table body
+  });
+}
+
+function sorttasks_byDeadline(){
+    var table = document.getElementById("taskstable");
+    var rows = Array.from(table.rows).slice(1); 
+
+    rows.sort(function(a, b) {
+        var dateA = new Date(a.cells[4].innerText);
+        var dateB = new Date(b.cells[4].innerText);
+
+        return dateA - dateB;
+    });
+
+    // Reorder the rows in the table
+    rows.forEach(function(row) {
+        table.appendChild(row);
+    });
+}
 
 function find_statusquantities(callback) {
   $.ajax({

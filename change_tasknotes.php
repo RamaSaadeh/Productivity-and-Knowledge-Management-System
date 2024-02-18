@@ -5,11 +5,11 @@ $task_id = $_POST['taskid'];
 $new_notes = $_POST['notes'];
 
 $servername = "localhost";
-$username = "team017";
-$password = "xngk4RgUqJxMjKX3EMak";
-$database = "team017";
+$username = "host";
+$dbpassword = "Team017FTW!";
+$database = "makeitall";
 
-$conn = new mysqli($servername, $username, $password, $database);
+$conn = new mysqli($servername, $username, $dbpassword, $database);
 
 
 // SQL query to fetch staff not currently in team from the database

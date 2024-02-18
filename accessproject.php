@@ -53,7 +53,7 @@
 						<span id="profileIcon" class="material-symbols-outlined">account_circle</span>Account</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="profile.html">My Profile</a>
-							<a class="dropdown-item logout" href="login.html">Logout</a>
+							<a class="dropdown-item logout" href="standard_index.html">Logout</a>
 						</div>
 					</li>
 				</ul>
@@ -100,12 +100,13 @@
         <div class="createproj-flex">
 		
             <div class="title">Create New Project</div>   
-                <div id="formcontent">
+                <form id="createnew_form" onsubmit="create_newproj()" method="get">
                     
                     <label>Enter new Project Name</label>
                     <input type="text" placeholder="Enter Project Name" id="newprojname" required>			
-                    <a href="managerdash.html"><button type="submit" id="newproj-btn" href="managerdash.html">Create Project</button></a>
-                </div>
+                    <button type="submit" id="newproj-btn">Create Project</button>
+
+				</form>
             </div>
         </div>
 
@@ -137,6 +138,7 @@
 </footer>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="accessproject.js"></script>
 	
 

@@ -4,11 +4,11 @@ $project_ID_toload = $_POST['ID'];
 
 
 $servername = "localhost";
-$username = "team017";
-$password = "xngk4RgUqJxMjKX3EMak";
-$database = "team017";
+$username = "host";
+$dbpassword = "Team017FTW!";
+$database = "makeitall";
 
-$conn = new mysqli($servername, $username, $password, $database);
+$conn = new mysqli($servername, $username, $dbpassword, $database);
 
 
 // SQL query to fetch number of tasks Completed

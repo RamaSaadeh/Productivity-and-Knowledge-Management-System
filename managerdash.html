@@ -128,9 +128,7 @@
 	<! -----------Tasks Box----------- >
 	<div class="flex-item-myproject">
 		
-		<div class="section-header">Project XXX
-			<button class="addtaskbtn" onclick="openaddtaskForm()">Add Task</button>
-		</div>	
+		<div id="section_header"></div>	
 
 		<div class="tablediv">
 			<table id="taskstable">
@@ -145,9 +143,9 @@
 						<div class="SortByDropdown">
 							<button onclick="toggleTaskSortbyDropdown()" class="Sortbybtn">Sort By<i class="fa fa-caret-down"></i></button>
 							<div id="tasksortbydropdown" class="dropdown-content">
-								<a href="#">Alphebetical</a>
-								<a href="#">Completion</a>
-								<a href="#">Deadline</a>
+								<a onclick="sorttasks_byAlphabetical()">Alphebetical</a>
+								<a onclick="sorttasks_byCompletion()">Completion</a>
+								<a onclick="sorttasks_byDeadline()">Deadline</a>
 							</div>
 						</div>
 					</th>
