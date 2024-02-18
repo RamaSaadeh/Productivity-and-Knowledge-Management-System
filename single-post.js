@@ -105,6 +105,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const posts = {
       
     };
+
+	//get the current number of characters remaining on the content
+	const contentElement = document.querySelector('#postContent');
+    const charsLeftElement = document.querySelector('#contentCharsLeft');
+    const maxChars = 1500;
+    const initialCharsUsed = contentElement.textContent.length;
+    const charsLeft = maxChars - initialCharsUsed;
+    charsLeftElement.textContent = `${charsLeft} characters left for Content`; 
 	
 	$(document).ready(function() {
 
@@ -543,15 +551,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		if (!isEditing) openSaveConfirmationModal();
 	}
 
-	document.addEventListener('DOMContentLoaded', () => {
-		const contentElement = document.querySelector('#postContent');
-		const charsLeftElement = document.querySelector('#contentCharsLeft');
-		const initialCharsUsed = contentElement.textContent.trim().length;
-		const maxChars = 1500; //maximum characters allowed for content
-		const charsLeft = maxChars - initialCharsUsed;
-		charsLeftElement.textContent = `${charsLeft} characters left for Content`;
-	});
-				
+	
 		//close the modal
 		function closeModal() {
 			//get both modals by ID
