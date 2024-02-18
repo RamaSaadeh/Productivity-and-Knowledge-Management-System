@@ -484,7 +484,7 @@ function appendDraftToSidebar(draft) {
 		    <button class="delete-draft">Delete</button>
 		</div>
 		<div class="draft-date">
-		    Last Modified: <span class="draft-last-modified">${draft.lastModified}</span>
+			${draft.lastModified}
 		</div>
 	    </div>
 	</div>
