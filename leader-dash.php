@@ -85,9 +85,10 @@
                 <label>Select your project to launch</label>
                 <select required id="select-proj" name="selected_project_ID">
                     <option value="" disabled selected>Select Project or Search by Typing</option>
-                    <?php include "get_leader_projects.php"; ?>
+                    <div id="values">
+					</div>
                 </select>		
-                <button type="submit" id="exploreproj-btn">Explore Project</button>
+                <button type="submit" id="exploreproj-btn" onclick="exploreClick()">Explore Project</button>
 
             </form>
         </div>
