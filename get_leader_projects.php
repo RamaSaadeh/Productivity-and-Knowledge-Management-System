@@ -5,9 +5,6 @@ $username = "host";
 $dbpassword = "Team017FTW!";
 $database = "makeitall";
 
-$details = sessionStorage.getItem("user");
-$id = JSON.parse(details).id;
-
 $conn = new mysqli($servername, $username, $dbpassword, $database);
 
 // SQL query to fetch options from the database
