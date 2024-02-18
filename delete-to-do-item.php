@@ -1,9 +1,8 @@
 <?php
+// Include your database configuration file
 include "db_config.php";
 
-$user_id = intval($_POST['itemId']);
-$item_id = intval($_POST['userId']);
-
+// Create connection
 $conn = new mysqli($servername, $username, $dbpassword, $database);
 
 // Check connection
@@ -11,25 +10,27 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
- // Set the appropriate headers to indicate JSON content
- header('Content-Type: application/json');
+// User input (example)
+$item_id = intval($_POST['itemId']);
+$user_id = intval($_POST['userId']);
 
+// Prepare SQL statement
+$sql = "DELETE FROM `todolist` WHERE user_id = ? AND item_id = ?;";
+$stmt = $conn->prepare($sql);
+// Bind parameters
+$stmt->bind_param("ii", $user_id, $item_id);
 
-// Execute SQL queries to fetch users data
-$sql = "DELETE FROM todolist WHERE item_id = $item_id AND user_id = $user_id;";
-$result = $conn->query($sql);
-
-
-// Check if the query was successful
-if ($result) {
+// Execute SQL statement
+if ($stmt->execute()) {
     // Query was successful
-    $response = array("success" => true, "message" => "Query successful");
+    echo "Row deleted successfully.";
 } else {
     // Query failed
-    $response = array("success" => false, "message" => "Query failed: " . mysqli_error($conn));
+    echo "Error deleting row: " . $stmt->error;
 }
 
-echo json_encode($response);
+// Close the prepared statement
+$stmt->close();
 
 // Close the database connection
 $conn->close();
