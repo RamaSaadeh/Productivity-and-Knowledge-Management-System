@@ -60,9 +60,13 @@ $.ajax({
     success: function (response) {
         var projects = JSON.parse(response);
         alert(projects);
-        //var array = [1, 2, 3, 4, 5];
         projects.forEach(function (project) {
             alert(project);
+            if (typeof project === 'string') {
+                document.getElementById("values").innerHTML += project;
+            } else {
+                console.error("Invalid project format:", project);
+            }
             //document.getElementById("values").innerHTML += project;
         });
     },
