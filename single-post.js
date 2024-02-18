@@ -940,11 +940,12 @@ document.addEventListener("DOMContentLoaded", function () {
 		})
 		.then(response => response.json())
 		.then(data => {
-			if (data.success) {
+			if (data.success) {			
 				// Update the comment content in the HTML
 				document.querySelector(`.comment[data-comment-id="${commentId}"] .comment-content`).textContent = updatedContent;
 				// Hide the edit modal
 				document.getElementById('editCommentModal').style.display = 'none';
+				fetchComments(postID); 
 			} else {
 				alert('Failed to update comment: ' + data.message);
 			}
@@ -953,6 +954,9 @@ document.addEventListener("DOMContentLoaded", function () {
 			console.error('Error:', error);
 			alert('Error updating comment.');
 		});
+
+
+		
 	}
 	
 
