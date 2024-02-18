@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="profile.css">
 </head>
-<body>
+<body onload="checkLogin()">
 
 	<nav class="myNav">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -137,26 +137,6 @@
 
 	<script>
 		document.getElementById("openTab").click();
-        try {
-            var details = sessionStorage.getItem("user");
-            var role = JSON.parse(details).role;
-            switch (role) {
-                case "a":
-                    break;
-                case "g":
-                    break;
-                case "m":
-                    break;
-                case "l":
-                    break;
-                default:
-                    window.location.replace("login.html");
-                    break;
-            }
-        }
-        catch {
-            window.location.replace("login.html");
-        }
 
         var email = JSON.parse(details).email;
         //Decides which Dash to link to
