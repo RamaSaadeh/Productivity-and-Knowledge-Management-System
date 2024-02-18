@@ -5,6 +5,8 @@ $username = "host";
 $dbpassword = "Team017FTW!";
 $database = "makeitall";
 
+$id = $_POST['id'];
+
 $conn = new mysqli($servername, $username, $dbpassword, $database);
 
 // SQL query to fetch options from the database
