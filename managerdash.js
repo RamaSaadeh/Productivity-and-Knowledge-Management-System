@@ -473,10 +473,9 @@ function isValidDateString(str) {
 }
 
 
-
 document.querySelector('.addtask-form').addEventListener('submit', function(event) {
   // Prevent the default form submission behavior
-  event.preventDefault();
+  // event.preventDefault();
 
   var newtaskID = document.getElementById("new_taskID").value;
   var newtaskName = document.getElementById("new_taskname").value;
