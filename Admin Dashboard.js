@@ -197,7 +197,38 @@
         // remove to do list item
          var li = this.parentElement;
          if (confirm("Are you sure you want to delete this item?: \n\n\n" +  "\"" + li.querySelector("p").textContent + "\"")){
-          li.style.display = "none";
+            // delete the to-do list item
+            
+            // update the database asynchronously
+            // Prepare the data to be sent to the server
+            if (li.id){
+              // item has an id attribute set - delete from database
+                  var requestData = {
+                    itemId: li.id,
+                    //userId: userIdsessionStorage.getItem("user")[id]
+                    userId: 3
+                  };
+                  li.style.display = "none";
+                  // Make the AJAX request
+                  $.ajax({
+                    url: 'delete-to-do-item.php',
+                    type: 'POST',
+                    data: requestData,
+                    success: function(response) {
+                        // Handle the response from the server
+                        console.log('Item deleted successfully');
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        console.error('Error deleting item:', error);
+                    }
+                  });
+
+
+            } else {
+                    // item has no id set, was not stored in database
+                    li.style.display = "none";
+            }
          }
          
        }
