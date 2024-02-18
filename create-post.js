@@ -447,7 +447,7 @@ function fetchAndDisplayDrafts() {
 	success: function(response) {
 	    //check if drafts were retrieved successfully
 	    if (response && response.drafts) {
-		// Clear existing drafts in the sidebar
+		//clear existing drafts in the sidebar
 		$('.drafts-container').empty();
 
 		//loop through each draft and append it to the sidebar
