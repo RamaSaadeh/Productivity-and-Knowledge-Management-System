@@ -352,6 +352,9 @@ function openremovestaffForm(){
 }
 
 function remove_fromteam(){
+
+  event.preventDefault();
+  
   var selectedUserID = document.getElementById("select_removestaff").value;
 
   $.ajax({
