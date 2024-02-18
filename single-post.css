@@ -450,21 +450,13 @@ textarea {
 	
 }
 
-.character-limit {
-  font-weight: normal; 
-  font-size: 0.8em; 
-  color: #6c757d; 
-}
-
-.character-limit-message {
-  font-size: 0.9em;
-  color: #666;
-  display: inline-block;
+#contentCharsLeft {
+  font-weight: normal;
+  font-size: 0.8em;
+  color: #6c757d;
+  display: none; 
   position: relative;
-  vertical-align: middle;
-  margin-top: 10px;
   margin-right: 10px;
-  text-align: center;
 }
 
 .media-body.comment-content {

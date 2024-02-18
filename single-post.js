@@ -106,13 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
       
     };
 
-	//get the current number of characters remaining on the content
-	const contentElement = document.querySelector('#postContent');
-    const charsLeftElement = document.querySelector('#contentCharsLeft');
-    const maxChars = 1500;
-    const initialCharsUsed = contentElement.textContent.length;
-    const charsLeft = maxChars - initialCharsUsed;
-    charsLeftElement.textContent = `${charsLeft} characters left for Content`; 
 	
 	$(document).ready(function() {
 
@@ -467,17 +460,17 @@ document.addEventListener("DOMContentLoaded", function () {
 		
 	}
 
-		
-	//get the current date in specific format
-	function getFormattedDate() {
-		const currentDate = new Date();
-		return currentDate.toLocaleDateString('en-US', {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric',
-		});
+	//function to show the character count display
+	function showCharCountDisplay() {
+		const charCountElement = document.getElementById('contentCharsLeft');
+		charCountElement.style.display = 'inline-block';
 	}
 
+	//function to hide the character count display
+	function hideCharCountDisplay() {
+		const charCountElement = document.getElementById('contentCharsLeft');
+		charCountElement.style.display = 'none';
+	}
 	
 	//function to toggle content editable state and enforce character limit
 	function editPost(editIcon) {
@@ -533,21 +526,23 @@ document.addEventListener("DOMContentLoaded", function () {
 				}
 	
 				//initialize the character count display specifically for content when editing starts
-				if(selector === '#postContent') {
+				if (selector === '#postContent') {
 					enforceLimit.call(element);
+					showCharCountDisplay(); //show the character count display when editing starts
 				}
 	
-				if (selector === '#postContent') element.focus(); 
+				if (selector === '#postContent') element.focus();
 			} else {
 				//remove the listener if it exists to prevent duplication
 				if (element.enforceLimitListener) {
 					element.removeEventListener('input', element.enforceLimitListener);
-					delete element.enforceLimitListener; 
+					delete element.enforceLimitListener;
 				}
+				hideCharCountDisplay(); //hide the character count display when editing ends
 			}
 		});
 	
-		//if switching from edit to save, handle accordingly
+	
 		if (!isEditing) openSaveConfirmationModal();
 	}
 
