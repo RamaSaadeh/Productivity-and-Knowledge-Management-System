@@ -48,24 +48,22 @@ function sendInvite() {
     }
 }
 
-function exploreClick() {
-    var details = sessionStorage.getItem("user");
-    var id = JSON.parse(details).id;
+var details = sessionStorage.getItem("user");
+var id = JSON.parse(details).id;
 
-    $.ajax({
-        type: "POST",
-        url: "get_leader_projects.php",
-        data: {
-            id: id
-        },
-        success: function (response) {
-            var projects = JSON.parse(response);
-            projects.forEach(function (project) {
-                document.getElementById("values").innerHTML += project;
-            });
-        },
-        error: function () {
-            alert("Error loading projects");
-        }
-    });
-}
+$.ajax({
+    type: "POST",
+    url: "get_leader_projects.php",
+    data: {
+        id: id
+    },
+    success: function (response) {
+        var projects = JSON.parse(response);
+        projects.forEach(function (project) {
+            document.getElementById("values").innerHTML += project;
+        });
+    },
+    error: function () {
+        alert("Error loading projects");
+    }
+});
