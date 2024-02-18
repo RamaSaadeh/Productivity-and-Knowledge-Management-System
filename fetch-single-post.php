@@ -13,7 +13,7 @@ if (isset($_GET['id'])) {
     $postId = mysqli_real_escape_string($conn, $_GET['id']);
     
     //query to retrieve the details of the specific post based on its ID
-    $sql = "SELECT p.PostID, p.Title, p.Content, p.DateCreated, p.DatePublished, p.IsDraft, p.LikesCount, p.Topic, u.name AS AuthorName,
+    $sql = "SELECT p.PostID, p.Title, p.Content, p.DateCreated, p.DateLastModified, p.IsDraft, p.LikesCount, p.Topic, u.name AS AuthorName,
             (p.UserID = ?) AS IsUserOwner,
             EXISTS(SELECT 1 FROM PostLikes pl WHERE pl.PostID = p.PostID AND pl.UserID = ?) AS IsLiked
             FROM Posts p

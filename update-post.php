@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //check if all required fields are provided
     if (!empty($postId) && !empty($topic) && !empty($title) && !empty($content)) {
         //SQL query to update post thats changed by user
-         $sql = "UPDATE Posts SET Topic = ?, Title = ?, Content = ?, DatePublished = NOW() WHERE PostID = ?";
+         $sql = "UPDATE Posts SET Topic = ?, Title = ?, Content = ?, DateLastModified = NOW() WHERE PostID = ?";
 
         //prepare statement
         if ($stmt = mysqli_prepare($conn, $sql)) {
