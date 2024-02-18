@@ -196,7 +196,7 @@
        close[i].onclick = function() {
         // remove to do list item
          var li = this.parentElement;
-         if (confirm(li.textContent + "\nAre you sure you want to delete this item?" )){
+         if (confirm("Are you sure you want to delete this item?: \n\n\n" +  "\"" + li.querySelector("p").textContent + "\"")){
           li.style.display = "none";
          }
          
