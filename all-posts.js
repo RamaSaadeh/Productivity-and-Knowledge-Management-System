@@ -68,7 +68,7 @@ $(document).ready(function() {
             posts.forEach(function(post) {
                 var postClass = post.Topic.toLowerCase().replace(/\s+/g, '-');
                 var postHTML = `
-                    <div class="post ${postClass}" data-date-created="${post.FullDateCreated}">
+                    <div class="post ${postClass}" data-date-created="${post.DateCreated}">
                         <div class="media-body">
                             <h3 class="post-topic">${post.Topic}</h3>
                             <h2 class="post-title">${post.Title}</h2>
@@ -80,7 +80,7 @@ $(document).ready(function() {
                         <div class="comment-metadata">
                             <div class="comment-user-date">
                                 <i class="far fa-user">${post.AuthorName}</i> &nbsp;
-                                <i class="far fa-calendar">${post.FormattedDateCreated}</i>                               
+                                <i class="far fa-calendar">${post.DisplayDate}</i>                              
                             </div>
                             <div class="comment-actions">
                                 <i class="fas fa-thumbs-up like-comment ${post.IsLiked ? 'liked' : ''}" title="Like" data-post-id="${post.PostID}" data-liked="${post.IsLiked ? 'true' : 'false'}"></i>

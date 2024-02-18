@@ -4,11 +4,11 @@ $projectID = $_POST['projectID'];
 $taskID = $_POST['taskID'];
 
 $servername = "localhost";
-$username = "team017";
-$password = "xngk4RgUqJxMjKX3EMak";
-$database = "team017";
+$username = "host";
+$dbpassword = "Team017FTW!";
+$database = "makeitall";
 
-$conn = new mysqli($servername, $username, $password, $database);
+$conn = new mysqli($servername, $username, $dbpassword, $database);
 
 
 //remove all staff currently working on this task- then rewrite the new version

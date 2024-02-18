@@ -5,11 +5,11 @@ $project_ID_toload = $_POST['ID'];
 
 
 $servername = "localhost";
-$username = "team017";
-$password = "xngk4RgUqJxMjKX3EMak";
-$database = "team017";
+$username = "host";
+$dbpassword = "Team017FTW!";
+$database = "makeitall";
 
-$conn = new mysqli($servername, $username, $password, $database);
+$conn = new mysqli($servername, $username, $dbpassword, $database);
 
 
 // SQL query to fetch staff not currently in team from the database
@@ -17,21 +17,9 @@ $sql = "SELECT DISTINCT users.user_id, users.name, users.email \n"
 
     . "FROM users \n"
 
-    . "JOIN project_staff ON users.user_id = project_staff.user_id \n"
+    . "LEFT JOIN project_staff ON users.user_id = project_staff.user_id \n"
 
-    . "WHERE project_staff.project_id <> '$project_ID_toload'\n"
-
-    . "AND NOT EXISTS (\n"
-
-    . "    SELECT 1\n"
-
-    . "    FROM project_staff AS ps2\n"
-
-    . "    WHERE ps2.user_id = users.user_id\n"
-
-    . "    AND ps2.project_id = '$project_ID_toload'\n"
-
-    . ");";
+    . "WHERE NOT EXISTS (SELECT 1 FROM project_staff WHERE users.user_id = project_staff.user_id AND project_staff.project_id = '$project_ID_toload')";
 
 
 
