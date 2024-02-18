@@ -288,31 +288,31 @@ function openchangeroleForm() {
  document.getElementById("changeroleopaquebg").style.display = "block";
 }
 
-function maketeamleader(){
+// function maketeamleader(){
 
-  event.preventDefault();
+//   event.preventDefault();
 
-  var selectedUserID = document.getElementById("select_changerole").value;
+//   var selectedUserID = document.getElementById("select_changerole").value;
 
-  $.ajax({
-    type: "POST",
-    url: "make_teamleader.php",
-    data: {
-      projectID: selectedProjectID,
-      userID: selectedUserID
-    },
-    success: function (response) {
-      if (response === "invalid") {
-        alert("Something went wrong");
-      } 
+//   $.ajax({
+//     type: "POST",
+//     url: "make_teamleader.php",
+//     data: {
+//       projectID: selectedProjectID,
+//       userID: selectedUserID
+//     },
+//     success: function (response) {
+//       if (response === "invalid") {
+//         alert("Something went wrong");
+//       } 
 
-      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
-    }
-  });
+//       window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+//     }
+//   });
 
-  // now staff not in the team are loaded into the <select> we are going to open the form
-  document.getElementById("changeroleopaquebg").style.display = "none";
-}
+//   // now staff not in the team are loaded into the <select> we are going to open the form
+//   document.getElementById("changeroleopaquebg").style.display = "none";
+// }
 
 function closechangeroleForm() {
   document.getElementById("changeroleopaquebg").style.display = "none";
@@ -738,11 +738,6 @@ function closeedittaskForm() {
 
 
 
-
-
-function toggleSwitchProjDropdown() {
-    document.getElementById("switchproj-dropdown").classList.toggle("show");
-  }
 function toggleTaskSortbyDropdown() {
   document.getElementById("tasksortbydropdown").classList.toggle("show");
 }
@@ -750,12 +745,10 @@ function toggleTaskSortbyDropdown() {
 function openToDoList() {
   document.getElementById("ToDoListopaquebg").style.display = "block";
 }
+
 function closeToDoList() {
   document.getElementById("ToDoListopaquebg").style.display = "none";
 }
-
-
-
   
 function sorttasks_byAlphabetical() {
   var table = document.getElementById("taskstable");
