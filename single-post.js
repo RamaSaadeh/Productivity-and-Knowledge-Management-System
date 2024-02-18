@@ -626,23 +626,24 @@ document.addEventListener("DOMContentLoaded", function () {
 		  }
 		  
 		  function showEditedStatus() {
-			  //find the date element
-			  const dateElement = document.getElementById('postDate');
-		  
-			  //check if the "(edited)" span already exists
-			  let editedSpan = dateElement.nextElementSibling;
-			  if (!editedSpan || !editedSpan.classList.contains('edited-mark')) {
-				  //if it does not exist, create it
-				  editedSpan = document.createElement('span');
-				  editedSpan.classList.add('edited-mark'); 
-				  editedSpan.textContent = ' (edited)';
-				  //insert the "(edited)" span after the date element
-				  dateElement.parentNode.insertBefore(editedSpan, dateElement.nextSibling);
-			  } else {
-				  //if it already exists, ensure it's visible
-				  editedSpan.style.display = '';
-			  }
-		  }
+			//find the date element
+			const dateElement = document.getElementById('postDate');
+		
+			//check if the "(edited)" span already exists
+			let editedSpan = dateElement.nextElementSibling;
+			if (editedSpan && editedSpan.classList.contains('edited-mark')) {
+				//if "(edited)" span already exists, do nothing to prevent adding it again
+				return;
+			} else {
+				//if it does not exist, create it
+				editedSpan = document.createElement('span');
+				editedSpan.classList.add('edited-mark'); 
+				editedSpan.textContent = ' (edited)';
+				//insert the "(edited)" span after the date element
+				dateElement.parentNode.insertBefore(editedSpan, dateElement.nextSibling);
+			}
+		}
+		
 		  
 
 		
