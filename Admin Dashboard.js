@@ -304,6 +304,26 @@ list.addEventListener('click', function(ev) {
     if (ev.target.tagName === 'LI' || ev.target.tagName === 'P') {
         const listItem = (ev.target.tagName === 'LI') ? ev.target : ev.target.closest('li');
         if (listItem) {
+          var description = listItem.querySelector('p').textContent;
+          var checked = 0;
+          if (listItem.classList.contains("checked")){
+            // if the item was checked then update db and adjust position
+            checked = 1; 
+          } 
+          $.ajax({
+            url: 'toggle-to-do-status.php',
+            type: 'POST',
+            data: {'item_id': listItem.id, 'user_id': user_id, 'description': description, 'current_status': checked},
+            success: function(response) {
+                // Handle the response from the server
+                console.log('Item edited in db successfully');
+            },
+            error: function(xhr, status, error) {
+                // Handle errors
+                console.error('Error toggling item:', error);
+            }
+          });
+          
           listItem.classList.toggle('checked');
         }
     }
