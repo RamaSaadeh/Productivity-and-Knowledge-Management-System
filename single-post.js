@@ -937,25 +937,24 @@ document.addEventListener("DOMContentLoaded", function () {
 			body: `commentID=${encodeURIComponent(commentId)}&newContent=${encodeURIComponent(updatedContent)}`
 		})
 		.then(response => response.json())
+
 		.then(data => {
 			if (data.success) {
 				const commentElement = document.querySelector(`.comment[data-comment-id="${commentId}"]`);
 				if (commentElement) {
 					//update the comment content
 					commentElement.querySelector('.comment-content').textContent = updatedContent;
-	
+		
 					//update the last modified timestamp
-					const lastModifiedElement = commentElement.querySelector('.comment-user-date .far.fa-calendar');
+					const lastModifiedElement = commentElement.querySelector('.far.fa-calendar');
 					if (lastModifiedElement) {
-						lastModifiedElement.textContent = data.lastModified;
+						//check if "(edited)" is already appended to avoid duplication
+						const isAlreadyEdited = lastModifiedElement.textContent.includes('(edited)');
+						const newLastModifiedText = `${data.lastModified}${isAlreadyEdited ? '' : ' (edited)'}`;
+		
+						lastModifiedElement.textContent = newLastModifiedText;
 					}
-	
-					//show the "(edited)" tag
-					const editedSpan = commentElement.querySelector('.comment-user-date .comment-edited');
-					if (editedSpan) {
-						editedSpan.style.display = 'inline';
-					}
-	
+		
 					//hide the edit modal
 					document.getElementById('editCommentModal').style.display = 'none';
 				} else {
