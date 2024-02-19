@@ -169,10 +169,11 @@
     // Access other data similarly
 
     // Ask for confirmation with the data
-    if (confirm('Are you sure you want to delete the user ' + fullName + ' with ID ' + staffId + 'from the system? This cannot be reversed.')) {
+    if (confirm('Permanently delete user ' + fullName + ' with ID ' + staffId + " from the system?")) {
         // Code to delete the user
         alert("user deleted");
         row.style.display="none";
+
     }
   }
 
