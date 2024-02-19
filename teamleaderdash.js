@@ -483,7 +483,7 @@ return true;
 
 function addnewtask() {
 
-// event.preventDefault();
+event.preventDefault();
 alert("hi");
 
 var newtaskID = document.getElementById("new_taskID").value;
@@ -519,7 +519,7 @@ $.ajax({
     if (response === "invalid") {
       alert("Something went wrong");
     } 
-
+      alert("success");
       document.getElementById("addtaskopaquebg").style.display = "none";
 
       window.location.href = "teamleaderdash.html?selected_project_ID="+selectedProjectID;
