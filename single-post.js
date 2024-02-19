@@ -104,7 +104,8 @@ document.addEventListener("DOMContentLoaded", function () {
     //counter for assigning IDs to comments
 	let commentIdCounter = 0;
 	
-  
+	let hasUnsavedChanges = false;
+
     const comments = [];
 	
     const posts = {
@@ -399,6 +400,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			element.contentEditable = !isEditable;
 			
 			if (isEditing) {
+				hasUnsavedChanges = true;
 				element.setAttribute('data-original-content', element.textContent);
 				
 				//add event listener for character limit
@@ -440,6 +442,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 				if (selector === '#postContent') element.focus();
 			} else {
+				hasUnsavedChanges = false;
 				//remove the listener if it exists to prevent duplication
 				if (element.enforceLimitListener) {
 					element.removeEventListener('input', element.enforceLimitListener);
@@ -1079,6 +1082,14 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	});
 	
-		
+	//when user tries leaving page with unsaved changes to post trigger the following
+	window.addEventListener('beforeunload', (event) => {
+		if (hasUnsavedChanges) {
+			const message = 'You have unsaved changes! Are you sure you want to leave?';
+			event.returnValue = message; 
+			return message; 
+		}
+	});
+
 
 });
