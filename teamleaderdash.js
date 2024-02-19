@@ -500,6 +500,7 @@ for (var i = 0; i < selectedOptions.length; i++) {
 }
 
 
+
 if(isValidDateString(newtaskDeadline)){
 $.ajax({
   type: "POST",
@@ -517,6 +518,7 @@ $.ajax({
     if (response === "invalid") {
       alert("Something went wrong");
     } 
+
 
     document.getElementById("addtaskopaquebg").style.display = "none";
 
