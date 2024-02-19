@@ -80,7 +80,6 @@
 	Management Dashboard
 	<div class="SwitchProject">
 		<a href="leader-dash.php"><button class="switchprojbtn" onclick="toggleSwitchProjDropdown()">Switch Project <span id="switchsymbol" class="material-symbols-outlined">sync_alt</span></button></a>
-		<button id="ToDoListbtn" onclick="openToDoList()">My To-Do List<span id="listsymbol" class="material-symbols-outlined">list</span></button>
 	</div>
 </div>
 
@@ -98,30 +97,6 @@
 	</form>
 </div>
 
-<div class="popup-background" id="ToDoListopaquebg">
-	<div class="ToDoList-form">
-		<div class="form-title">
-			<button type="button" id="cancel-formbtn" onclick="closeToDoList()">Close</button>
-			<div id="formheader">My To-Do List</div>
-		</div>
-		<div id="toDoList">
-  			<!-- www.w3schools.com. (n.d.). How To Create a To Do List. [online] Available at: https://www.w3schools.com/howto/howto_js_todolist.asp [Accessed 28 Oct. 2023].-->
-			<div id="toDoHeader">
-				<input type="text" id="toDoInput" placeholder="New item..."></textarea>
-				<span onclick="newElement()" id="toDoAddBtn">Add</span>
-			</div>
-		
-			<ul id="toDoUL">
-				<li><p>Send out meeting notes</p></li>
-				<li class="checked"><p>Book time off</p></li>
-				<li><p>Organize mentor meeting</p></li>
-				<li><p>Order printing ink</p></li>
-				<li><p>Set up meeting with client</p></li>
-				<li><p>Book team dinner</p></li>
-			</ul>
-		</div>
-	</div>
-</div>
 
 
 <div class="flex-container">
@@ -283,59 +258,11 @@
 		</div>
 	</div>
 	
-	<div class="popup-background" id="addstaffopaquebg">
-		<form class="addstaff-form" onsubmit="addstaff_toteam()" method="get">
-			<div class="form-title">
-				<button type="button" id="cancel-formbtn" onclick="closeaddstaffForm()">Cancel</button>
-				<div id="formheader">Add Member</div>
-			</div>
-			<div id="formcontent">
-				<label id="addstafflabel">Below are all staff not in your team</label>
 	
-				<select required id="select_addstaff" name="selected_addstaff">
-					<option value="" disabled selected>Select staff member to add to project</option>
-				</select>		
+
 	
-				<button type="submit" id="addstaff_formbtn">Add</button>
-			</div>
-		</form>
-		</div>
 
-	<div class="popup-background" id="removestaffopaquebg">
-	<form class="removestaff-form" onsubmit="remove_fromteam()" method="get">
-		<div class="form-title">
-			<button type="button" id="cancel-formbtn" onclick="closeremovestaffForm()">Cancel</button>
-			<div id="formheader">Remove Member</div>
-		</div>	
-		<div id="formcontent">
-			<label>Select member below to remove them from the Team</label>
-
-			<select required id="select_removestaff">
-				<option value="" disabled selected>Select Member</option>
-			</select>			
-
-			<button type="submit" id="removestaff-formbtn">Remove</button>
-		</div>
-	</form>
-	</div>
-
-	<div class="popup-background" id="changeroleopaquebg">
-	<form class="changerole-form" onsubmit="maketeamleader()" method="get">
-		<div class="form-title">
-			<button type="button" id="cancel-formbtn" onclick="closechangeroleForm()">Cancel</button>
-			<div id="formheader">Change Role</div>
-		</div>	
-		<div id="formcontent">
-			<label>Select member below to make them the project Team Leader</label>
-
-			<select required id="select_changerole">
-				<option value="" disabled selected>Select Member</option>
-			</select>		
-
-			<button type="submit" id="changerole-formbtn">Make Team Leader</button>
-		</div>
-	</form>
-	</div>
+	
 	
 	<! -----------Workload Box----------- >
 	<div class="flex-item-workloadsection"> 
@@ -346,18 +273,34 @@
 		
 	</div>
 	
+	<div class="popup-background" id="editprojopaquebg">
+		<form class="editproj-form" onsubmit="edit_projectname()" method="get">
+			<div class="form-title">
+				<button type="button" id="cancel-formbtn" onclick="closeeditprojectForm()">Cancel</button>
+				<div id="formheader">Edit Project Details</div>
+			</div>
+			<div id="formcontent">
+	
+				<label class="addtaskform_labels">Project ID</label>
+				<input type="text" value="" id="edit_projID" readonly>
+	
+				<label class="addtaskform_labels">Project Name</label>
+				<input type="text" id="edit_projname" required>
+	
+				<button type="submit" id="saveedittask_formbtn">Save Changes</button>
+				<button type="button" id="closeedittaskbtn" onclick="closeeditprojectForm()">Close without saving changes</button>
+			</div>
+		</form>  
+	</div>
+
 	<! -----------Alerts Box----------- >
 	<div class="flex-item-alertssection"> 
-		<div class="section-header">Alerts</div>
-			<div id="allalerts">
-				<div class="alert">
-					<span class="closealertbtn">&times;</span>  
-					John Doe has requested Training
-				</div>
-				<div class="alert">
-					<span class="closealertbtn">&times;</span>  
-					Task xxx is due today!
-				</div>
+		<div class="section-header">Project Details</div>
+			<div id="projectdetails">
+				<div id="projID_text"></div>
+				<div id="projname_text"></div>
+				<button id="editprojbtn" onclick="openeditprojectForm()">Edit Details</button>
+				<button id="deleteprojbtn" onclick="deleteProject()">Delete Project</button>		
 			</div>
 		</div>
 	</div>
