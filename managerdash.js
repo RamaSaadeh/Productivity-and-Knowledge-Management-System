@@ -156,30 +156,6 @@ success: function (response) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function openaddstaffForm() {
 
 $.ajax({
@@ -776,8 +752,6 @@ function edit_projectname(){
   event.preventDefault();
 
   var new_projname = document.getElementById("edit_projname").value;
-
-  alert(new_projname);
   var confirmation = confirm("Are you sure you want to rename this project?");
   
   if(confirmation){
@@ -792,8 +766,6 @@ function edit_projectname(){
           if (response === "invalid") {
             alert("Something went wrong");
           } else {
-
-              alert("hi");
               // Hide the task notes form
               document.getElementById("editprojopaquebg").style.display = "none";
               // Redirect to the manager dashboard
@@ -982,27 +954,6 @@ new Chart("workload-chart", {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-// var close = document.getElementsByClassName("closealertbtn");
-// var i;
-
-// for (i = 0; i < close.length; i++) {
-// close[i].onclick = function(){
-//   var div = this.parentElement;
-//   div.style.opacity = "0";
-//   setTimeout(function(){ div.style.display = "none"; }, 600);
-// }
-// }
 
 
 var myNodelist = document.getElementById("toDoList").getElementsByTagName("LI");
