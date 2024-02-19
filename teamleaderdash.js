@@ -236,7 +236,7 @@ function addstaff_toteam(){
         alert("Something went wrong");
       } 
 
-      window.location.href = "leaderdash.html?selected_project_ID="+selectedProjectID;
+      window.location.href = "teamleaderdash.html?selected_project_ID="+selectedProjectID;
     }
   });
 
