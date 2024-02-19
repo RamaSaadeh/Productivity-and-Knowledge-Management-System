@@ -363,6 +363,7 @@ function newElement() {
     } else {
     // add new item to the start of the list 
       document.getElementById("toDoUL").insertAdjacentElement('afterbegin', li);
+      alert("please");
       // update the todolist table using jQuery AJAX
       $.ajax({
         url: 'add-to-do-item.php',
