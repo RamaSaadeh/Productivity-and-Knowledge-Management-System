@@ -498,9 +498,7 @@ var newtaskStaff = [];
 for (var i = 0; i < selectedOptions.length; i++) {
   newtaskStaff.push(selectedOptions[i].value);
 }
-
-
-alert(selectedProjectID);
+// alert(selectedProjectID);
 if(isValidDateString(newtaskDeadline)){
 $.ajax({
   type: "POST",
@@ -518,8 +516,6 @@ $.ajax({
     if (response === "invalid") {
       alert("Something went wrong");
     } 
-
-
     document.getElementById("addtaskopaquebg").style.display = "none";
 
     window.location.href = "teamleaderdash.html?selected_project_ID="+selectedProjectID;
