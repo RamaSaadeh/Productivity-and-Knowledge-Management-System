@@ -956,63 +956,6 @@ new Chart("workload-chart", {
 
 
 
-var myNodelist = document.getElementById("toDoList").getElementsByTagName("LI");
-var i;
-for (i = 0; i < myNodelist.length; i++) {
-var span = document.createElement("SPAN");
-var txt = document.createTextNode("\u{1F5D1}");
-span.className = "close";
-span.appendChild(txt);
-myNodelist[i].appendChild(span);
-}
-
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-close[i].onclick = function() {
-  var div = this.parentElement;
-  div.style.display = "none";
-}
-}
-
-var list = document.getElementById("toDoList").querySelector('ul');
-list.addEventListener('click', function(ev) {
-if (ev.target.tagName === 'LI' || ev.target.tagName === 'P') {
-const listItem = (ev.target.tagName === 'LI') ? ev.target : ev.target.closest('li');
-if (listItem) {
-  listItem.classList.toggle('checked');
-}
-}
-}, false);
-    
-
-function newElement() {
-var li = document.createElement("li");
-var p = document.createElement("p");
-var inputValue = document.getElementById("toDoInput").value;
-var t = document.createTextNode(inputValue);
-p.appendChild(t);
-li.appendChild(p);
-if (inputValue === '') {
-  // they didn't type anything
-} else {
-  document.getElementById("toDoUL").appendChild(li);
-}
-document.getElementById("toDoInput").value = "";
-
-var span = document.createElement("SPAN");
-var txt = document.createTextNode("\u{1F5D1}");
-span.className = "close";
-span.appendChild(txt);
-li.appendChild(span);
-
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function() {
-    var div = this.parentElement;
-    div.style.display = "none";
-  }
-}
-}
 
 
 
