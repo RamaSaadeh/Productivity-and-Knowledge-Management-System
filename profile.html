@@ -138,6 +138,7 @@
 	<script>
 		document.getElementById("openTab").click();
         var details = sessionStorage.getItem("user");
+		alert(JSON.parse(details));
         var role = JSON.parse(details).role;
         var email = JSON.parse(details).email;
         //Decides which Dash to link to
@@ -162,7 +163,6 @@
 		});
 
 		//display current user's email address
-		alert(email);
         document.getElementById("email_address").innerHTML = "Email: " + email;
         switch (role) {
             case "a":
