@@ -483,7 +483,8 @@ return true;
 
 function addnewtask() {
 
-event.preventDefault();
+// event.preventDefault();
+alert("hi");
 
 var newtaskID = document.getElementById("new_taskID").value;
 var newtaskName = document.getElementById("new_taskname").value;
@@ -749,9 +750,6 @@ function deleteProject(){
 function toggleTaskSortbyDropdown() {
 document.getElementById("tasksortbydropdown").classList.toggle("show");
 }
-
-
-
 
 
 
