@@ -2,14 +2,12 @@
 
   var tasksData;
   var toDoListArray;
-  var user_id = 1;
+  
   var max_item_id = 0;
 
-
-  if (sessionStorage.getItem("user")){
-    user_id = sessionStorage.getItem("user")["id"];
-  }
-  //alert("user id: " + user_id);
+  var details = sessionStorage.getItem("user");
+  var user_id = JSON.parse(details).id;
+  alert("user id: " + user_id);
 
 
   function populateToDoList(){
