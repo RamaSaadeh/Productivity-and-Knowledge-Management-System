@@ -119,6 +119,7 @@ emailcell.innerHTML = email;
 
 const urlParams = new URLSearchParams(window.location.search);
 const selectedProjectID = urlParams.get('selected_project_ID');
+var projectname;
 
 $.ajax({
 type: "POST",
@@ -131,7 +132,7 @@ success: function (response) {
     alert("Something went wrong");
   } else {	
 
-    var projectname = JSON.parse(response)[0];
+    projectname = JSON.parse(response)[0];
     var allTasks = JSON.parse(response)[1]; //[0] takes the first half of the encoded json array
     var allStaff = JSON.parse(response)[2]; //[1] takes the first half of the encoded json array
 
@@ -764,7 +765,16 @@ function deleteProject(){
 }
 
 
+function openeditprojectForm(){
+  document.getElementById("edit_projID").value = selectedProjectID;
+  document.getElementById("edit_projname").value = projectname;
 
+  document.getElementById("editprojopaquebg").style.display = "block";
+}
+
+function closeeditprojectForm(){
+  document.getElementById("editprojopaquebg").style.display = "none";
+}
 
 
 
@@ -942,16 +952,25 @@ new Chart("workload-chart", {
 
 
 
-var close = document.getElementsByClassName("closealertbtn");
-var i;
 
-for (i = 0; i < close.length; i++) {
-close[i].onclick = function(){
-  var div = this.parentElement;
-  div.style.opacity = "0";
-  setTimeout(function(){ div.style.display = "none"; }, 600);
-}
-}
+
+
+
+
+
+
+
+
+// var close = document.getElementsByClassName("closealertbtn");
+// var i;
+
+// for (i = 0; i < close.length; i++) {
+// close[i].onclick = function(){
+//   var div = this.parentElement;
+//   div.style.opacity = "0";
+//   setTimeout(function(){ div.style.display = "none"; }, 600);
+// }
+// }
 
 
 var myNodelist = document.getElementById("toDoList").getElementsByTagName("LI");

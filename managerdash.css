@@ -1035,32 +1035,58 @@
 	  margin-top: 5px;
   }
   
-  /*Alert Box*/
-  #allalerts {
-	  padding-top: 5px;
+  /*ProjectDetails Box*/
+ #projectdetails{
+	font-size: 20;
+    margin-left: 25;
+	margin-top: 25;
+ }
+#editprojbtn{
+	width: 100%;
+    background-color: #efbf1a;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    margin-top: 5px;
+    font-size: 15;
+}
+#deleteprojbtn{
+	width: 100%;
+    background-color: #efbf1a;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    margin-top: 5px;
+    font-size: 15;
+}
+
+#edit_projID{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid grey;
+	border-radius: 4px;
+	box-sizing: border-box;
   }
-  .alert {
-	padding: 10px;
-	background-color: #2980B9;
-	color: white;
-	opacity: 1;
-	transition: opacity 0.6s;
-	margin-bottom: 15px;
-  }
-  .closealertbtn {
-	margin-left: 15px;
-	color: white;
-	font-weight: bold;
-	float: right;
-	font-size: 22px;
-	line-height: 20px;
-	cursor: pointer;
-	transition: 0.3s;
-  }
-  .closebtn:hover {
-	color: black;
-  }
-  
+
+#edit_projname{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid grey;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
   
   /*Footer Content*/
   .footer {
