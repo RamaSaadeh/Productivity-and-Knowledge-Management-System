@@ -132,6 +132,9 @@
   }
 
   $(document).ready(function(){
+    document.getElementById("editprojopaquebg").style.display = "block";
+
+
     populateToDoList();
     addOnDeleteFunc();
       $.ajax({ 
