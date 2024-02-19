@@ -200,12 +200,12 @@ document.addEventListener("DOMContentLoaded", function () {
 							$('.like-post').addClass('liked').attr('data-liked', 'true').attr('title', 'Unlike');
 						}
 					} else {
-						alert(response.message || 'Failed to update like status.');
+						
 					}
 				},
 				error: function(xhr, status, error) {
 				
-					alert('Error updating like status.');
+					
 				}
 			});
 		});
@@ -660,16 +660,16 @@ document.addEventListener("DOMContentLoaded", function () {
 					//if the post was successfully deleted
 					$(`.post[data-post-id="${postID}"]`).remove(); 
 					$('#deleteConfirmationModal').modal('hide'); 
-					alert(response.message || 'Post deleted successfully.');
+					
 				} else {
 					//if the server responded with an error
-					alert(response.message || 'Failed to delete post.');
+					
 				}
 			},
 			error: function(xhr, status, error) {
 				//handle any AJAX errors
 				
-				alert('Error deleting post.');
+				
 			}
 		});
 	});
@@ -763,12 +763,12 @@ document.addEventListener("DOMContentLoaded", function () {
 				
 				document.getElementById('confirmationModal').style.display = 'none';
 			} else {
-				alert('Failed to delete comment: ' + data.message);
+				
 			}
 		})
 		.catch(error => {
 	
-			alert('Error deleting comment.');
+		
 		});
 	}
 		
@@ -863,15 +863,15 @@ document.addEventListener("DOMContentLoaded", function () {
 					//hide the edit modal
 					document.getElementById('editCommentModal').style.display = 'none';
 				} else {
-					alert('Failed to find the comment element.');
+					
 				}
 			} else {
-				alert('Failed to update comment: ' + data.message);
+				
 			}
 		})
 		.catch(error => {
 		
-			alert('Error updating comment.');
+			
 		});
 	}
 
@@ -1072,7 +1072,7 @@ document.addEventListener("DOMContentLoaded", function () {
 						likes = isLiked ? likes - 1 : likes + 1; //increment or decrement based on current state
 						$likeCount.text(likes);
 					} else {
-						alert('Failed to update like status: ' + response.message);
+						
 					}
 				},
 				error: function(xhr, status, error) {
