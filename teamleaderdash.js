@@ -483,7 +483,7 @@ function isValidDateString(str) {
 
 function addnewtask() {
 
-  event.preventDefault();
+//   event.preventDefault();
 
   var newtaskID = document.getElementById("new_taskID").value;
   var newtaskName = document.getElementById("new_taskname").value;
