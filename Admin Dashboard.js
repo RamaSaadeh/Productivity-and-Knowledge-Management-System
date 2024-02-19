@@ -70,6 +70,7 @@
   function populateStaffTable(){
     var staffTable = document.getElementById("staffInfo");
     var tbody = staffTable.querySelector("tbody");
+    tbody.innerHTML= "";
 
     staffData.forEach(function(item){
           // create a new table row for each user in the database
@@ -173,6 +174,20 @@
         // Code to delete the user
         alert("user deleted");
         row.style.display="none";
+        $.ajax({
+          url: 'delete-user.php',
+          type: 'POST',
+          data: {'user_id': staffId},
+          success: function(response) {
+              // Handle the response from the server
+              console.log('User deleted from database');
+          },
+          error: function(xhr, status, error) {
+              // Handle errors
+              console.error('Error deleting item:', error);
+          }
+        });
+
 
     }
   }
@@ -405,8 +420,6 @@ function newElement() {
             } else if (staffId && staffId.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
             } else if (teamLead && teamLead.textContent.toUpperCase().trim().indexOf(filter) > -1){
-                tr[i].style.display = "";
-            } else if (teamMan && teamMan.textContent.toUpperCase().trim().indexOf(filter) > -1){
                 tr[i].style.display = "";
             } else{
                 tr[i].style.display = "none";
