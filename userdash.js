@@ -46,7 +46,7 @@
           })
           addOnDeleteFunc();
           console.log(max_item_id);
-
+ 
       },
       error: function(xhr, status, error) {
           // Handle errors
