@@ -102,6 +102,7 @@ function addOnDeleteFunc(){
                   };
                   li.style.display = "none";
                   // Make the AJAX request
+                  /*
                   $.ajax({
                     url: 'delete-to-do-item.php',
                     type: 'POST',
@@ -115,7 +116,7 @@ function addOnDeleteFunc(){
                         console.error('Error deleting item:', error);
                     }
                   });
-
+*/
 
             } else {
                     // item has no id set, was not stored in database
@@ -143,6 +144,7 @@ list.addEventListener('click', function(ev) {
             // if the item was checked then update db and adjust position
             checked = 1; 
           } 
+          /*
           $.ajax({
             url: 'toggle-to-do-status.php',
             type: 'POST',
@@ -156,6 +158,7 @@ list.addEventListener('click', function(ev) {
                 console.error('Error toggling item:', error);
             }
           });
+          */
           
           moveToDoItem(listItem.id, description, checked);
         }
@@ -217,6 +220,7 @@ function newElement() {
     // add new item to the start of the list 
       document.getElementById("toDoUL").insertAdjacentElement('afterbegin', li);
       // update the todolist table using jQuery AJAX
+      /*
       $.ajax({
         url: 'add-to-do-item.php',
         type: 'POST',
@@ -230,6 +234,7 @@ function newElement() {
             console.error('Error creating item:', error);
         }
       });
+      */
 
 
     }
@@ -248,6 +253,7 @@ function newElement() {
 // code for user tasks
 
 function getUserTasks(){
+    /*
 
     $.ajax({
         url: 'return-tasks.php',
@@ -266,6 +272,7 @@ function getUserTasks(){
             console.error('Error retrieving tasks:', error);
         }
       });
+      */
 
 }
 
@@ -431,6 +438,7 @@ function saved(taskId, projectId) {
     document.getElementById("submitted" + uniqueId).innerHTML = "Task Status Updated";
 
     // edit data in database
+    /*
     $.ajax({
         url: 'update-task-status.php',
         dataType: "json",
@@ -440,6 +448,7 @@ function saved(taskId, projectId) {
             //alert("success");
         }
     })
+    */
 }
 
 
