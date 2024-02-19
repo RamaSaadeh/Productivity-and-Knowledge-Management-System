@@ -258,7 +258,6 @@ function getUserTasks(){
             tasksData = data;
             console.log(tasksData);
             populateTasksTable();
-            alert(JSON.parse(data));
         },
         error: function(xhr, status, error) {
             // Handle errors
@@ -284,8 +283,8 @@ function populateTasksTable(){
     document.getElementById("taskTable").appendChild(header);
     tasksData.forEach(function(task){
         // accessing variables 
-        var task_id = document.createElement("h5");
-        task_id.textContent = "Task ID #" + task['task_id'];
+        //var task_id = document.createElement("h5");
+        //task_id.textContent = "Task ID #" + task['task_id'];
         var task_name = document.createElement("h4");
         task_name.textContent = task['task_name'];
         var hrs_left = document.createElement("h5");
