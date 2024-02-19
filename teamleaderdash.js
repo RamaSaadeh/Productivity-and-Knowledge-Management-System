@@ -68,7 +68,7 @@ dashboard.addEventListener("click", function() {
       a.href = "accessproject.php";
       break;
     case "l":
-      a.href = "accessproject.php";
+      a.href = "leader-dash.html";
       break;
     default:
       a.href = "#";
