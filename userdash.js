@@ -7,7 +7,6 @@
 
   var details = sessionStorage.getItem("user");
   var user_id = JSON.parse(details).id;
-  alert("user id: " + user_id);
 
 
   function populateToDoList(){
@@ -47,8 +46,7 @@
           })
           addOnDeleteFunc();
           console.log(max_item_id);
- 
-        alert(data);
+
       },
       error: function(xhr, status, error) {
           // Handle errors
