@@ -483,8 +483,7 @@ return true;
 
 function addnewtask() {
 
-event.preventDefault();
-alert("hi");
+// event.preventDefault();
 
 var newtaskID = document.getElementById("new_taskID").value;
 var newtaskName = document.getElementById("new_taskname").value;
@@ -501,7 +500,7 @@ for (var i = 0; i < selectedOptions.length; i++) {
 }
 
 
-
+alert(selectedProjectID);
 if(isValidDateString(newtaskDeadline)){
 $.ajax({
   type: "POST",
