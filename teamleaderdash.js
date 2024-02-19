@@ -590,7 +590,7 @@ function updatetasknotes() {
               // Hide the task notes form
               document.getElementById("tasknotesopaquebg").style.display = "none";
               // Redirect to the manager dashboard
-              window.location.href = "managerdash.html?selected_project_ID=" + selectedProjectID;
+              window.location.href = "teamleaderdash.html?selected_project_ID=" + selectedProjectID;
           }
         },
       });
