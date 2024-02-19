@@ -102,7 +102,7 @@
         var editButton = document.createElement("button");
         editButton.classList.add("editUserBttn");
         editButton.textContent = "\u270E"; 
-        editButton.onclick = editUser;
+        editButton.onclick = editUser(this);
         editCell.appendChild(editButton);
 
 
@@ -191,21 +191,25 @@
     }
   }
 
-  function editUser(){
-    // Get the parent row of the button
-    var row = this.closest('tr');
+//   function editUser(button){
+//     // Get the parent row of the button
+//     var row = this.closest('tr');
 
-    // Access data within the row
-    var fullName = row.querySelector('.fullName').textContent;
-    var staffId = row.querySelector('.staffId').textContent;
-    // Access other data similarly
+//     // Access data within the row
+//     var fullName = row.querySelector('.fullName').textContent;
+//     var staffId = row.querySelector('.staffId').textContent;
+//     // Access other data similarly
 
-    // Ask for confirmation with the data
-    if (confirm('Are you sure you want to edit user ' + fullName + ' with ID ' + staffId + '?')) {
-        // Code to delete the user
-        alert("User edited");
-    }
-  }
+//     // Ask for confirmation with the data
+//     if (confirm('Are you sure you want to edit user ' + fullName + ' with ID ' + staffId + '?')) {
+//         // Code to delete the user
+//         alert("User edited");
+//     }
+//   }
+
+function editUser(button){
+    document.getElementById("editprojopaquebg").style.display = "block";
+}
 
 
   // add editUser onclick function to each edit user button 

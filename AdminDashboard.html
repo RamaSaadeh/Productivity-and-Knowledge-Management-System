@@ -350,6 +350,26 @@
 
             </div>
 
+            <div class="popup-background" id="editprojopaquebg">
+                <form class="editproj-form" onsubmit="edit_projectname()" method="get">
+                    <div class="form-title">
+                        <button type="button" id="cancel-formbtn" onclick="closeeditprojectForm()">Cancel</button>
+                        <div id="formheader">Edit Project Details</div>
+                    </div>
+                    <div id="formcontent">
+            
+                        <label class="addtaskform_labels">Project ID</label>
+                        <input type="text" value="" id="edit_projID" readonly>
+            
+                        <label class="addtaskform_labels">Project Name</label>
+                        <input type="text" id="edit_projname" required>
+            
+                        <button type="submit" id="saveedittask_formbtn">Save Changes</button>
+                        <button type="button" id="closeedittaskbtn" onclick="closeeditprojectForm()">Close without saving changes</button>
+                    </div>
+                </form>  
+            </div>
+
     <!-- end of main content -->
     </div>
 
@@ -375,25 +395,6 @@
 
     </footer>
     </div>
-    <!-- Edit Staff Modal -->
-<div id="editModal" class="modal">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal()">&times;</span>
-      <h2>Edit User</h2>
-      <form id="editForm" onsubmit="">
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br><br>
-        <label for="role">Role:</label><br>
-        <input type="text" id="role" name="role" required><br><br>
-        <button type="submit">Save</button>
-      </form>
-    </div>
-  
-  </div>
 
 <script src="Admin Dashboard.js"></script>
 
