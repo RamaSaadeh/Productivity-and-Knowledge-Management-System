@@ -16,7 +16,7 @@
       url: 'return-to-do.php',
       dataType: "json",
       type: 'POST',
-      data: { user_id: user_id },
+      data: { 'user_id': user_id },
       success: function(data) {
           // Handle the response from the server
           toDoListArray = data;
