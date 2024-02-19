@@ -804,7 +804,6 @@ function edit_projname(){
   }
 }
 
-
 function closeeditprojectForm(){
   document.getElementById("editprojopaquebg").style.display = "none";
 }
