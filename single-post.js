@@ -388,8 +388,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		editIcon.classList.toggle('fa-edit', !isEditing);
 	
 		const elements = [
-			{selector: '#postTitle', limit: 40},
-			{selector: '#postTopic', limit: 40},
+			{selector: '#postTitle', limit: 80},
+			{selector: '#postTopic', limit: 80},
 			{selector: '#postContent', limit: 1500}
 		];
 		
@@ -480,8 +480,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			  const contentElement = document.querySelector('#postContent');
 		  
 			  //character limits
-			  let title = titleElement.textContent.substring(0, 40).trim();
-			  let topic = topicElement.textContent.substring(0, 40).trim();
+			  let title = titleElement.textContent.substring(0, 80).trim();
+			  let topic = topicElement.textContent.substring(0, 80).trim();
 			  let content = contentElement.textContent.substring(0, 1500).trim();
 		  
 			  //update elements with trimmed content
@@ -597,7 +597,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				switch(el.id) {
 					case 'postTitle':
 					case 'postTopic':
-						charLimit = 40;
+						charLimit = 80;
 						break;
 					case 'postContent':
 						charLimit = 1500;

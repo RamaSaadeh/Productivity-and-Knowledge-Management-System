@@ -289,7 +289,7 @@ function saveDraft(postTitle, postTopic, postBody) {
 	        const body = draftElement.find('.draft-body').val();
 		    
 		//validation to ensure correct lengths of data fields
-	        if (title.length > 40 || topic.length > 40 || body.length > 1500) {
+	        if (title.length > 80 || topic.length > 80 || body.length > 1500) {
 	            displayPopup('Character limit exceeded!');
 	            return;
 	        }
@@ -471,9 +471,9 @@ function appendDraftToSidebar(draft) {
 	<div class="media draft" data-post-id="${draft.postID}">
 	    <div class="media-body draft-content">
 		<label for="post-topic" class="label">Topic</label>
-		<input type="text" class="draft-topic" value="${draft.topic}" maxlength="40">
+		<input type="text" class="draft-topic" value="${draft.topic}" maxlength="89">
 		<label for="post-title" class="label">Title</label>
-		<input type="text" class="draft-title" value="${draft.title}" maxlength="40">
+		<input type="text" class="draft-title" value="${draft.title}" maxlength="80">
 		<label for="post-body" class="label">Body</label>
 		<textarea class="draft-body" maxlength="1500">${draft.body}</textarea>
 	    </div>

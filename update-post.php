@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $content = isset($_POST['content']) ? mysqli_real_escape_string($conn, $_POST['content']) : '';
 
     //enforce character limits
-    if (strlen($topic) > 40 || strlen($title) > 40 || strlen($content) > 1500) {
+    if (strlen($topic) > 80 || strlen($title) > 80 || strlen($content) > 1500) {
         echo json_encode(['success' => false, 'message' => 'Character limit exceeded']);
         exit; //stop execution if any limit is exceeded
     }
