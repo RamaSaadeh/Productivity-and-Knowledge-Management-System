@@ -1076,7 +1076,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		//function for getting the date
 	function extractDateFromElement(element) {
 		const regex = /(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/;
-		const match = regex.exec(element.textContent);
+		const match = regex.exec(element.textContent || '');
 		return match ? match[1] : null; 
 	}
 
@@ -1091,10 +1091,10 @@ document.addEventListener("DOMContentLoaded", function () {
 			const dateAString = extractDateFromElement(a.querySelector('.comment-user-date'));
 			const dateBString = extractDateFromElement(b.querySelector('.comment-user-date'));
 			
-
 			
 			const dateA = new Date(dateAString);
 			const dateB = new Date(dateBString);
+			
 			return dateB - dateA; 
 		});
 
