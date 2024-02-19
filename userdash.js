@@ -340,16 +340,6 @@ function populateTasksTable(){
             <br>
             <input type="submit" class="submitButton" value="Save" onclick="saved(${task['task_id']},${task['project_id']})">
             <h5 id="submitted${task['task_id']}${task['project_id']}" style="color: #2fe617; display: none">Status updated</h5> 
-            <br>
-            <h5 style="margin-top: 13px">Report Problem</h5>
-            <input name="problem" type="text" id="problem${task['task_id']}${task['project_id']}"><br>
-            <input type="submit" class="submitButton" value="Report" onclick="reportTaskProblem(${task['task_id']},${task['project_id']})">
-            <h5 id="reported${task['task_id']}${task['project_id']}" style="color: #2fe617; display: none">Problem reported</h5>
-            <br><br>
-            <h5>Request Training</h5>
-            <input name="training" type="text" id="training${task['task_id']}${task['project_id']}"><br>
-            <input type="submit" class="submitButton" value="Request" onclick="suggestTraining(${task['task_id']}, ${task['project_id']})">
-            <h5 id="requested${task['task_id']}${task['project_id']}" style="color: #2fe617; display: none">Training requested</h5>
             <br>`;
             row.appendChild(rightCell);
             document.getElementById("taskTable").appendChild(row);
