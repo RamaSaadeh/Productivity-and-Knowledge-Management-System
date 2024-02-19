@@ -20,7 +20,7 @@ if ($conn->connect_error) {
 $sql = "INSERT INTO todolist (user_id, item_id, description, checked) VALUES ($user_id, $item_id, $description, 0);";
 $result = $conn->query($sql);
 
-
+/*
 // Check if the query was successful
 if ($result) {
     // Query was successful
@@ -31,7 +31,7 @@ if ($result) {
 }
 
 echo json_encode($response);
-
+*/
 // Close the database connection
 $conn->close();
 ?>
