@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 
 
 // Execute SQL queries to fetch users data
-$sql = "INSERT INTO todolist (user_id, item_id, description, checked) VALUES ($user_id, $item_id, $description, 0);";
+$sql = "INSERT INTO todolist (user_id, item_id, description, checked) VALUES (`$user_id`, `$item_id`, `$description`, `0`);";
 $result = $conn->query($sql);
 
 /*
