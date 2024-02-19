@@ -218,9 +218,9 @@ function open_editUser(button){
 
     // Get the data from the cells of the row
     document.getElementById("edit_name").value = row.cells[0].innerText;
-    document.getElementById("edit_name").value = row.cells[1].innerText;
-    document.getElementById("edit_name").value = row.cells[2].innerText;
-    document.getElementById("edit_name").value = row.cells[3].innerText;
+    document.getElementById("edit_ID").value = row.cells[1].innerText;
+    document.getElementById("edit_role").value = row.cells[2].innerText;
+    document.getElementById("edit_email").value = row.cells[3].innerText;
 }
 
 function close_editUser(){
