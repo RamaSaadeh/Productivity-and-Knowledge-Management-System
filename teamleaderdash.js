@@ -519,6 +519,7 @@ function addnewtask() {
         alert("Something went wrong");
       } 
 
+        alert("hi");
         document.getElementById("addtaskopaquebg").style.display = "none";
 
         window.location.href = "teamleaderdash.html?selected_project_ID="+selectedProjectID;
