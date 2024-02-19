@@ -13,12 +13,13 @@
   function populateToDoList(){
     // request to-do list data for user asynchronously
     $.ajax({
-      url: 'return-to-do.php',
+      url: 'test_connection.php',
       dataType: "json",
       type: 'POST',
-      data: { 'user_id': user_id },
+      data: { user_id: user_id },
       success: function(data) {
           // Handle the response from the server
+          /*
           toDoListArray = data;
           console.log('todo list returned successfully');
           document.getElementById("toDoUL").innerHTML = "";
@@ -46,14 +47,15 @@
           })
           addOnDeleteFunc();
           console.log(max_item_id);
-
+*/  
+        alert(data);
       },
       error: function(xhr, status, error) {
           // Handle errors
           console.error('Error accessing to do items:', error);
       }
     });
-
+    
 
   }
 
