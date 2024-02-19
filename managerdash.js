@@ -773,7 +773,7 @@ function openeditprojectForm(){
 
 function edit_projname(){
 
-  // event.preventDefault();
+  event.preventDefault();
 
   var new_projname = document.getElementById("edit_projname").value;
 
