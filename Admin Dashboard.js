@@ -229,7 +229,7 @@ function update_userdetails(){
             alert("Something went wrong");
         } 
 
-        // window.location.reload();
+        window.location.reload();
         }
     });
 

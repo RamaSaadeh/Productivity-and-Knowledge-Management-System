@@ -15,7 +15,7 @@ $conn = new mysqli($servername, $username, $dbpassword, $database);
 
 
 // SQL query to fetch staff not currently in team from the database
-$sql = "UPDATE users SET name = '$user_name' WHERE role = '$role';";
+$sql = "UPDATE users SET name = '$user_name', role = '$role' WHERE user_id = '$user_to_change';";
 
 $result = $conn->query($sql);
 
