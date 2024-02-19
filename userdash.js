@@ -437,7 +437,7 @@ function saved(taskId, projectId) {
         type: 'POST',
         data: { 'status': currentStatus, 'taskId': taskId, 'projectId': projectId},
         success: function(data) {
-            alert("success");
+            //alert("success");
         }
     })
 }
