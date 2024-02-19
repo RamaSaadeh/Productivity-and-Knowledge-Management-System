@@ -623,20 +623,6 @@ bottom: .5em;
     font-size: 100%;
 }
 
-
-
-.popup-background {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.4);
-}
-
 .editproj-form {
 	background-color: #fefefe;
 	margin: 5% auto;
@@ -685,7 +671,7 @@ bottom: .5em;
     font-size: 12;
     padding-left: 10px;
 }
-#edit_projID{
+#edit_name{
 	width: 100%;
 	padding: 12px 20px;
 	margin: 8px 0;
@@ -694,8 +680,18 @@ bottom: .5em;
 	border-radius: 4px;
 	box-sizing: border-box;
   }
-  #edit_projname{
+  #edit_ID{
 	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid grey;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#edit_role{
+    width: 100%;
 	padding: 12px 20px;
 	margin: 8px 0;
 	display: inline-block;

@@ -10,7 +10,6 @@
   var max_item_id = 0;
 
 
-  //alert("user id: " + user_id);
 
 
   function populateToDoList(){
@@ -144,7 +143,7 @@
           dataType: "json", // Specify the expected data type of the response
           success: function(data){ // 'data' parameter contains the response from the server
               staffData = data;
-              alert("Users data loaded successfully");
+            //   alert("Users data loaded successfully");
               console.log(staffData);
               populateStaffTable();
               // Here you can perform any further operations with the users data if needed
