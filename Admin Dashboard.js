@@ -1,4 +1,33 @@
-  
+//get role from session storage
+var details = sessionStorage.getItem("user");
+var role = JSON.parse(details).role;
+
+//ensure that user is logged in to grant access to this page else redirect them to login.html
+function checkLogin() {
+    try {
+        var details = sessionStorage.getItem("user");
+        var role = JSON.parse(details).role;
+        switch (role) {
+            case "a":
+                break;
+            case "g":
+                window.location.replace("permission-denied.html");
+                break;
+            case "m":
+                window.location.replace("permission-denied.html");
+                break;
+            case "l":
+                window.location.replace("permission-denied.html");
+                break;
+            default:
+                window.location.replace("login.html");
+                break;
+        }
+    }
+    catch {
+        window.location.replace("login.html");
+    }
+}  
 
   
   // requesting staff info  on page load
@@ -492,18 +521,22 @@ function newElement() {
         staffClicked();
         
         // adapting dashboard links depending on user role
-        dashboard.addEventListener("click", function() {
-            var user = sessionStorage.getItem("user");
+        var details = sessionStorage.getItem("user");
+        var role = JSON.parse(details).role;
+        dashboard.addEventListener("click", function () {
             var a = document.getElementById("dashboard");
-            switch (user) {
+            switch (role) {
                 case "a":
                     a.href = "AdminDashboard.html";
                     break;
                 case "g":
                     a.href = "userdash.html";
-                    break;					
+                    break;
                 case "m":
-                    a.href = "managerdash.html";
+                    a.href = "accessproject.php";
+                    break;
+                case 'l':
+                    a.href = "leader-dash.php";
                     break;
                 default:
                     a.href = "#";

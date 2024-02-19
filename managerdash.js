@@ -12,6 +12,7 @@ function checkLogin() {
           case "m":
               break;
           case "l":
+              window.location.replace("permission-denied.html");
               break;
           default:
               window.location.replace("login.html");

@@ -6,10 +6,13 @@ function checkLogin() {
         var role = JSON.parse(details).role;
         switch (role) {
             case "a":
+                window.location.replace("permission-denied.html");
                 break;
             case "g":
+                window.location.replace("permission-denied.html");
                 break;
             case "m":
+                window.location.replace("permission-denied.html");
                 break;
             case "l":
                 break;
