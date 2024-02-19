@@ -1,6 +1,8 @@
+//get role from session storage
 var details = sessionStorage.getItem("user");
 var role = JSON.parse(details).role;
 
+//ensure that user is logged in to grant access to this page else redirect them to login.html
 function checkLogin() {
     try {
         var details = sessionStorage.getItem("user");
@@ -29,6 +31,7 @@ var email = JSON.parse(details).email;
 var id = JSON.parse(details).id;
 
 function toggle(event, tab) {
+    //switching between tabs
 
     var i = 0;
     var tabcontent;
@@ -63,6 +66,7 @@ function passwordClose() {
 }
 
 function detailsInput(box) {
+    //same checks as register page
     colour = "#D2D2D2";
     document.getElementById(box).style.borderColor = colour;
     a = $("#password").val();
@@ -88,6 +92,7 @@ function detailsInput(box) {
 }
 
 function specialCheck() {
+    //checks if password contains a special character
     var a = $("#password").val();
     for (let i = 0; i < a.length; i++) {
         if (a.charAt(i).match(/^[^a-zA-Z0-9]+$/)) return true;
@@ -99,6 +104,7 @@ function submitClick() {
     colour = "#D2D2D2";
     document.getElementById("password").style.borderColor = colour;
     var complete = passwordComplete();
+    //hide messages
     var a = document.getElementById("successMessage");
     a.style.display = "none";
     var b = document.getElementById("error");
@@ -106,7 +112,7 @@ function submitClick() {
     if (!complete) return;
     var details = sessionStorage.getItem("user");
     var id = JSON.parse(details).id;
-    //check if new password == old password
+    //check if new password == old password when attempting to change password
     $.ajax({
         type: "POST",
         url: "profile.php",
@@ -131,6 +137,7 @@ function submitClick() {
 }
 
 function passwordComplete() {
+    //check if all password parameters are successful
     const colours = [];
     colours[0] = document.getElementById("length").style.color;
     colours[1] = document.getElementById("lowercase").style.color;

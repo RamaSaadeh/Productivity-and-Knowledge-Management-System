@@ -59,6 +59,7 @@ $.ajax({
     },
     success: function (response) {
         var projects = JSON.parse(response);
+        //print projects as options in dropdown
         projects.forEach(function (project) {
             document.getElementById("select-proj").innerHTML += project;
         });

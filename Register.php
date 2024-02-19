@@ -13,6 +13,7 @@
 
 	if ($action == "check_email") {
 		$email = $_POST['email'];
+		//check if email already exists
 		$stmt = $conn->prepare("SELECT COUNT(*) FROM `users` WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -35,6 +36,7 @@
 		$role = $_POST['role'];
 		$password = hash('sha256', $_POST['password']);
 
+		//add new user to database
 		$stmt = $conn->prepare("INSERT INTO `users` (role, email, name, password) VALUES (?, ?, ?, ?)");
 		$stmt->bind_param("ssss", $role, $email, $name, $password);
 		$stmt->execute();

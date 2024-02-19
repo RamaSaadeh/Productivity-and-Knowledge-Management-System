@@ -10,8 +10,10 @@
 
 	if ($action == "change_password") {
 		$id = $_POST['id'];
+		//hashes password for security
 		$password = hash('sha256', $_POST['password']);
 
+		//get current password
 		$stmt = $conn->prepare("SELECT password FROM `users` WHERE user_id = ?");
 		$stmt->bind_param("s", $id);
 		$stmt->execute();
@@ -23,6 +25,7 @@
 			echo "invalid";
 		}
 		else {
+			//if new password is different, update password in database
 			$stmt = $conn->prepare("UPDATE `users` SET password = ? WHERE user_id = ?");
 			$stmt->bind_param("ss", $password, $id);
 			$stmt->execute();
@@ -34,6 +37,7 @@
 	else if ($action == "get_projects") {
 		$id = $_POST['id'];
 
+		//get number of projects that current user is part of
 		$stmt = $conn->prepare("SELECT COUNT(project_id) FROM `project_staff` WHERE user_id = ?");
 		$stmt->bind_param("s", $id);
 		$stmt->execute();
@@ -44,12 +48,14 @@
 			echo "none";
 		}
 		else {
+			//if current user is part of at least one project, get project ids in order
 			$stmt = $conn->prepare("SELECT project_id FROM `project_staff` WHERE user_id = ? ORDER BY project_id");
 			$stmt->bind_param("s", $id);
 			$stmt->execute();
 			$stmt->bind_result($projects);
 			while ($stmt->fetch()) {
 				$conn2 = new mysqli($servername, $username, $dbpassword, $database);
+				//get name and leader status for every project that the current user is part of
 				$stmt2 = $conn2->prepare("SELECT proj_name, leader_id FROM `projects` WHERE project_id = ?");
 				$stmt2->bind_param("s", $projects);
 				$stmt2->execute();
@@ -72,6 +78,7 @@
 
 		include 'db.php';
 
+		//get post details for current user
 		$sql = "SELECT PostID, Title, DateCreated, IsDraft, LikesCount, Topic
 				FROM Posts
 				WHERE IsDraft = 0 AND UserID = ?
@@ -98,6 +105,7 @@
 
 		include 'db.php';
 
+		//get comment details for current user
 		$sql = "SELECT p.PostID, p.Title, p.Topic, c.CommentContent, c.Likes, c.LastModified
 				FROM Comments c
 				INNER JOIN Posts p ON c.PostID = p.PostID
