@@ -102,8 +102,10 @@
         var editButton = document.createElement("button");
         editButton.classList.add("editUserBttn");
         editButton.textContent = "\u270E"; 
-        editButton.onclick = open_editUser(this);
         editCell.appendChild(editButton);
+        editButton.onclick = function() {
+            open_editUser(editButton);
+        };
 
 
           // create a delete button
