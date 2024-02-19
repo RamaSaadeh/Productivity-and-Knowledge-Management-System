@@ -792,6 +792,7 @@ function edit_projname(){
           if (response === "invalid") {
             alert("Something went wrong");
           } else {
+            
               alert("hi");
               // Hide the task notes form
               document.getElementById("editprojopaquebg").style.display = "none";
