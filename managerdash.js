@@ -778,7 +778,7 @@ function edit_projectname(){
   var new_projname = document.getElementById("edit_projname").value;
 
   alert(new_projname);
-  var confirmation = confirm("Are you sure you want to delete this task?");
+  var confirmation = confirm("Are you sure you want to rename this project?");
   
   if(confirmation){
     $.ajax({
