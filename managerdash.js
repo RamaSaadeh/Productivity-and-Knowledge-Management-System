@@ -773,7 +773,7 @@ function openeditprojectForm(){
 
 function edit_projname(){
 
-  event.preventDefault();
+  // event.preventDefault();
 
   var new_projname = document.getElementById("edit_projname").value;
 
@@ -792,7 +792,7 @@ function edit_projname(){
           if (response === "invalid") {
             alert("Something went wrong");
           } else {
-            
+
               alert("hi");
               // Hide the task notes form
               document.getElementById("editprojopaquebg").style.display = "none";
