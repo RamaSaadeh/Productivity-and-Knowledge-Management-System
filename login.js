@@ -39,7 +39,6 @@ async function getData() {
 						break;
 				}
 				let obj = { id: array[0], role: array[1], email: array[2] };
-				alert(email);
 				//create session storage where active user details are stored
 				sessionStorage.setItem("user", JSON.stringify(obj));
 			}
