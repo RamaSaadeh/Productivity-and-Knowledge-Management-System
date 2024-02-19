@@ -66,8 +66,5 @@ $.ajax({
         projects.forEach(function (project) {
             document.getElementById("select-proj").innerHTML += project;
         });
-    },
-    error: function () {
-        alert("Error loading projects");
     }
 });
