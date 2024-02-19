@@ -1,16 +1,19 @@
 //Nav Java
 var inviteForm = document.getElementById("inviteuseropaquebg");
 		
+//function to open invite form
 function openForm() {
 	inviteForm.style.display = "block";
 }
 
+//function to close invite form
 function closeForm() {
 	inviteForm.style.display = "none";
 	document.getElementById("email").value = "";
 	document.getElementById("emailError").style.display = "none";
 }
 
+//function to invite user
 function sendInvite() {
 	var email = document.getElementById("email").value;
 	var label = document.getElementById("emailError");
@@ -26,6 +29,7 @@ function sendInvite() {
 	}
 }
 
+//check user is logged in to account in users table
 function checkLogin() {
     try {
         var details = sessionStorage.getItem("user");
@@ -49,7 +53,7 @@ function checkLogin() {
     }
 }
 
-//Decides which Dash to Link to
+//decides which Dash to Link to
 dashboard.addEventListener("click", function() {
 	var details = sessionStorage.getItem("user");
 	var role = JSON.parse(details).role;
@@ -75,10 +79,10 @@ dashboard.addEventListener("click", function() {
 
 $(document).ready(function() {
 	
-	//declare variables necessary
+	//declare variables for managing draft limit
     var currentEditingDraft = null;
     var draftCounter = 1;
-	var currentAction = null; // Declare this to manage current action
+	var currentAction = null; 
 	var currentDraftToPost = null;
 	
 	
@@ -145,7 +149,7 @@ $(document).ready(function() {
 });
 
 	
-	//when saving a draft
+//when saving a draft
 
 $('#draftButton').click(function() {
 	var details = sessionStorage.getItem("user");
@@ -194,8 +198,7 @@ $('#draftButton').click(function() {
 		data: { userID: userID }, //pass user id
         dataType: "json",
         success: function(response) {
-            //test log
-            console.log(response);
+
             
             if (response && response.draftCount && response.draftCount >= 5) {
                 errorMessage.text("Maximum of 5 saved drafts allowed.");
@@ -256,7 +259,6 @@ function saveDraft(postTitle, postTopic, postBody) {
 	$(document).on('click', '.delete-draft', function() {
 	    var draftToDelete = $(this).closest('.draft');
 	    var postID = draftToDelete.data('post-id'); //retrieve the postID from data attribute
-	    console.log('Post ID:', postID); //log the postID value
 	
 	    //confirm deletion with the user
 	    confirmAction('delete', 'Are you sure you want to delete this draft?', function() {
@@ -287,7 +289,7 @@ function saveDraft(postTitle, postTopic, postBody) {
 	        const body = draftElement.find('.draft-body').val();
 		    
 		//validation to ensure correct lengths of data fields
-	        if (title.length > 40 || topic.length > 40 || body.length > 1500) {
+	        if (title.length > 80 || topic.length > 80 || body.length > 1500) {
 	            displayPopup('Character limit exceeded!');
 	            return;
 	        }
@@ -324,7 +326,7 @@ function saveDraft(postTitle, postTopic, postBody) {
 	                }
 	            },
 	            error: function(xhr, status, error) {
-	                console.error('Error updating draft:', error);
+	         
 	                displayPopup('Error saving draft. Please try again later.');
 	            }
 	        });
@@ -433,32 +435,32 @@ function saveDraft(postTitle, postTopic, postBody) {
 
 //function to fetch drafts from the server and display them in the sidebar
 function fetchAndDisplayDrafts() {
-
-	var details = sessionStorage.getItem("user");
-	var userID = JSON.parse(details).id;
+    var details = sessionStorage.getItem("user");
+    var userID = JSON.parse(details).id;
     
-	$.ajax({
-	type: "GET",
-	url: "fetch-drafts.php", 
-	dataType: "json",
-	data: { userID: userID},
-	success: function(response) {
-	    //check if drafts were retrieved successfully
-	    if (response && response.drafts) {
-		//clear existing drafts in the sidebar
-		$('.drafts-container').empty();
-
-		//loop through each draft and append it to the sidebar
-		response.drafts.forEach(function(draft) {
-		    appendDraftToSidebar(draft);
-		});
-	    } else {
-		console.log('No drafts found.');
-	    }
-	},
-	error: function(xhr, status, error) {
-	    console.error('Error fetching drafts:', error);
-	}
+    $.ajax({
+        type: "GET",
+        url: "fetch-drafts.php", 
+        dataType: "json",
+        data: { userID: userID },
+        success: function(response) {
+            //clear existing drafts in the sidebar
+            $('.drafts-container').empty();
+            
+            if (response && response.drafts && response.drafts.length > 0) {
+                //there are drafts, loop through each draft and append it to the sidebar
+                response.drafts.forEach(function(draft) {
+                    appendDraftToSidebar(draft);
+                });
+            } else {
+                //no drafts were found, display a message indicating this
+                $('.drafts-container').append('<div class="no-drafts-message">You have no saved drafts currently.</div>');
+            }
+        },
+        error: function(xhr, status, error) {
+         
+            $('.drafts-container').append('<div class="error-message">Error fetching drafts. Please try again later.</div>');
+        }
     });
 }
 
@@ -469,9 +471,9 @@ function appendDraftToSidebar(draft) {
 	<div class="media draft" data-post-id="${draft.postID}">
 	    <div class="media-body draft-content">
 		<label for="post-topic" class="label">Topic</label>
-		<input type="text" class="draft-topic" value="${draft.topic}" maxlength="40">
+		<input type="text" class="draft-topic" value="${draft.topic}" maxlength="89">
 		<label for="post-title" class="label">Title</label>
-		<input type="text" class="draft-title" value="${draft.title}" maxlength="40">
+		<input type="text" class="draft-title" value="${draft.title}" maxlength="80">
 		<label for="post-body" class="label">Body</label>
 		<textarea class="draft-body" maxlength="1500">${draft.body}</textarea>
 	    </div>
@@ -519,12 +521,12 @@ function deleteDraft(postID, $draftContainer) {
                 displayPopup('Draft deleted successfully!');
             } else {
                 //error deleting draft
-                console.error('Error deleting draft:', response.message);
+                
                 displayPopup('Error deleting draft. Please try again later.');
             }
         },
         error: function(xhr, status, error) {
-            console.error('Error deleting draft:', error);
+       
             displayPopup('Error deleting draft. Please try again later.');
         }
     });
@@ -548,12 +550,12 @@ function deleteDraft(postID, $draftContainer) {
 	                displayPopup('Draft posted successfully!');
 	            } else {
 	                //error posting draft
-	                console.error('Error posting draft:', response.message);
+	             
 	                displayPopup('Error posting draft. Please try again later.');
 	            }
 	        },
 	        error: function(xhr, status, error) {
-	            console.error('Error posting draft:', error);
+	          
 	            displayPopup('Error posting draft. Please try again later.');
 	        }
 	    });

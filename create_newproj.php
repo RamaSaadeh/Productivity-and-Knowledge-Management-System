@@ -31,7 +31,7 @@ if ($result->num_rows > 0) {
 
 
 // SQL to enter new project into database
-$sql = "INSERT INTO projects (project_id, proj_name, leader_id) VALUES ('$counter', '$new_projname', '2');";
+$sql = "INSERT INTO projects (project_id, proj_name, leader_id) VALUES ('$counter', '$new_projname', '0');";
 
 $result = $conn->query($sql);
 

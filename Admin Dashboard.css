@@ -334,8 +334,13 @@
       height: 100%;
   }
   
+  #staffBttn:hover {
+    font-size: 110%; /* Increase the font size by 10% on hover */
+  }
   
-  
+  #toDoBttn:hover{
+    font-size: 110%;
+  }
   .staffHeader {
       text-align: left;
   }

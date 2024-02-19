@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-  <title>TeamLeaderDashboard</title>
+  <title>ManagerDashboard</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
@@ -18,7 +18,7 @@
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
-  <link href="teamleaderdash.css" rel="stylesheet"></script>
+  <link href="managerdash.css" rel="stylesheet"></script>
 </head>
 
 <body onload="checkLogin()">
@@ -77,14 +77,14 @@
 
 
 <div id="pageheader">
-	Team Leader Dashboard
+	Management Dashboard
 	<div class="SwitchProject">
-		<a href="accessproject.php"><button class="switchprojbtn" onclick="toggleSwitchProjDropdown()">Switch Project <span id="switchsymbol" class="material-symbols-outlined">sync_alt</span></button></a>
+		<a href="leader-dash.php"><button class="switchprojbtn" onclick="toggleSwitchProjDropdown()">Switch Project <span id="switchsymbol" class="material-symbols-outlined">sync_alt</span></button></a>
 		<button id="ToDoListbtn" onclick="openToDoList()">My To-Do List<span id="listsymbol" class="material-symbols-outlined">list</span></button>
 	</div>
 </div>
 
-<!-- <div class="popup-background" id="addnewprojopaquebg">
+<div class="popup-background" id="addnewprojopaquebg">
 	<form class="addnewproj-form" action="javascript:getData()" method="get">
 		<div class="form-title">
 			<button type="button" id="cancel-formbtn" onclick="closeaddnewprojForm()">Cancel</button>
@@ -96,7 +96,7 @@
 			<button type="submit" id="createnewproj-formbtn" onclick="closeaddnewprojForm()">Create</button>
 		</div>
 	</form>
-</div> -->
+</div>
 
 <div class="popup-background" id="ToDoListopaquebg">
 	<div class="ToDoList-form">
@@ -269,9 +269,6 @@
     <! -----------My Team Box----------- >
 	<div class="flex-item-myteamsection"> 
 		<div class="section-header">Team
-			<button id="removememberbtn" onclick="openremovestaffForm()">Remove member</button>
-			<button id="addmemberbtn" onclick="openaddstaffForm()">Add member</button>
-			<!-- <button id="changeteamrolesbtn" onclick="openchangeroleForm()">Change Roles</button> -->
 		</div>
 		
 		<div class="tablediv">
@@ -322,7 +319,7 @@
 	</form>
 	</div>
 
-	<!-- <div class="popup-background" id="changeroleopaquebg">
+	<div class="popup-background" id="changeroleopaquebg">
 	<form class="changerole-form" onsubmit="maketeamleader()" method="get">
 		<div class="form-title">
 			<button type="button" id="cancel-formbtn" onclick="closechangeroleForm()">Cancel</button>
@@ -338,7 +335,7 @@
 			<button type="submit" id="changerole-formbtn">Make Team Leader</button>
 		</div>
 	</form>
-	</div> -->
+	</div>
 	
 	<! -----------Workload Box----------- >
 	<div class="flex-item-workloadsection"> 
@@ -388,7 +385,7 @@
 <script>
 
 </script>
-<script src="teamleaderdash.html"></script>
+<script src="teamleaderdash.js"></script>
 
 </body>
 </html>

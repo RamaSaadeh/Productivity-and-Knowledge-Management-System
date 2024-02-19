@@ -349,21 +349,40 @@
 		
 	</div>
 	
+
+
+	<div class="popup-background" id="editprojopaquebg">
+		<form class="edittask-form" onsubmit="edit_projname()" method="get">
+			<div class="form-title">
+				<button type="button" id="cancel-formbtn" onclick="closeeditprojectForm()">Cancel</button>
+				<div id="formheader">Edit Project Details</div>
+			</div>
+			<div id="formcontent">
+	
+				<label class="addtaskform_labels">Project ID</label>
+				<input type="text" value="" id="edit_projID" readonly>
+	
+				<label class="addtaskform_labels">Project Name</label>
+				<input type="text" id="edit_projname" required>
+	
+				<button type="submit" id="saveedittask_formbtn">Save Changes</button>
+				<button type="button" id="closeedittaskbtn" onclick="closeeditprojectForm()">Close without saving changes</button>
+			</div>
+		</form>  
+	</div>
+
 	<! -----------Alerts Box----------- >
 	<div class="flex-item-alertssection"> 
-		<div class="section-header">Alerts</div>
-			<div id="allalerts">
-				<div class="alert">
-					<span class="closealertbtn">&times;</span>  
-					John Doe has requested Training
-				</div>
-				<div class="alert">
-					<span class="closealertbtn">&times;</span>  
-					Task xxx is due today!
-				</div>
+		<div class="section-header">Project Details</div>
+			<div id="projectdetails">
+				<div id="projID_text"></div>
+				<div id="projname_text"></div>
+				<button id="editprojbtn" onclick="openeditprojectForm()">Edit Details</button>
+				<button id="deleteprojbtn" onclick="deleteProject()">Delete Project</button>		
 			</div>
 		</div>
 	</div>
+
 
 
 <footer class="myFooter">

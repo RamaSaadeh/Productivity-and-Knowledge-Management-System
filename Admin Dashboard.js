@@ -169,9 +169,11 @@
     // Access other data similarly
 
     // Ask for confirmation with the data
-    if (confirm('Are you sure you want to delete the user ' + fullName + ' with ID ' + staffId + '?')) {
+    if (confirm('Permanently delete user ' + fullName + ' with ID ' + staffId + " from the system?")) {
         // Code to delete the user
         alert("user deleted");
+        row.style.display="none";
+
     }
   }
 
@@ -201,46 +203,6 @@
     button.onclick = deleteUser;
   });
 
-
-
-
-    // Get the modal and close button
-    var modal = document.getElementById("projectsWindow");
-    var closeButton = document.querySelector(".closeProj");
-    
-    // Show the modal when needed
-    function showProject() {
-    modal.style.display = "block";
-    }
-    
-    // Close the modal when the close button is clicked
-    closeButton.onclick = function () {
-    modal.style.display = "none";
-    };
-    
-    // Handle form submission when the Submit button is clicked
-    var submitButton = document.getElementById("projSubmitButton");
-    var inputField = document.getElementById("projInputField");
-    
-    submitButton.onclick = function () {
-    var inputValue = inputField.value;
-    // Process the input or perform other actions here
-    alert("Project Added");
-    modal.style.display = "none";
-    };
-    
-    // Close the modal if the overlay is clicked
-    window.onclick = function (event) {
-    if (event.target == modal) {
-    modal.style.display = "none";
-    }
-    }; 
-
-
-
-
-
-    
      // Create a "close" button and append it to each list item
      var myNodelist = document.getElementById("toDoList").getElementsByTagName("LI");
      var i;
@@ -454,46 +416,8 @@ function newElement() {
         
     }
 
-    function projectsSearch() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("projectsSearch");
-        
-        filter = input.value.toUpperCase().trim();
-        table = document.getElementById("projectsInfo");
-        tr = table.getElementsByTagName("tr");
-        
-    
-        for (i = 1; i < tr.length; i++) {
-            
-    
-            var projectName = tr[i].getElementsByClassName("projectName")[0];
-            var projectId = tr[i].getElementsByClassName("projectId")[0];
-            
-            var teamLeader = tr[i].getElementsByClassName("teamLeader")[0];
-            
-            if (projectName && projectName.textContent.toUpperCase().trim().indexOf(filter) > -1){
-                tr[i].style.display = "";
-            } else if (projectId && projectId.textContent.toUpperCase().trim().indexOf(filter) > -1){
-                tr[i].style.display = "";
-            }  else if (teamLeader && teamLeader.textContent.toUpperCase().trim().indexOf(filter) > -1){
-                tr[i].style.display = "";
-            } else{
-                tr[i].style.display = "none";
-            }
-            
-        }
-        
-    }
 
   // bootstrap for table sorting
-  $(document).ready(function () {
-    $('#projectsInfo').DataTable({
-        "paging": false , searching: false, info: false // disable pagination, search, page info
-      });
-    $('.dataTables_length').addClass('bs-select');
-  });
-
-
   $(document).ready(function () {
     $('#staffInfo').DataTable({
         "paging": false , searching: false, info: false // disable pagination, search, page info
@@ -501,46 +425,26 @@ function newElement() {
     $('.dataTables_length').addClass('bs-select');
   });
 
+     // change content when staff / to-do clicked
     
-    
-    
-    // change content when staff / project / to-do clicked
-    
-     // change content when staff / project / to-do clicked
-    
-    function staffClicked(){
-      document.getElementById("toDoBttn").style.backgroundColor = "#d3d3d3";
-      document.getElementById("staffToDoContainer").style.display = "none";
-      document.getElementById("projectsBttn").style.backgroundColor = "#d3d3d3";
-      document.getElementById("staffProjectsContainer").style.display = "none";
-      document.getElementById("staffBttn").style.backgroundColor = "#2980B9";
-      document.getElementById("staffInfoContainer").style.display = "block";
+  function staffClicked(){
+    document.getElementById("toDoBttn").style.backgroundColor = "#d3d3d3";
+    document.getElementById("staffToDoContainer").style.display = "none";
+    document.getElementById("staffBttn").style.backgroundColor = "#2980B9";
+    document.getElementById("staffInfoContainer").style.display = "block";
 
   }
 
   function toDoClicked(){
       document.getElementById("staffBttn").style.backgroundColor = "#d3d3d3";
       document.getElementById("staffInfoContainer").style.display = "none";
-      
-      document.getElementById("projectsBttn").style.backgroundColor = "#d3d3d3";
-      document.getElementById("staffProjectsContainer").style.display = "none";
-
       document.getElementById("toDoBttn").style.backgroundColor = "#2980B9";
       document.getElementById("staffToDoContainer").style.display = "block";
   
   }
 
-  function projectsClicked(){
-      document.getElementById("toDoBttn").style.backgroundColor = "#d3d3d3";
-      document.getElementById("staffToDoContainer").style.display = "none";
-      document.getElementById("staffBttn").style.backgroundColor = "#d3d3d3";
-      document.getElementById("staffInfoContainer").style.display = "none";
-      document.getElementById("projectsBttn").style.backgroundColor = "#2980B9";
-      document.getElementById("staffProjectsContainer").style.display = "block";
-  }
-    
-        // setting projects as the initial display
-        projectsClicked();
+        // setting staff as the initial display
+        staffClicked();
         
         // adapting dashboard links depending on user role
         dashboard.addEventListener("click", function() {

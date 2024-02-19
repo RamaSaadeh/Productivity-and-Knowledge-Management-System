@@ -307,7 +307,16 @@ textarea {
 
 
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
 
+.container-fluid {
+  display: flex; /* Makes it a flex container */
+  flex-direction: column; /* Stacks children vertically */
+  height: 100%; /* Ensures it takes up full parent height */
+}
 
 
 
@@ -328,12 +337,12 @@ textarea {
 #postButton {
   
 	background: #2980B9; 
-    color: white; 
-    padding: 10px 20px; 
-    border: none; 
-    border-radius: 5px; 
-    font-size: 1.2em; 
-    cursor: pointer; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  font-size: 1.2em; 
+  cursor: pointer; 
 	margin-top: 10px;
 	display: inline-block; 
 	margin-right: 5px;
@@ -341,7 +350,8 @@ textarea {
 	text-align: center;
 	margin-bottom: 15px;
 	vertical-align: middle;
-    margin-left: 5px; 
+  margin-left: 5px; 
+  margin-bottom: 50px;
 
 }
 
@@ -506,7 +516,7 @@ textarea {
 .footer {
   background: #303036;
   color: #d3d3d3;
-  height: 140px;
+  height: 160px;
   position: relative;
 }
 .footer .footer-content {
@@ -660,10 +670,6 @@ textarea {
     justify-content: space-between; 
 }
 
-#postButton {
-
-    margin-bottom: 0; 
-}
 
 .message-container {
     display: flex;
@@ -734,6 +740,7 @@ textarea {
 
 
 .container {
+  height: 100%;
   width: 100%;
   max-width: none; 
   padding-left: 20px;
@@ -747,6 +754,10 @@ textarea {
 .row {
   width: calc(100% - 40px); 
   margin: 0;
+  flex-grow: 1; 
+  overflow-y: auto;
+ 
+  
 }
 
 
@@ -780,7 +791,10 @@ textarea {
 }
 
 
-
+.col-lg-4, .col-lg-8 {
+  display: flex;
+  flex-direction: column;
+}
 
 .container {
   padding: 0; 
