@@ -786,19 +786,10 @@ function closeeditprojectForm(){
 
 
 
-function toggleSwitchProjDropdown() {
-  document.getElementById("switchproj-dropdown").classList.toggle("show");
-}
 function toggleTaskSortbyDropdown() {
 document.getElementById("tasksortbydropdown").classList.toggle("show");
 }
 
-function openToDoList() {
-document.getElementById("ToDoListopaquebg").style.display = "block";
-}
-function closeToDoList() {
-document.getElementById("ToDoListopaquebg").style.display = "none";
-}
 
 
 
