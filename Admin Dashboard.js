@@ -9,9 +9,7 @@
   var user_id = JSON.parse(details).id;
   var max_item_id = 0;
 
-  if (sessionStorage.getItem("user")){
-    user_id = sessionStorage.getItem("user")["id"];
-  }
+
   //alert("user id: " + user_id);
 
 
