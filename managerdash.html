@@ -364,19 +364,19 @@
 	<div class="popup-background" id="editprojopaquebg">
 		<form class="edittask-form" onsubmit="save_changesto_task()" method="get">
 			<div class="form-title">
-				<button type="button" id="cancel-formbtn" onclick="closeedittaskForm()">Cancel</button>
-				<div id="formheader">Edit Task</div>
+				<button type="button" id="cancel-formbtn" onclick="closeeditprojectForm()">Cancel</button>
+				<div id="formheader">Edit Project Details</div>
 			</div>
 			<div id="formcontent">
 	
 				<label class="addtaskform_labels">Project ID</label>
-				<input type="text" value="" id="edit_taskID" readonly>
+				<input type="text" value="" id="edit_projID" readonly>
 	
 				<label class="addtaskform_labels">Project Name</label>
-				<input type="text" placeholder="Enter Task Name" id="edit_taskname" required>
+				<input type="text" id="edit_projname" required>
 	
 				<button type="submit" id="saveedittask_formbtn">Save Changes</button>
-				<button type="button" id="closeedittaskbtn" onclick="closeedittaskForm()">Close without saving changes</button>
+				<button type="button" id="closeedittaskbtn" onclick="closeeditprojectForm()">Close without saving changes</button>
 			</div>
 		</form>  
 	</div>

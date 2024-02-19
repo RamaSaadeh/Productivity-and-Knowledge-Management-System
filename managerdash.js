@@ -765,7 +765,14 @@ function deleteProject(){
 
 
 function openeditprojectForm(){
+  document.getElementById("edit_projID").value = selectedProjectID;
+  document.getElementById("edit_projname").value = "haha";
+
   document.getElementById("editprojopaquebg").style.display = "block";
+}
+
+function closeeditprojectForm(){
+  document.getElementById("editprojopaquebg").style.display = "none";
 }
 
 
