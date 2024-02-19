@@ -161,6 +161,7 @@
             }
 		});
 
+		//display current user's email address
         document.getElementById("email_address").innerHTML = "Email: " + email;
         switch (role) {
             case "a":
@@ -176,6 +177,7 @@
                 document.getElementById("role").innerHTML = "Role: General Staff";
 		}
 
+		//get list of projects
         $.ajax({
             type: "POST",
             url: "profile.php",
@@ -189,7 +191,8 @@
                 }
                 else {
                     var array = response.split('/');
-                    var string = "";
+					var string = "";
+					//checking if user is leader of a project to change format
                     for (let i = 0; i < array.length - 1; i++) {
                         if (array[i].substring(array[i].length - 2) == "-L") {
                             array[i] = array[i].substring(0, array[i].length - 2) + " (L)";
@@ -216,7 +219,8 @@
             success: function (response) {
                 var posts = JSON.parse(response);
                 if (posts.length == 0) document.getElementById("posts").innerHTML = "You haven't posted anything yet!";
-                posts.forEach(function (post) {
+				posts.forEach(function (post) {
+					//html code that will display posts
                     var postHTML = `
 							<a href="single-post.html?id=${post.PostID}"><b>${post.Topic}</b><br>
 							<h5>${post.Title}</h5><br>
@@ -243,7 +247,8 @@
             success: function (response) {
                 var posts = JSON.parse(response);
                 if (posts.length == 0) document.getElementById("comments").innerHTML = "You haven't commented anything yet!";
-                posts.forEach(function (post) {
+				posts.forEach(function (post) {
+					//html code that will display comments
                     var postHTML = `
 							<a href="single-post.html?id=${post.PostID}"><b>${post.Topic}</b><br>
 							<h5>${post.Title}</h5><br>${post.CommentContent}<br>

@@ -7,6 +7,7 @@ async function getData() {
 		type: "POST",
 		url: "login.php",
 		data: {
+			//pass data to php
 			email: email,
 			password: password
 		},
@@ -16,8 +17,10 @@ async function getData() {
 			}
 			else {
 				a.style.display = "none";
+				//split response into array
 				var array = response.split("/");
 				switch (array[1]) {
+					//check role and redirect to appropriate page
 					case 'Admin':
 						array[1] = 'a';
 						window.location.replace("AdminDashboard.html");
@@ -35,7 +38,8 @@ async function getData() {
 						window.location.replace("leader-dash.php");
 						break;
 				}
-				let obj = { id: array[0], role: array[1], email: array[2]};
+				let obj = { id: array[0], role: array[1], email: array[2] };
+				//create session storage where active user details are stored
 				sessionStorage.setItem("user", JSON.stringify(obj));
 			}
 		}

@@ -156,30 +156,6 @@ success: function (response) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function openaddstaffForm() {
 
 $.ajax({
@@ -768,8 +744,36 @@ function deleteProject(){
 function openeditprojectForm(){
   document.getElementById("edit_projID").value = selectedProjectID;
   document.getElementById("edit_projname").value = projectname;
-
   document.getElementById("editprojopaquebg").style.display = "block";
+}
+
+function edit_projectname(){
+
+  event.preventDefault();
+
+  var new_projname = document.getElementById("edit_projname").value;
+  var confirmation = confirm("Are you sure you want to rename this project?");
+  
+  if(confirmation){
+    $.ajax({
+        type: "POST",
+        url: "change_proj_name.php",
+        data: {
+          projectID: selectedProjectID,
+          projname: new_projname,
+        },
+        success: function (response) {
+          if (response === "invalid") {
+            alert("Something went wrong");
+          } else {
+              // Hide the task notes form
+              document.getElementById("editprojopaquebg").style.display = "none";
+              // Redirect to the manager dashboard
+              window.location.href = "managerdash.html?selected_project_ID=" + selectedProjectID;
+          }
+        },
+      });
+  }
 }
 
 function closeeditprojectForm(){
@@ -950,27 +954,6 @@ new Chart("workload-chart", {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-// var close = document.getElementsByClassName("closealertbtn");
-// var i;
-
-// for (i = 0; i < close.length; i++) {
-// close[i].onclick = function(){
-//   var div = this.parentElement;
-//   div.style.opacity = "0";
-//   setTimeout(function(){ div.style.display = "none"; }, 600);
-// }
-// }
 
 
 var myNodelist = document.getElementById("toDoList").getElementsByTagName("LI");

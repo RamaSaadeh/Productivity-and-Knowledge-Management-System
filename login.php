@@ -8,11 +8,13 @@
 	$database = "makeitall";
 
 	$email = $_POST['email'];
+	//hashes password for security
 	$password = hash('sha256', $_POST['password']);
 
 
 	$conn = new mysqli($servername, $username, $dbpassword, $database);
 
+	//count users with correct credentials
 	$stmt = $conn->prepare("SELECT COUNT(user_id) FROM `users` WHERE email = ? AND password = ?");
 	$stmt->bind_param("ss", $email, $password);
 	$stmt->execute();
@@ -24,6 +26,7 @@
 		echo "invalid";
 	}
 	else {
+		//get details for successful user
 		$stmt = $conn->prepare("SELECT user_id, role, email FROM `users` WHERE email = ? AND password = ?");
 		$stmt->bind_param("ss", $email, $password);
 		$stmt->execute();

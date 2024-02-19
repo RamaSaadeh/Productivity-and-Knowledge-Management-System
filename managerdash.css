@@ -1087,6 +1087,19 @@
 	border-radius: 4px;
 	box-sizing: border-box;
 }
+
+.editproj-form {
+	background-color: #fefefe;
+	margin: 5% auto;
+	padding-left: 10px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	padding-top: 10px;
+	border: 2px solid #efbf1a;
+	width: 40%;
+	height: auto;
+	border-radius: 20px;
+}
   
   /*Footer Content*/
   .footer {
@@ -1179,7 +1192,7 @@
   }
   
   @media (max-width: 624px) {
-	  .addnewproj-form, .addtask-form, .tasknotes-form, .edittask-form, .changerole-form, .addstaff-form, .removestaff-form, .ToDoList-form {
+	  .addnewproj-form, .addtask-form, .tasknotes-form, .edittask-form, .changerole-form, .addstaff-form, .removestaff-form, .ToDoList-form, .editproj-form {
 		  width: 80%;
 	  }
 	  th, td {

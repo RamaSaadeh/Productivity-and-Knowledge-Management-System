@@ -349,20 +349,10 @@
 		
 	</div>
 	
-	<! -----------Alerts Box----------- >
-	<div class="flex-item-alertssection"> 
-		<div class="section-header">Project Details</div>
-			<div id="projectdetails">
-				<div id="projID_text"></div>
-				<div id="projname_text"></div>
-				<button id="editprojbtn" onclick="openeditprojectForm()">Edit Details</button>
-				<button id="deleteprojbtn" onclick="deleteProject()">Delete Project</button>		
-			</div>
-		</div>
-	</div>
+
 
 	<div class="popup-background" id="editprojopaquebg">
-		<form class="edittask-form" onsubmit="" method="get">
+		<form class="editproj-form" onsubmit="edit_projectname()" method="get">
 			<div class="form-title">
 				<button type="button" id="cancel-formbtn" onclick="closeeditprojectForm()">Cancel</button>
 				<div id="formheader">Edit Project Details</div>
@@ -380,6 +370,19 @@
 			</div>
 		</form>  
 	</div>
+
+	<! -----------Alerts Box----------- >
+	<div class="flex-item-alertssection"> 
+		<div class="section-header">Project Details</div>
+			<div id="projectdetails">
+				<div id="projID_text"></div>
+				<div id="projname_text"></div>
+				<button id="editprojbtn" onclick="openeditprojectForm()">Edit Details</button>
+				<button id="deleteprojbtn" onclick="deleteProject()">Delete Project</button>		
+			</div>
+		</div>
+	</div>
+
 
 
 <footer class="myFooter">
