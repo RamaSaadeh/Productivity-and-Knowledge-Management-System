@@ -477,9 +477,10 @@ label.style.display = "block";
 
 //Decides which Dash to Link to
 dashboard.addEventListener("click", function() {
-var user = sessionStorage.getItem("user");
+var details = sessionStorage.getItem("user");
+var role = JSON.parse(details).role;
 var a = document.getElementById("dashboard");
-switch (user) {
+switch (role) {
 case "a":
     a.href = "AdminDashboard.html";
     break;
