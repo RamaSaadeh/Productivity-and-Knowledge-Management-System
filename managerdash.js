@@ -754,7 +754,7 @@ function deleteProject(){
           if (response === "invalid") {
             alert("Something went wrong");
           } else {
-          
+            window.location.href = "accessproject.php";
           }
         },
       });
