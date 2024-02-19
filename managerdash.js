@@ -768,9 +768,37 @@ function deleteProject(){
 function openeditprojectForm(){
   document.getElementById("edit_projID").value = selectedProjectID;
   document.getElementById("edit_projname").value = projectname;
-
   document.getElementById("editprojopaquebg").style.display = "block";
 }
+
+function edit_projname(){
+  var new_projname = document.getElementById("edit_projname").value;
+
+  var confirmation = confirm("Are you sure you want to delete this task?");
+  
+  if(confirmation){
+    $.ajax({
+        type: "POST",
+        url: "change_proj_name.php",
+        data: {
+          projectID: selectedProjectID,
+          projname: new_projname,
+        },
+        success: function (response) {
+          if (response === "invalid") {
+            alert("Something went wrong");
+          } else {
+          
+              // Hide the task notes form
+              document.getElementById("editprojopaquebg").style.display = "none";
+              // Redirect to the manager dashboard
+              window.location.href = "managerdash.html?selected_project_ID=" + selectedProjectID;
+          }
+        },
+      });
+  }
+}
+
 
 function closeeditprojectForm(){
   document.getElementById("editprojopaquebg").style.display = "none";
