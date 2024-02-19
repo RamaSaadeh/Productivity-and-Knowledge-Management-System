@@ -367,7 +367,6 @@ function newElement() {
       $.ajax({
         url: 'add-to-do-item.php',
         type: 'POST',
-        dataType: 'json',
         data: {'item_id': itemId, 'user_id': user_id, 'description': inputValue},
         success: function(response) {
             // Handle the response from the server
