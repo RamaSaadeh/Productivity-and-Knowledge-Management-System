@@ -136,8 +136,8 @@ success: function (response) {
     var allStaff = JSON.parse(response)[2]; //[1] takes the first half of the encoded json array
 
     document.getElementById("section_header").innerHTML = '<div class="section-header">' + projectname + '<button class="addtaskbtn" onclick="openaddtaskForm()">Add Task</button></div>';
-    document.getElementById("projID_text").innerHTML = '<div id="projID_text">' + selectedProjectID + '</div>';
-    document.getElementById("projname_text").innerHTML = '<div id="projname_text">' + projectname + '</div>';
+    document.getElementById("projID_text").innerHTML = '<div id="projID_text">' + 'Project ID: ' + selectedProjectID + '</div>';
+    document.getElementById("projname_text").innerHTML = '<div id="projname_text">' + 'Project Name: ' + projectname + '</div>';
 
 
     for (var taskrow in allTasks) { //for every task returned, add each to the table
