@@ -771,7 +771,7 @@ function openeditprojectForm(){
   document.getElementById("editprojopaquebg").style.display = "block";
 }
 
-function edit_projname(){
+function edit_projectname(){
 
   event.preventDefault();
 
