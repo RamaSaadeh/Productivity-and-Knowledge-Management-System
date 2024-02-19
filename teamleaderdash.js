@@ -519,9 +519,10 @@ $.ajax({
       alert("Something went wrong");
     } 
       alert("success");
-      document.getElementById("addtaskopaquebg").style.display = "none";
 
-      window.location.href = "teamleaderdash.html?selected_project_ID="+selectedProjectID;
+    document.getElementById("addtaskopaquebg").style.display = "none";
+
+    window.location.href = "teamleaderdash.html?selected_project_ID="+selectedProjectID;
   }
 });
 
