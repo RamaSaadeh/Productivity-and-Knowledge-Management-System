@@ -435,32 +435,32 @@ function saveDraft(postTitle, postTopic, postBody) {
 
 //function to fetch drafts from the server and display them in the sidebar
 function fetchAndDisplayDrafts() {
-
-	var details = sessionStorage.getItem("user");
-	var userID = JSON.parse(details).id;
+    var details = sessionStorage.getItem("user");
+    var userID = JSON.parse(details).id;
     
-	$.ajax({
-	type: "GET",
-	url: "fetch-drafts.php", 
-	dataType: "json",
-	data: { userID: userID},
-	success: function(response) {
-	    //check if drafts were retrieved successfully
-	    if (response && response.drafts) {
-		//clear existing drafts in the sidebar
-		$('.drafts-container').empty();
-
-		//loop through each draft and append it to the sidebar
-		response.drafts.forEach(function(draft) {
-		    appendDraftToSidebar(draft);
-		});
-	    } else {
-		
-	    }
-	},
-	error: function(xhr, status, error) {
-	    
-	}
+    $.ajax({
+        type: "GET",
+        url: "fetch-drafts.php", 
+        dataType: "json",
+        data: { userID: userID },
+        success: function(response) {
+            //clear existing drafts in the sidebar
+            $('.drafts-container').empty();
+            
+            if (response && response.drafts && response.drafts.length > 0) {
+                //there are drafts, loop through each draft and append it to the sidebar
+                response.drafts.forEach(function(draft) {
+                    appendDraftToSidebar(draft);
+                });
+            } else {
+                //no drafts were found, display a message indicating this
+                $('.drafts-container').append('<div class="no-drafts-message">You have no saved drafts currently.</div>');
+            }
+        },
+        error: function(xhr, status, error) {
+         
+            $('.drafts-container').append('<div class="error-message">Error fetching drafts. Please try again later.</div>');
+        }
     });
 }
 
