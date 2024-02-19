@@ -214,6 +214,15 @@
 
 function open_editUser(button){
     document.getElementById("editprojopaquebg").style.display = "block";
+    var row = button.parentNode.parentNode;
+
+    // Get the data from the cells of the row
+    document.getElementById("edit_name").value = row.cells[0].innerText;
+    // var this_name = row.cells[0].innerText;
+    var this_ID = row.cells[1].innerText;
+    var this_role = row.cells[2].innerText;
+    var this_email = row.cells[3].innerText;
+
 }
 
 function close_editUser(){
