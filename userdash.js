@@ -1,4 +1,33 @@
-  // requesting staff info  on page load
+var details = sessionStorage.getItem("user");
+var role = JSON.parse(details).role;
+
+//ensure that user is logged in to grant access to this page else redirect them to login.html
+function checkLogin() {
+    try {
+        var details = sessionStorage.getItem("user");
+        var role = JSON.parse(details).role;
+        switch (role) {
+            case "a":
+                window.location.replace("permission-denied.html");
+                break;
+            case "g":
+                break;
+            case "m":
+                window.location.replace("permission-denied.html");
+                break;
+            case "l":
+                break;
+            default:
+                window.location.replace("login.html");
+                break;
+        }
+    }
+    catch {
+        window.location.replace("login.html");
+    }
+}  
+
+// requesting staff info  on page load
 
   var tasksData;
   var toDoListArray;
