@@ -774,9 +774,10 @@ function openeditprojectForm(){
 function edit_projname(){
 
   event.preventDefault();
-  
+
   var new_projname = document.getElementById("edit_projname").value;
 
+  alert(new_projname);
   var confirmation = confirm("Are you sure you want to delete this task?");
   
   if(confirmation){
@@ -791,7 +792,7 @@ function edit_projname(){
           if (response === "invalid") {
             alert("Something went wrong");
           } else {
-          
+              alert("hi");
               // Hide the task notes form
               document.getElementById("editprojopaquebg").style.display = "none";
               // Redirect to the manager dashboard
