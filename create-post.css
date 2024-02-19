@@ -478,7 +478,10 @@ textarea {
 }
 
 
-
+.no-drafts-message {
+  text-align: center;
+  margin-top: 25px;
+}
 
 
 .media.draft {
