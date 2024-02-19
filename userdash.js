@@ -302,7 +302,7 @@ function populateTasksTable(){
         // populating table cells
 
         var row = document.createElement("tr");
-        row.setAttribute("id", (String(task['task_id']) + String(task['project_id'])) );
+        //row.setAttribute("id", (String(task['task_id']) + String(task['project_id'])) );
         leftCell = document.createElement("td");
         leftCell.classList.add("details");
         rightCell = document.createElement("td");
@@ -310,7 +310,7 @@ function populateTasksTable(){
 
         // populate leftCell
         leftCell.appendChild(task_name);
-        leftCell.appendChild(task_id);
+        //leftCell.appendChild(task_id);
         leftCell.appendChild(proj_name);
         leftCell.appendChild(deadline);
         leftCell.appendChild(hrs_left);
