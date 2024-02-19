@@ -196,21 +196,6 @@
     }
   }
 
-//   function editUser(button){
-//     // Get the parent row of the button
-//     var row = this.closest('tr');
-
-//     // Access data within the row
-//     var fullName = row.querySelector('.fullName').textContent;
-//     var staffId = row.querySelector('.staffId').textContent;
-//     // Access other data similarly
-
-//     // Ask for confirmation with the data
-//     if (confirm('Are you sure you want to edit user ' + fullName + ' with ID ' + staffId + '?')) {
-//         // Code to delete the user
-//         alert("User edited");
-//     }
-//   }
 
 function open_editUser(button){
     document.getElementById("editprojopaquebg").style.display = "block";
@@ -222,6 +207,35 @@ function open_editUser(button){
     document.getElementById("edit_role").value = row.cells[2].innerText;
     document.getElementById("edit_email").value = row.cells[3].innerText;
 }
+
+function update_userdetails(){
+    var new_name = document.getElementById("edit_name").value;
+    var new_ID = document.getElementById("edit_ID").value;
+    var new_role = document.getElementById("edit_role").value;
+
+    event.preventDefault();
+
+
+    $.ajax({
+        type: "POST",
+        url: "change_userdetails.php",
+        data: {
+        name: new_name,
+        userID: new_ID,
+        role: new_role
+        },
+        success: function (response) {
+        if (response === "invalid") {
+            alert("Something went wrong");
+        } 
+
+        window.location.reload();
+        }
+    });
+
+    document.getElementById("editprojopaquebg").style.display = "none";
+}
+
 
 function close_editUser(){
     document.getElementById("editprojopaquebg").style.display = "none";
