@@ -9,7 +9,7 @@
   if (sessionStorage.getItem("user")){
     user_id = sessionStorage.getItem("user")["id"];
   }
-  //alert("user id: " + user_id);
+  alert("user id: " + user_id);
 
 
   function populateToDoList(){
