@@ -9,7 +9,7 @@ if ($conn->connect_error) {
 }
 
  // Set the appropriate headers to indicate JSON content
- header('Content-Type: application/json');
+
 
 // Execute SQL queries to fetch users data
 $sql1 = "SELECT user_id, name, email, role FROM users;";
