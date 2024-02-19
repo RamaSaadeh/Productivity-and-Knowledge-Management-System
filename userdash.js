@@ -13,7 +13,7 @@
   function populateToDoList(){
     // request to-do list data for user asynchronously
     $.ajax({
-      url: 'test_connection.php',
+      url: 'return-to-do.php',
       type: 'POST',
       data: { user_id: user_id },
       success: function(data) {
