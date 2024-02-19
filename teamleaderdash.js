@@ -519,7 +519,7 @@ function addnewtask() {
         alert("Something went wrong");
       } 
 
-      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+      window.location.href = "teamleaderdash.html?selected_project_ID="+selectedProjectID;
     }
   });
 
