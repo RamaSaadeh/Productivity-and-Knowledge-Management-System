@@ -358,11 +358,18 @@
                     </div>
                     <div id="formcontent">
             
-                        <label class="addtaskform_labels">Project ID</label>
-                        <input type="text" value="" id="edit_projID" readonly>
+                        <label class="addtaskform_labels">Full Name</label>
+                        <input type="text" value="" id="edit_name" required>
+
+                        <label class="addtaskform_labels">ID</label>
+                        <input type="text" value="" id="edit_ID" readonly>
             
-                        <label class="addtaskform_labels">Project Name</label>
-                        <input type="text" id="edit_projname" required>
+                        <label class="addtaskform_labels">Role</label>
+                        <input type="text" value= "" id="edit_role" required>
+
+                        <label class="addtaskform_labels">Email</label>
+                        <input type="text" value="" id="edit_email" readonly>
+                        
             
                         <button type="submit" id="saveedittask_formbtn">Save Changes</button>
                         <button type="button" id="closeedittaskbtn" onclick="close_editUser()">Close without saving changes</button>
