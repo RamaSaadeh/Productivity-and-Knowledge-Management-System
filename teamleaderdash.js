@@ -306,7 +306,7 @@ function maketeamleader(){
         alert("Something went wrong");
       } 
 
-      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+      window.location.href = "teamleaderdash.html?selected_project_ID="+selectedProjectID;
     }
   });
 
@@ -375,7 +375,7 @@ function remove_fromteam(){
         alert("Something went wrong");
       } 
 
-      window.location.href = "managerdash.html?selected_project_ID="+selectedProjectID;
+      window.location.href = "teamleaderdash.html?selected_project_ID="+selectedProjectID;
     }
   });
 
@@ -695,7 +695,7 @@ function save_changesto_task(){
           } else {
               
               // Redirect to the manager dashboard
-              window.location.href = "managerdash.html?selected_project_ID=" + selectedProjectID;
+              window.location.href = "teamleaderdash.html?selected_project_ID=" + selectedProjectID;
 
           }
         },
@@ -725,7 +725,7 @@ function delete_task(){
               // Hide the task notes form
               document.getElementById("edittaskopaquebg").style.display = "none";
               // Redirect to the manager dashboard
-              window.location.href = "managerdash.html?selected_project_ID=" + selectedProjectID;
+              window.location.href = "teamleaderdash.html?selected_project_ID=" + selectedProjectID;
           }
         },
       });
