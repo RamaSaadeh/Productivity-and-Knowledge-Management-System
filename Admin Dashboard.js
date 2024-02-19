@@ -526,9 +526,10 @@ function newElement() {
         }
 
         // Function to handle form submission
+        /*
         document.getElementById("editForm").addEventListener("submit", function(event) {
           event.preventDefault(); // Prevent default form submission
           // Here you can handle the form submission using JavaScript or AJAX
           // For this example, let's just close the modal
           closeModal();
-        });
+        }); */
