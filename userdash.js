@@ -1,9 +1,10 @@
   // requesting staff info  on page load
 
-  var staffData; // to store the users data in json format
+  var tasksData;
   var toDoListArray;
   var user_id = 1;
   var max_item_id = 0;
+
 
   if (sessionStorage.getItem("user")){
     user_id = sessionStorage.getItem("user")["id"];
@@ -64,6 +65,7 @@
 $(document).ready(function(){
     populateToDoList();
     addOnDeleteFunc();
+    getUserTasks();
 }); 
 
 
@@ -243,6 +245,134 @@ function newElement() {
 }
 
 
+// code for user tasks
+
+function getUserTasks(){
+
+    $.ajax({
+        url: 'return-tasks.php',
+        type: 'POST',
+        dataType: "json",
+        data: {'user_id': user_id},
+        success: function(data) {
+            // Handle the response from the server
+            console.log('tasks retrieved successfully');
+            tasksData = data;
+            console.log(tasksData);
+            populateTasksTable();
+        },
+        error: function(xhr, status, error) {
+            // Handle errors
+            console.error('Error retrieving tasks:', error);
+        }
+      });
+
+}
+
+
+function populateTasksTable(){
+    //replace sample content with user tasks
+    document.getElementById("taskTable").innerHTML = "";
+    var header = document.createElement("tr");
+    var heading1 = document.createElement("th");
+    heading1.classList.add("details");
+    heading1.textContent = "Details";
+    var heading2 = document.createElement("th");
+    heading2.classList.add("status");
+    heading2.textContent = "Status";
+    header.appendChild(heading1);
+    header.appendChild(heading2);
+    document.getElementById("taskTable").appendChild(header);
+    tasksData.forEach(function(task){
+        // accessing variables 
+        var task_id = document.createElement("h5");
+        task_id.textContent = "Task ID #" + task['task_id'];
+        var task_name = document.createElement("h4");
+        task_name.textContent = task['task_name'];
+        var hrs_left = document.createElement("h5");
+        hrs_left.textContent = "Hours remaining: " +task['hrs_remaining'];
+        var status = task['status'];
+        var deadline = document.createElement("h5");
+        deadline.textContent = "Deadline: " +task['deadline'];
+        var notes = document.createElement("h5");
+        var em = document.createElement("em");
+        notes.appendChild(em);
+        notes.textContent = "Notes: " + task['notes'];
+        var proj_name = document.createElement("h5")
+        proj_name.textContent = "Project Name: " + task['proj_name'];
+
+        // populating table cells
+
+        var row = document.createElement("tr");
+        row.setAttribute("id", (String(task['task_id']) + String(task['project_id'])) );
+        leftCell = document.createElement("td");
+        leftCell.classList.add("details");
+        rightCell = document.createElement("td");
+        rightCell.classList.add("status");
+
+        // populate leftCell
+        leftCell.appendChild(task_name);
+        leftCell.appendChild(task_id);
+        leftCell.appendChild(proj_name);
+        leftCell.appendChild(deadline);
+        leftCell.appendChild(hrs_left);
+        leftCell.appendChild(notes);
+        row.appendChild(leftCell);
+
+        // populate rightCell
+
+        
+        rightCell.innerHTML = `
+            <label class="container">Not Started
+            <input type="radio" id="notStarted${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}" checked="true">
+            <span class="radio"></span>
+            </label>
+            <label class="container">On Track
+                <input type="radio" id="onTrack${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}">
+                <span class="radio"></span>
+            </label>
+            <label class="container">Completed
+                <input type="radio" id="completed${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}">
+                <span class="radio"></span>
+            </label>
+            <label class="container">Overdue
+                <input type="radio" id="overdue${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}">
+                <span class="radio"></span>
+            </label>
+            <br>
+            <input type="submit" class="submitButton" value="Save" onclick="saved(${task['task_id']},${task['project_id']})">
+            <h5 id="submitted${task['task_id']}${task['project_id']}" style="color: #2fe617; display: none">Status updated</h5> 
+            <br>
+            <h5 style="margin-top: 13px">Report Problem</h5>
+            <input name="problem" type="text" id="problem${task['task_id']}${task['project_id']}"><br>
+            <input type="submit" class="submitButton" value="Report" onclick="reportTaskProblem(${task['task_id']},${task['project_id']})">
+            <h5 id="reported${task['task_id']}${task['project_id']}" style="color: #2fe617; display: none">Problem reported</h5>
+            <br><br>
+            <h5>Request Training</h5>
+            <input name="training" type="text" id="training${task['task_id']}${task['project_id']}"><br>
+            <input type="submit" class="submitButton" value="Request" onclick="suggestTraining(${task['task_id']}, ${task['project_id']})">
+            <h5 id="requested${task['task_id']}${task['project_id']}" style="color: #2fe617; display: none">Training requested</h5>
+            <br>`;
+            row.appendChild(rightCell);
+            document.getElementById("taskTable").appendChild(row);
+          
+
+    });
+
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+// end of code for user tasks
 
 
 
@@ -250,38 +380,66 @@ function newElement() {
 
 
 // adding prompts for problem and training buttons
-function reportTaskProblem(taskNumber){
-    var string = "reported" + taskNumber;
-    var problem = "problem" + taskNumber;
-    document.getElementById(string).style.display = "block";
-    if (document.getElementById(problem).value.length == 0) {
-        document.getElementById(string).style.color = "red";
-        document.getElementById(string).innerHTML = "Please type a problem";
+function reportTaskProblem(taskId, projectId){
+    //
+
+    var problem = "problem with " + taskId;
+    document.getElementById("reported" + (String(taskId) + String(projectId))).style.display = "block"; // show message
+    if (document.getElementById("problem" + (String(taskId) + String(projectId))).value.trim().length == 0) {
+        document.getElementById("reported" + (String(taskId) + String(projectId))).style.color = "red";
+        document.getElementById("reported" + (String(taskId) + String(projectId))).innerHTML = "Please type a problem";
     }
     else {
-        document.getElementById(string).style.color = "#2fe617";
-        document.getElementById(string).innerHTML = "Problem reported";
-        document.getElementById(problem).value = "";
+        document.getElementById("reported" + (String(taskId) + String(projectId))).style.color = "#2fe617";
+        document.getElementById("reported" + (String(taskId) + String(projectId))).innerHTML = "Problem reported";
+        document.getElementById("problem" + (String(taskId) + String(projectId))).value = "";
     }
 }
-function suggestTraining(taskNumber){
-    var string = "requested" + taskNumber;
-    var training = "training" + taskNumber;
-    document.getElementById(string).style.display = "block";
-    if (document.getElementById(training).value.length == 0) {
-        document.getElementById(string).style.color = "red";
-        document.getElementById(string).innerHTML = "Please type training";
+function suggestTraining(taskId, projectId){
+    document.getElementById("requested" + (String(taskId) + String(projectId))).style.display = "block"; // show message
+    if (document.getElementById("training"+(String(taskId) + String(projectId))).value.trim().length == 0) {
+        document.getElementById("requested" + (String(taskId) + String(projectId))).style.color = "red";
+        document.getElementById("requested" + (String(taskId) + String(projectId))).innerHTML = "Please type training";
     }
     else {
-        document.getElementById(string).style.color = "#2fe617";
-        document.getElementById(string).innerHTML = "Training requested";
-        document.getElementById(training).value = "";
+        document.getElementById("requested" + (String(taskId) + String(projectId))).style.color = "#2fe617";
+        document.getElementById("requested" + (String(taskId) + String(projectId))).innerHTML = "Training requested";
+        document.getElementById("training" + (String(taskId) + String(projectId))).value = "";
     }
 }
 
-function saved(taskNumber) {
-    var string = "submitted" + taskNumber;
-    document.getElementById(string).style.display = "block";
+
+
+function saved(taskId, projectId) {
+    var uniqueId = String(taskId) + String(projectId);
+    var statuses = {"On Track": document.getElementById("onTrack" + uniqueId).checked,
+        "Completed": document.getElementById("completed" + uniqueId).checked,
+        "Overdue": document.getElementById("overdue" + uniqueId).checked,
+        "Not Started": document.getElementById("notStarted" + uniqueId).checked};
+    console.log(statuses);
+    var currentStatus;
+    for (var key in statuses) {
+        if (statuses.hasOwnProperty(key)) {
+            if(statuses[key]){
+                currentStatus = key;
+            }
+        }
+    }
+    // display message
+    document.getElementById("submitted" + uniqueId).style.display = "block";
+    document.getElementById("submitted" + uniqueId).style.color = "#2fe617";
+    document.getElementById("submitted" + uniqueId).innerHTML = "Task Status Updated";
+
+    // edit data in database
+    $.ajax({
+        url: 'update-task-status.php',
+        dataType: "json",
+        type: 'POST',
+        data: { 'status': currentStatus, 'taskId': taskId, 'projectId': projectId},
+        success: function(data) {
+            alert("success");
+        }
+    })
 }
 
 
@@ -341,39 +499,3 @@ default:
 
 
 //End of js for navbar
-
-
-
-
-
-//js for add tasks button
-
-function openaddtaskForm() {
-    document.getElementById("addtaskopaquebg").style.display = "block";
-}
-
-function closeaddtaskForm() {
-    document.getElementById("addtaskopaquebg").style.display = "none";
-}
-
-
-
-
-function team2clicked(){
-
-    document.getElementById("taskTitle").innerHTML = `Audit Information System Tasks      <i class="fa fa-caret-down"></i>`;
-    document.getElementById("addTaskBttn").style.display = "block";
-    document.getElementById("taskTable").classList.add('hidden');
-    document.getElementById("auditTable").classList.remove("hidden");
-}
-
-
-function myTasksClicked(){
-    document.getElementById("taskTitle").innerHTML = `My Tasks      <i class="fa fa-caret-down"></i>`;
-    document.getElementById("addTaskBttn").style.display = "none";
-    document.getElementById("taskTable").classList.remove('hidden');
-    document.getElementById("auditTable").classList.add("hidden");
-}
-
-
-myTasksClicked();
