@@ -102,7 +102,7 @@
         var editButton = document.createElement("button");
         editButton.classList.add("editUserBttn");
         editButton.textContent = "\u270E"; 
-        editButton.onclick = editUser(this);
+        editButton.onclick = open_editUser(this);
         editCell.appendChild(editButton);
 
 
@@ -210,10 +210,13 @@
 //     }
 //   }
 
-function editUser(button){
+function open_editUser(button){
     document.getElementById("editprojopaquebg").style.display = "block";
 }
 
+function close_editUser(){
+    document.getElementById("editprojopaquebg").style.display = "none";
+}
 
   // add editUser onclick function to each edit user button 
   document.querySelectorAll('.editUserBttn').forEach(function(button){
