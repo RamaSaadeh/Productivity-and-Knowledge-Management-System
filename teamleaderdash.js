@@ -519,12 +519,14 @@ function addnewtask() {
         alert("Something went wrong");
       } 
 
-      window.location.href = "teamleaderdash.html?selected_project_ID="+selectedProjectID;
+        document.getElementById("addtaskopaquebg").style.display = "none";
+
+        window.location.href = "teamleaderdash.html?selected_project_ID="+selectedProjectID;
+
     }
   });
 
-  // now staff not in the team are loaded into the <select> we are going to open the form
-  document.getElementById("addtaskopaquebg").style.display = "none";
+ alert(selectedProjectID);
  } else{
   alert("Invalid date entered");
  }
