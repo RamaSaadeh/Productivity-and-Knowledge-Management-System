@@ -1,3 +1,4 @@
+//access different pages
 dashboard.addEventListener("click", function () {
 	var details = sessionStorage.getItem("user");
 	var role = JSON.parse(details).role;
@@ -21,7 +22,7 @@ dashboard.addEventListener("click", function () {
 });
 
 var currentSearchTerm = '';
-var currentTopic = 'all'; // signifies empty top initially
+var currentTopic = 'all'; // signifies empty topic initially
 
 var inviteForm = document.getElementById("inviteuseropaquebg");
 	
@@ -29,12 +30,14 @@ function openForm() {
 	inviteForm.style.display = "block";
 }
 
+//close invite form
 function closeForm() {
 	inviteForm.style.display = "none";
 	document.getElementById("email").value = "";
 	document.getElementById("emailError").style.display = "none";
 }
 	
+//send invite form
 function sendInvite() {
 	var email = document.getElementById("email").value;
 	var label = document.getElementById("emailError");
@@ -50,6 +53,7 @@ function sendInvite() {
 	}
 }
 
+//check user is logged in to an account on users table
 function checkLogin() {
   try {
       var details = sessionStorage.getItem("user");
@@ -82,7 +86,7 @@ $(document).ready(function() {
     $.ajax({
         url: "fetch-posts.php",
         type: "GET",
-        dataType: "json", //this ensures jQuery treats the response as JSON.
+        dataType: "json", 
         data: {userID: userID},
 		success: function (posts) {
 			if (posts.length == 0) {
@@ -115,16 +119,18 @@ $(document).ready(function() {
             });
         },
         error: function(xhr, status, error) {
-            console.error("Error fetching posts: " + error);
+           
         }
     });
 
     
+    //when user clicks
     $(document).on('click', '.topic-filter', function(e) {
         e.preventDefault(); 
 
+        //select topic
         var selectedTopic = $(this).text();
-        console.log("Selected topic:", selectedTopic);
+       
 
         //highlight the selected topic
         $('.topic-filter').removeClass('active');
@@ -139,7 +145,7 @@ $(document).ready(function() {
 
     //function to filter posts by topic and search term
     function filterPosts() {
-        console.log("Filtering with search term: " + currentSearchTerm + " and topic: " + currentTopic);
+       
         var $allPosts = $('.all-content .post'); //target all posts
 
         $allPosts.each(function() {
@@ -164,7 +170,7 @@ $(document).ready(function() {
     };
 
 
-//event listener for like 
+//event listener for liking comment
 $(document).on('click', '.like-comment', function() {
   const $likeButton = $(this);
   const postID = $likeButton.data('post-id');
@@ -196,17 +202,17 @@ $(document).on('click', '.like-comment', function() {
                   $likeButton.addClass('liked').data('liked', true).attr('data-liked', 'true');
               }
           } else {
-              console.error("Failed to update like status: " + response.message);
+              
           }
       },
       error: function(xhr, status, error) {
-          console.error("Error updating like status: " + error);
+         
       }
   });
 });
 
 
-
+//filtering topics
 $('.section.topics').on('click', 'a', function(e) {
     e.preventDefault();
 
@@ -247,17 +253,17 @@ $('.section.topics').on('click', 'a', function(e) {
     filterPosts(); //apply both filters
   });
 
-$(document).ready(function() {
-    //fetch and insert dynamic topics from PHP script
-    $.get("dynamic-topics.php", function(data) {
-        //prepend "Show all topics" with an id for easy access
-        $("#dynamic-topics").html('<li><a href="#" id="show-all-topics" class="topic-filter active">Show all topics</a></li>' + data);
-    });
+  $(document).ready(function() {
+      //fetch and insert dynamic topics from PHP script
+      $.get("dynamic-topics.php", function(data) {
+          //prepend "Show all topics" with an id for easy access
+          $("#dynamic-topics").html('<li><a href="#" id="show-all-topics" class="topic-filter active">Show all topics</a></li>' + data);
+      });
 
-});
+  });
 
   
-  		//sort by most liked comments
+  //sort by most liked comments
 	function sortByTop() {
 	  const posts = document.querySelectorAll('.all-content > .post');
 	  const sortedPosts = Array.from(posts).sort((a, b) => {
@@ -275,75 +281,75 @@ $(document).ready(function() {
 		//append sorted posts back to the container
 		sortedPosts.forEach(post => container.appendChild(post));
 	  } else {
-		console.error('Posts container not found.');
+		
 	  }
 	}
 
-	//ensure the DOM is fully loaded before calling this function
 
-
-		//sort by newest comments
-    function sortByNewest() {
-      const posts = document.querySelectorAll('.all-content > .post');
-      
-      const sortedPosts = Array.from(posts).sort((a, b) => {
-        // Use the data-date-created attribute for sorting
-        let dateA = new Date(a.getAttribute('data-date-created'));
-        let dateB = new Date(b.getAttribute('data-date-created'));
+  //sort by newest comments
+  function sortByNewest() {
+    const posts = document.querySelectorAll('.all-content > .post');
     
-        return dateB - dateA; //sort by descending date order (newest first)
+    const sortedPosts = Array.from(posts).sort((a, b) => {
+      //use the data-date-created attribute for sorting
+      let dateA = new Date(a.getAttribute('data-date-created'));
+      let dateB = new Date(b.getAttribute('data-date-created'));
+  
+      return dateB - dateA; //sort by descending date order (newest first)
+    });
+  
+    const container = document.querySelector('.all-content');
+    if (container) {
+      //remove all post elements from the DOM
+      posts.forEach(post => post.remove());
+  
+      //append sorted posts back to the container
+      sortedPosts.forEach(post => {
+        container.appendChild(post);
       });
-    
-      const container = document.querySelector('.all-content');
-      if (container) {
-        //remove all post elements from the DOM
-        posts.forEach(post => post.remove());
-    
-        //append sorted posts back to the container
-        sortedPosts.forEach(post => {
-          container.appendChild(post);
-        });
-      } else {
-        console.error('Posts container not found.');
-      }
+    } else {
+   
     }
+  }
 
 		
-	// Call the function once the page content has loaded
-	document.addEventListener('DOMContentLoaded', () => {
-	  sortByNewest(); // Sort by newest posts on initial page load
-	  newestPostsBtn.classList.add('active'); // Set the newest button to active on initial load
-	});
+    //call the function once the page content has loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      sortByNewest(); //sort by newest on initial page load
+      newestPostsBtn.classList.add('active'); //set the newest button to active on initial load
+    });
 
-	//adjust event listeners to check for null and toggle active class
-	const topPostsBtn = document.getElementById('topPostsBtn');
-	const newestPostsBtn = document.getElementById('newestPostsBtn');
+    //adjust event listeners to check for null and toggle active class
+    const topPostsBtn = document.getElementById('topPostsBtn');
+    const newestPostsBtn = document.getElementById('newestPostsBtn');
 
-	//function to toggle active class on buttons
-	function toggleButtonActive(clickedBtn) {
-	  //remove 'active' class from both buttons
-	  topPostsBtn.classList.remove('active');
-	  newestPostsBtn.classList.remove('active');
-	  //add 'active' class to the button that was clicked
-	  clickedBtn.classList.add('active');
-	}
+    //function to toggle active class on buttons
+    function toggleButtonActive(clickedBtn) {
+      //remove 'active' class from both buttons
+      topPostsBtn.classList.remove('active');
+      newestPostsBtn.classList.remove('active');
+      //add 'active' class to the button that was clicked
+      clickedBtn.classList.add('active');
+    }
 
-	if (topPostsBtn) {
-	  topPostsBtn.addEventListener('click', () => {
-		sortByTop();
-		toggleButtonActive(topPostsBtn);
-	  });
-	} else {
-	  console.error('Top Posts button not found.');
-	}
+    //if users are sorting by newest
+    if (topPostsBtn) {
+      topPostsBtn.addEventListener('click', () => {
+      sortByTop();
+      toggleButtonActive(topPostsBtn);
+      });
+    } else {
+   
+    }
 
-	if (newestPostsBtn) {
-	  newestPostsBtn.addEventListener('click', () => {
-		sortByNewest();
-		toggleButtonActive(newestPostsBtn);
-	  });
-	} else {
-	  console.error('Newest Posts button not found.');
-	}
+    //if user is sorting by newest:
+    if (newestPostsBtn) {
+      newestPostsBtn.addEventListener('click', () => {
+      sortByNewest();
+      toggleButtonActive(newestPostsBtn);
+      });
+    } else {
+    
+    }
 
 });

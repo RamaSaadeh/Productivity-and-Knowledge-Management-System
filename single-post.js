@@ -1,16 +1,19 @@
 //Nav Java
 var inviteForm = document.getElementById("inviteuseropaquebg");
-		
+
+//close to open invite form
 function openForm() {
 	inviteForm.style.display = "block";
 }
 
+//close invite form
 function closeForm() {
 	inviteForm.style.display = "none";
 	document.getElementById("email").value = "";
 	document.getElementById("emailError").style.display = "none";
 }
 
+//send invite popup
 function sendInvite() {
 	var email = document.getElementById("email").value;
 	var label = document.getElementById("emailError");
@@ -26,6 +29,7 @@ function sendInvite() {
 	}
 }
 
+//check user has logged in 
 function checkLogin() {
     try {
         var details = sessionStorage.getItem("user");
@@ -49,7 +53,7 @@ function checkLogin() {
     }
 }
 
-//Decides which Dash to Link to
+//decides which Dash to Link to
 dashboard.addEventListener("click", function () {
 	var details = sessionStorage.getItem("user");
 	var role = JSON.parse(details).role;
@@ -73,7 +77,7 @@ dashboard.addEventListener("click", function () {
 });
 
 
-// single-post.js
+//single-post.js
 document.addEventListener("DOMContentLoaded", function () {
 	hideCharCountDisplay();
    
@@ -160,12 +164,12 @@ document.addEventListener("DOMContentLoaded", function () {
 					
 				} else {
 					//handle case where post is not found or another error occurred
-					console.error("Error fetching single post: " + response.error);
+					
 				}
 				
 			},
 			error: function(xhr, status, error) {
-				console.error("Error fetching single post: " + error);
+			
 			}
 		});
 		//handles liking posts
@@ -185,10 +189,10 @@ document.addEventListener("DOMContentLoaded", function () {
 				},
 				success: function(response) {
 					if (response.success) {
-						// Update the like count display for the post
+						//update the like count display for the post
 						$('#likeCount').text(response.newLikeCount);
 						
-						// Toggle the like button class and title attribute for the post
+						//toggle the like button class and title attribute for the post
 						if (isLiked) {
 							$('.like-post').removeClass('liked').attr('data-liked', 'false').attr('title', 'Like');
 						} else {
@@ -199,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					}
 				},
 				error: function(xhr, status, error) {
-					console.error("Error: " + error);
+				
 					alert('Error updating like status.');
 				}
 			});
@@ -264,7 +268,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					});
 				},
 				error: function(xhr, status, error) {
-					console.error("Error fetching comments: " + error);
+				
 				}
 			});
 		}
@@ -363,107 +367,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-	//function to add a comment to the comment section
-
-	function createComment(commentText, containerSelector) {
-
-
-		const formattedCommentText = commentText.replace(/\n/g, '<br>');
-
-		const commentElement = document.createElement('div');
-		commentElement.classList.add('media', 'comment');
-
-		const mediaBody = document.createElement('div');
-		mediaBody.classList.add('media-body', 'comment-content');
-		mediaBody.innerHTML = formattedCommentText;
-		commentElement.appendChild(mediaBody);
-
-		commentElement.setAttribute('data-comment-id', commentIdCounter);
-
-	
-		const commentMetadata = document.createElement('div');
-		commentMetadata.classList.add('comment-metadata');
-		commentElement.appendChild(commentMetadata);
-
-		
-		//format for new comments
-		const currentDate = new Date();
-		const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-			"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-		];
-		const formattedDate = `${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
-
-		const commentUserInfo = document.createElement('div');
-		commentUserInfo.classList.add('comment-user-date');
-		commentUserInfo.innerHTML = `
-			<i class="far fa-user"> Haamid Jillani</i>
-			&nbsp;
-			<i class="far fa-calendar"> ${formattedDate}</i>
-			<span class="comment-edited" style="display: none;">(edited)</span> <!-- This span is for the edited text -->
-		`;
-		commentMetadata.appendChild(commentUserInfo);
-
-
-	
-		const commentActions = document.createElement('div');
-		commentActions.classList.add('comment-actions');
-		commentMetadata.appendChild(commentActions);
-
-		//create comment edit icon
-		const editIcon = document.createElement('i');
-		editIcon.classList.add('fas', 'fa-edit', 'edit-comment');
-		editIcon.title = "Edit";
-		commentActions.appendChild(editIcon);
-
-		//create delete icon
-		const deleteIcon = document.createElement('i');
-		deleteIcon.classList.add('fas', 'fa-trash-alt', 'delete-comment');
-		deleteIcon.title = "Delete";
-		commentActions.appendChild(deleteIcon);
-
-
-		//create comment actions container and append to metadata container
-		const likeContainer = document.createElement('div');
-		likeContainer.classList.add('like-container');
-
-
-		//create like icon
-		const likeIcon = document.createElement('i');
-		likeIcon.classList.add('fas', 'fa-thumbs-up', 'like-comment');
-		likeIcon.title = "Like";
-		likeContainer.appendChild(likeIcon);
-
-
-		const likeCount = document.createElement('span');
-		likeCount.classList.add('like-count');
-		likeCount.textContent = "0";  
-		likeContainer.appendChild(likeCount);
-
-		commentActions.appendChild(likeContainer);
-
-
-		//comments work like a stack having the latest ones at the top
-		const container = document.querySelector(containerSelector);
-		if (container.firstChild) {
-			container.insertBefore(commentElement, container.firstChild);
-		} else {
-			container.appendChild(commentElement);
-		}
-
-	
-		editIcon.addEventListener('click', () => editComment(editIcon));
-
-
-		deleteIcon.addEventListener('click', function() {
-	
-			const commentId = commentElement.getAttribute('data-comment-id');
-			openConfirmationModal(commentId); 
-		});
-		
-		return commentElement;
-		
-	}
-
 	//function to show the character count display
 	function showCharCountDisplay() {
 		const charCountElement = document.getElementById('contentCharsLeft');
@@ -511,7 +414,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					if (charsUsed > limit) {
 						//prevent additional characters
 						this.textContent = this.textContent.substring(0, limit);
-						charsUsed = limit; // Update charsUsed after truncation
+						charsUsed = limit; 
 						charsLeft = limit - charsUsed;
 						charsLeftElement.textContent = `${charsLeft} characters left for Content`;
 						
@@ -567,7 +470,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 		}
 
-
+		  //function to save edits to single post
 		  function saveEdits() {
 			  const titleElement = document.querySelector('#postTitle');
 			  const topicElement = document.querySelector('#postTopic');
@@ -614,11 +517,11 @@ document.addEventListener("DOMContentLoaded", function () {
 					  content: data.content
 				  },
 				  success: function(response) {
-					  console.log('Post updated successfully', response);
+				
 					  //success handling
 				  },
 				  error: function(xhr, status, error) {
-					  console.error('Failed to update post', error);
+					 
 					  //error handling
 				  }
 			  });
@@ -640,7 +543,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 		
 	
-			//function to open the save confirmation modal
+		//function to open the save confirmation modal
 		function openSaveConfirmationModal(contentElement) {
 			const modal = document.getElementById('savePostModal');
 			const confirmSaveBtn = document.getElementById('confirmSave');
@@ -704,7 +607,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
-
+	
 	document.querySelectorAll('.edit-post').forEach(button => {
 		button.addEventListener('click', function() {
 			
@@ -742,7 +645,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	$('#confirmPostDelete').click(function() {
 
 		const postID = urlParams.get('id'); //get post id from the url
-		console.log('Deleting post with ID:', postID); 
+		
 	
 		$.ajax({
 			url: 'delete-post.php', 
@@ -762,7 +665,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			},
 			error: function(xhr, status, error) {
 				//handle any AJAX errors
-				console.error("Error: " + error);
+				
 				alert('Error deleting post.');
 			}
 		});
@@ -775,36 +678,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	document.body.addEventListener('click', function(event) {
 		if (event.target.classList.contains('delete-comment')) {
-			// Get the closest comment element and its ID
+			//get the closest comment element and its ID
 			const commentElement = event.target.closest('.comment');
 			const commentId = commentElement.getAttribute('data-comment-id');
 	
-			// Show the confirmation modal
+			//show the confirmation modal
 			document.getElementById('confirmationModal').style.display = 'block';
 	
-			// Store the comment ID in a global variable or directly in the modal's confirm button for later use
+			//store the comment ID in a global variable
 			document.getElementById('confirmDelete').setAttribute('data-comment-id', commentId);
 		}
 	});
 	
-	// Handle confirmation of deletion
+	//handle confirmation of deletion
 	document.getElementById('confirmDelete').addEventListener('click', function() {
-		const commentId = this.getAttribute('data-comment-id'); // Retrieve the comment ID
+		const commentId = this.getAttribute('data-comment-id'); //retrieve comment id
 	
-		// Call the function to delete the comment
+		//call the function to delete the comment
 		deleteComment(commentId);
 	});
 	
-	// Handle cancellation of deletion
+	//handle cancellation of deletion
 	document.getElementById('cancelDelete').addEventListener('click', function() {
-		document.getElementById('confirmationModal').style.display = 'none'; // Hide the modal
+		document.getElementById('confirmationModal').style.display = 'none'; //hide the modal
 	});
 			
 		  //delete icon for posts
 		  document.addEventListener('click', function(event) {
 			//check if the delete-post icon was clicked
-			if (event.target.classList.contains('delete-post')) {
-			  // Prevent any default action
+			if (event.target.classList.contains('delete-post')) {			
 			  event.preventDefault();
 			  //show the delete confirmation modal
 			  document.getElementById('deletePostModal').style.display = 'block';
@@ -862,68 +764,68 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 		})
 		.catch(error => {
-			console.error('Error:', error);
+	
 			alert('Error deleting comment.');
 		});
 	}
 		
 	
 	
-	// Event listener for editing comments
+	//event listener for editing comments
 	document.body.addEventListener('click', function(event) {
 		if (event.target.classList.contains('edit-comment')) {
-			// Get the closest comment element and its ID
+			//get the closest comment element and its ID
 			const commentElement = event.target.closest('.comment');
 			const commentId = commentElement.getAttribute('data-comment-id');
 	
-			// Get the comment content from the comment element
+			//get the comment content from the comment element
 			const commentContent = commentElement.querySelector('.comment-content').textContent;
 	
-			// Ensure the textarea exists in the DOM before attempting to set its value
-			const editCommentTextarea = document.getElementById('editedCommentContent'); // Updated ID reference
+			//ensure the textarea exists in the DOM before attempting to set its value
+			const editCommentTextarea = document.getElementById('editedCommentContent'); 
 			if (editCommentTextarea) {
-				editCommentTextarea.value = commentContent; // Populate the textarea with the comment content
+				editCommentTextarea.value = commentContent; //initially populate the modal with comment modal
 			} else {
-				console.error('Textarea for editing comment not found');
+				
 			}
 	
-			// Store the comment ID in a global variable or directly in the modal's confirm button for later use
+			//store the comment ID in a global variable or directly in the modal's confirm button for later use
 			const confirmEditButton = document.getElementById('confirmEdit');
 			if (confirmEditButton) {
 				confirmEditButton.setAttribute('data-comment-id', commentId);
 			} else {
-				console.error('Confirm edit button not found');
+			
 			}
 	
-			// Show the edit modal, ensuring the modal exists
+			//show the edit modal, ensuring the modal exists
 			const editCommentModal = document.getElementById('editCommentModal');
 			if (editCommentModal) {
 				editCommentModal.style.display = 'block';
 			} else {
-				console.error('Edit comment modal not found');
+			
 			}
 		}
 	});
 	
-	// Handle confirmation of edit
+	//handle confirmation of edit
 	document.getElementById('confirmEdit').addEventListener('click', function() {
 		const commentId = this.getAttribute('data-comment-id'); // Retrieve the comment ID
 		const textarea = document.getElementById('editedCommentContent'); // Updated ID reference
 	
-		// Validate if the textarea is successfully accessed
+		//validate if the textarea is successfully accessed
 		if (textarea !== null) {
-			const updatedContent = textarea.value; // Get the updated comment content
+			const updatedContent = textarea.value; //get the updated comment content
 	
-			// Call the function to update the comment
+			//call the function to update the comment
 			updateComment(commentId, updatedContent);
 		} else {
-			console.error('Textarea element not found');
+	
 		}
 	});
 	
-	// Handle cancellation of edit
+	//handle cancellation of edit
 	document.getElementById('cancelEdit').addEventListener('click', function() {
-		document.getElementById('editCommentModal').style.display = 'none'; // Hide the edit modal
+		document.getElementById('editCommentModal').style.display = 'none'; 
 	});
 	
 	
@@ -965,7 +867,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 		})
 		.catch(error => {
-			console.error('Error:', error);
+		
 			alert('Error updating comment.');
 		});
 	}
@@ -993,12 +895,12 @@ document.addEventListener("DOMContentLoaded", function () {
 					fetchComments(postID); 
 				} else {
 					//if it errors, display error
-					console.error("Error adding comment: " + response.error);
+					
 				}
 			},
 			error: function(xhr, status, error) {
 				//if it errors display error
-				console.error("Error adding comment: " + error);
+			
 			}
 		});
 	
@@ -1050,7 +952,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				});
 			},
 			error: function(xhr, status, error) {
-				console.error("Error fetching comments: " + error);
+			
 			}
 		});
 	
@@ -1073,7 +975,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 		
-		//function for getting the date
+	//function for getting the date
 	function extractDateFromElement(element) {
 		const regex = /(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/;
 		const match = regex.exec(element.textContent || '');
@@ -1136,9 +1038,9 @@ document.addEventListener("DOMContentLoaded", function () {
 			const $this = $(this);
 			//get comment id
 			const commentID = $this.closest('.media.comment').data('comment-id');
-			console.log(commentID);
+			
 			const isLiked = $this.hasClass('liked'); 
-			console.log(isLiked);
+		
 	
 			$.ajax({
 				url: 'update-comment-like.php', 
@@ -1171,15 +1073,12 @@ document.addEventListener("DOMContentLoaded", function () {
 					}
 				},
 				error: function(xhr, status, error) {
-					console.error("Error: " + error);
+				
 				}
 			});
 		});
 	});
 	
-	
-
-	
-
+		
 
 });

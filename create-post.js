@@ -1,16 +1,19 @@
 //Nav Java
 var inviteForm = document.getElementById("inviteuseropaquebg");
 		
+//function to open invite form
 function openForm() {
 	inviteForm.style.display = "block";
 }
 
+//function to close invite form
 function closeForm() {
 	inviteForm.style.display = "none";
 	document.getElementById("email").value = "";
 	document.getElementById("emailError").style.display = "none";
 }
 
+//function to invite user
 function sendInvite() {
 	var email = document.getElementById("email").value;
 	var label = document.getElementById("emailError");
@@ -26,6 +29,7 @@ function sendInvite() {
 	}
 }
 
+//check user is logged in to account in users table
 function checkLogin() {
     try {
         var details = sessionStorage.getItem("user");
@@ -49,7 +53,7 @@ function checkLogin() {
     }
 }
 
-//Decides which Dash to Link to
+//decides which Dash to Link to
 dashboard.addEventListener("click", function() {
 	var details = sessionStorage.getItem("user");
 	var role = JSON.parse(details).role;
@@ -75,10 +79,10 @@ dashboard.addEventListener("click", function() {
 
 $(document).ready(function() {
 	
-	//declare variables necessary
+	//declare variables for managing draft limit
     var currentEditingDraft = null;
     var draftCounter = 1;
-	var currentAction = null; // Declare this to manage current action
+	var currentAction = null; 
 	var currentDraftToPost = null;
 	
 	
@@ -145,7 +149,7 @@ $(document).ready(function() {
 });
 
 	
-	//when saving a draft
+//when saving a draft
 
 $('#draftButton').click(function() {
 	var details = sessionStorage.getItem("user");
@@ -194,8 +198,7 @@ $('#draftButton').click(function() {
 		data: { userID: userID }, //pass user id
         dataType: "json",
         success: function(response) {
-            //test log
-            console.log(response);
+
             
             if (response && response.draftCount && response.draftCount >= 5) {
                 errorMessage.text("Maximum of 5 saved drafts allowed.");
@@ -256,7 +259,6 @@ function saveDraft(postTitle, postTopic, postBody) {
 	$(document).on('click', '.delete-draft', function() {
 	    var draftToDelete = $(this).closest('.draft');
 	    var postID = draftToDelete.data('post-id'); //retrieve the postID from data attribute
-	    console.log('Post ID:', postID); //log the postID value
 	
 	    //confirm deletion with the user
 	    confirmAction('delete', 'Are you sure you want to delete this draft?', function() {
@@ -324,7 +326,7 @@ function saveDraft(postTitle, postTopic, postBody) {
 	                }
 	            },
 	            error: function(xhr, status, error) {
-	                console.error('Error updating draft:', error);
+	         
 	                displayPopup('Error saving draft. Please try again later.');
 	            }
 	        });
@@ -453,11 +455,11 @@ function fetchAndDisplayDrafts() {
 		    appendDraftToSidebar(draft);
 		});
 	    } else {
-		console.log('No drafts found.');
+		
 	    }
 	},
 	error: function(xhr, status, error) {
-	    console.error('Error fetching drafts:', error);
+	    
 	}
     });
 }
@@ -519,12 +521,12 @@ function deleteDraft(postID, $draftContainer) {
                 displayPopup('Draft deleted successfully!');
             } else {
                 //error deleting draft
-                console.error('Error deleting draft:', response.message);
+                
                 displayPopup('Error deleting draft. Please try again later.');
             }
         },
         error: function(xhr, status, error) {
-            console.error('Error deleting draft:', error);
+       
             displayPopup('Error deleting draft. Please try again later.');
         }
     });
@@ -548,12 +550,12 @@ function deleteDraft(postID, $draftContainer) {
 	                displayPopup('Draft posted successfully!');
 	            } else {
 	                //error posting draft
-	                console.error('Error posting draft:', response.message);
+	             
 	                displayPopup('Error posting draft. Please try again later.');
 	            }
 	        },
 	        error: function(xhr, status, error) {
-	            console.error('Error posting draft:', error);
+	          
 	            displayPopup('Error posting draft. Please try again later.');
 	        }
 	    });
