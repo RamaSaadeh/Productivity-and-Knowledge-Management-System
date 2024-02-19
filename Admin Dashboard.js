@@ -133,7 +133,7 @@
   }
 
   $(document).ready(function(){
-    document.getElementById("editprojopaquebg").style.display = "block";
+    document.getElementById("editprojopaquebg").style.display = "none";
 
 
     populateToDoList();
