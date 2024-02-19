@@ -258,7 +258,7 @@ function getUserTasks(){
             tasksData = data;
             console.log(tasksData);
             populateTasksTable();
-            alert(data);
+            alert(data[2]);
         },
         error: function(xhr, status, error) {
             // Handle errors
