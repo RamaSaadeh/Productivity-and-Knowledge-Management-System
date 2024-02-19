@@ -50,8 +50,8 @@ function sendInvite() {
 
 
 
-function create_newproj(){
-    
+function create_newproj() {
+    event.preventDefault();
     var newprojname = document.getElementById("newprojname").value;
     alert(newprojname);
 
