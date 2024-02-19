@@ -764,7 +764,9 @@ function deleteProject(){
 }
 
 
-
+function openeditprojectForm(){
+  document.getElementById("editprojopaquebg").style.display = "block";
+}
 
 
 
@@ -942,16 +944,25 @@ new Chart("workload-chart", {
 
 
 
-var close = document.getElementsByClassName("closealertbtn");
-var i;
 
-for (i = 0; i < close.length; i++) {
-close[i].onclick = function(){
-  var div = this.parentElement;
-  div.style.opacity = "0";
-  setTimeout(function(){ div.style.display = "none"; }, 600);
-}
-}
+
+
+
+
+
+
+
+
+// var close = document.getElementsByClassName("closealertbtn");
+// var i;
+
+// for (i = 0; i < close.length; i++) {
+// close[i].onclick = function(){
+//   var div = this.parentElement;
+//   div.style.opacity = "0";
+//   setTimeout(function(){ div.style.display = "none"; }, 600);
+// }
+// }
 
 
 var myNodelist = document.getElementById("toDoList").getElementsByTagName("LI");

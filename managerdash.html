@@ -355,10 +355,30 @@
 			<div id="projectdetails">
 				<div id="projID_text"></div>
 				<div id="projname_text"></div>
-				<button id="editprojbtn">Edit Details</button>
+				<button id="editprojbtn" onclick="openeditprojectForm()">Edit Details</button>
 				<button id="deleteprojbtn" onclick="deleteProject()">Delete Project</button>		
 			</div>
 		</div>
+	</div>
+
+	<div class="popup-background" id="editprojopaquebg">
+		<form class="edittask-form" onsubmit="save_changesto_task()" method="get">
+			<div class="form-title">
+				<button type="button" id="cancel-formbtn" onclick="closeedittaskForm()">Cancel</button>
+				<div id="formheader">Edit Task</div>
+			</div>
+			<div id="formcontent">
+	
+				<label class="addtaskform_labels">Project ID</label>
+				<input type="text" value="" id="edit_taskID" readonly>
+	
+				<label class="addtaskform_labels">Project Name</label>
+				<input type="text" placeholder="Enter Task Name" id="edit_taskname" required>
+	
+				<button type="submit" id="saveedittask_formbtn">Save Changes</button>
+				<button type="button" id="closeedittaskbtn" onclick="closeedittaskForm()">Close without saving changes</button>
+			</div>
+		</form>  
 	</div>
 
 
