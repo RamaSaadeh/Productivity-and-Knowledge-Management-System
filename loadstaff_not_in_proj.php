@@ -19,7 +19,7 @@ $sql = "SELECT DISTINCT users.user_id, users.name, users.email \n"
 
     . "LEFT JOIN project_staff ON users.user_id = project_staff.user_id \n"
 
-    . "WHERE NOT EXISTS (SELECT 1 FROM project_staff WHERE users.user_id = project_staff.user_id AND project_staff.project_id = '$project_ID_toload')";
+    . "WHERE NOT EXISTS (SELECT 1 FROM project_staff WHERE users.user_id = project_staff.user_id AND project_staff.project_id = '$project_ID_toload') AND users.role = 'General Staff'";
 
 
 
