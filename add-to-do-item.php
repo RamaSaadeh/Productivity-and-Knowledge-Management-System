@@ -1,8 +1,8 @@
 <?php
 include "db_config.php";
 
-$user_id = intval($_POST['user_id']);
-$item_id = intval($_POST['item_id']);
+$user_id = $_POST['user_id'];
+$item_id = $_POST['item_id'];
 $description = $_POST['description'];
 
 $conn = new mysqli($servername, $username, $dbpassword, $database);
@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
  // Set the appropriate headers to indicate JSON content
- header('Content-Type: application/json');
+// header('Content-Type: application/json');
 
 
 // Execute SQL queries to fetch users data
