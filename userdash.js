@@ -2,14 +2,12 @@
 
   var tasksData;
   var toDoListArray;
-  var user_id = 1;
+  
   var max_item_id = 0;
 
-
-  if (sessionStorage.getItem("user")){
-    user_id = sessionStorage.getItem("user")["id"];
-  }
-  //alert("user id: " + user_id);
+  var details = sessionStorage.getItem("user");
+  var user_id = JSON.parse(details).id;
+  alert("user id: " + user_id);
 
 
   function populateToDoList(){
@@ -21,6 +19,7 @@
       data: { user_id: user_id },
       success: function(data) {
           // Handle the response from the server
+          
           toDoListArray = data;
           console.log('todo list returned successfully');
           document.getElementById("toDoUL").innerHTML = "";
@@ -48,14 +47,15 @@
           })
           addOnDeleteFunc();
           console.log(max_item_id);
-
+ 
+        alert(data);
       },
       error: function(xhr, status, error) {
           // Handle errors
           console.error('Error accessing to do items:', error);
       }
     });
-
+    
 
   }
 
@@ -102,6 +102,7 @@ function addOnDeleteFunc(){
                   };
                   li.style.display = "none";
                   // Make the AJAX request
+                  
                   $.ajax({
                     url: 'delete-to-do-item.php',
                     type: 'POST',
@@ -115,7 +116,6 @@ function addOnDeleteFunc(){
                         console.error('Error deleting item:', error);
                     }
                   });
-
 
             } else {
                     // item has no id set, was not stored in database

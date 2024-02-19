@@ -5,12 +5,11 @@
 
   var staffData; // to store the users data in json format
   var toDoListArray;
-  var user_id = 3;
+  var details = sessionStorage.getItem("user");
+  var user_id = JSON.parse(details).id;
   var max_item_id = 0;
 
-  if (sessionStorage.getItem("user")){
-    user_id = sessionStorage.getItem("user")["id"];
-  }
+
   //alert("user id: " + user_id);
 
 
@@ -364,9 +363,10 @@ function newElement() {
     } else {
     // add new item to the start of the list 
       document.getElementById("toDoUL").insertAdjacentElement('afterbegin', li);
+      alert("please " + itemId);
       // update the todolist table using jQuery AJAX
       $.ajax({
-        url: 'add-to-do-item.php',
+        url: 'test_connection.php',
         type: 'POST',
         data: {'item_id': itemId, 'user_id': user_id, 'description': inputValue},
         success: function(response) {
@@ -510,4 +510,25 @@ function newElement() {
         var deleteButtons = document.querySelectorAll('.deleteUserBttn');
         deleteButtons.forEach(function(button) {
             button.onclick = deleteUser;
+        });
+
+        // Get the modal
+        var modal = document.getElementById("editModal");
+
+        // Function to open the modal
+        function openModal() {
+          modal.style.display = "block";
+        }
+
+        // Function to close the modal
+        function closeModal() {
+          modal.style.display = "none";
+        }
+
+        // Function to handle form submission
+        document.getElementById("editForm").addEventListener("submit", function(event) {
+          event.preventDefault(); // Prevent default form submission
+          // Here you can handle the form submission using JavaScript or AJAX
+          // For this example, let's just close the modal
+          closeModal();
         });

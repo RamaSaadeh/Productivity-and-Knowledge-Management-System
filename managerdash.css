@@ -232,23 +232,13 @@
   .switchprojbtn:hover, .switchprojbtn:focus {
 	background-color: #2980B9;
   }
-  #ToDoListbtn {
-	  background-color: #d3d3d3;
-	  color: white;
-	  padding: 10px;
-	  font-size: 14px;
-	  border: 1px solid white;
-	  cursor: pointer;
-	  border-radius: 10px;
-  }
+
   #listsymbol {
 	  padding-left: 5px;
 	  vertical-align: top;
 	  font-size: 20;
   }
-  #ToDoListbtn:hover, #ToDoListbtn:focus {
-	  background-color: #2980B9;
-	}
+
   
   
   .SwitchProject {
@@ -258,79 +248,11 @@
   
   .switchprojdropdown-content a:hover {background-color: #ddd;}
   
-  .ToDoList-form{
-	  background-color: #d3d3d3;
-	  margin: 5% auto;
-	  padding-left: 10px;
-	  padding-right: 20px;
-	  padding-bottom: 20px;
-	  padding-top: 10px;
-	  width: 50%;
-	  height: auto;
-	  border-radius: 20px;
-  }
-  .ToDoList-form #formheader{
-	  color: white;
-  }
-  #toDoList{
-	  width: 100%;
-	  border-radius: 10px;
-	  height: fit-content;
-	  background-color: #f0efef;
-	  margin-top: 10px;
-	  margin-right: 10px;
-	  margin-left: 10px;
-  }
-  #toDoUL {
-	margin: 0;
-	padding: 0;
-	max-width: 100%;
-  }
+
   
-  #toDoUL li p{
-	overflow: hidden; 
-	text-overflow: ellipsis; 
-	display: inline-block;
-	font-size: 15;
-	max-width: 100%;
-	vertical-align: top;
-  }
-  
-  /* Style the list items */
-  #toDoUL li {
-	cursor: pointer;
-	position: relative;
-	padding: 12px 8px 12px 40px;
-	list-style-type: none;
-  
-	background: #faf9f9;
-	font-size: 18px;
-	transition: 0.2s;
-	
-	/* make the list items unselectable */
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-  }
-  #toDoUL li:nth-child(odd) {
-	  background: #f2ececf9;
-  }
-  #toDoUL li:hover {
-	  background: #eec46b;
-  }
-  #toDoUL li {
-	  display: block;
-  }
-  #toDoUL li.checked {
-	background: #888;
-	color: #fff;
-	text-decoration: line-through;
-  }
-  #toDoUL li.checked p {
-	text-decoration: line-through;
-	background: #888;
-  }
+
+
+
   .close {
 	position: absolute;
 	right: 0;
@@ -341,40 +263,7 @@
 	  background-color: #f2372a;
 	  color: white;
   }
-  #toDoHeader {
-	text-align: left;
-	color: #2c2b2a;
-	text-align: left;
-	height: 40px;
-  }
-  #toDoHeader:after {
-	content: "";
-	display: table;
-	clear: both;
-  }
-  #toDoAddBtn {
-	  width: 25%;
-	  padding-top: 7px;
-	  background: #d9d9d9;
-	  color: #555;
-	  float: left;
-	  text-align: center;
-	  font-size: 16px;
-	  cursor: pointer;
-	  transition: 0.2s;
-	  border-radius: 5px;
-	  height: 100%;
-  }
-  #toDoAddBtn:hover {
-	background-color: #bbb;
-  }
-  #toDoInput{
-	  float: left;
-	  height: 100%;
-	  border-radius: 5px;
-	  font-size: 16px;
-	  width: 75%;
-  }
+
   
   
    /*All boxes*/

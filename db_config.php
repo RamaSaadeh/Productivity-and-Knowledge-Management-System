@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
-$username = "team017";
-$dbpassword = "xngk4RgUqJxMjKX3EMak";
-$database = "team017";
+$username = "host";
+$dbpassword = "Team017FTW!";
+$database = "makeitall";
 // connect to phpmyadmin db
 ?>
