@@ -76,6 +76,8 @@ switch (role) {
 });
 
 
+
+//function that takes in info about a task as parameters and populates the cells in the table with these
 function addtaskTotable(task_id,task_name,hrs_remaining,status,deadline,assigned_to,notes){
 
 var table = document.getElementById("taskstable");
@@ -99,7 +101,7 @@ staffassignedcell.innerHTML = assigned_to;
 taskactionscell.innerHTML = '<button class = "notesbtn" onclick="opentasknotesForm(this)">Notes</button><button class="editbtn" onclick="openedittaskForm(this)"><span id="editsymbol" class="material-symbols-outlined">edit</span></button>';
 }
 
-
+//function that takes in info about a user as parameters and populates the cells in the table with these
 function addStaffTotable(user_id,name,role,email){
 
 var table = document.getElementById("StaffTable");
@@ -117,6 +119,7 @@ emailcell.innerHTML = email;
 }
 
 
+//gets the project ID that we have loaded from the URL
 const urlParams = new URLSearchParams(window.location.search);
 const selectedProjectID = urlParams.get('selected_project_ID');
 var projectname;
@@ -169,7 +172,7 @@ $.ajax({
       alert("Something went wrong");
     } else {	
       
-      var allStaff = JSON.parse(response); //[0] takes the first half of the encoded json array
+      var allStaff = JSON.parse(response); 
 
       var selectDropdown = document.getElementById("select_addstaff");
       //we want to overwrite the select/reset it each time so we dont just add to what was already there
@@ -219,7 +222,6 @@ $.ajax({
   }
 });
 
-// now staff not in the team are loaded into the <select> we are going to open the form
 document.getElementById("addstaffopaquebg").style.display = "none";
 }
 
@@ -263,7 +265,6 @@ $.ajax({
   }
 });
 
-// now staff not in the team are loaded into the <select> we are going to open the form
 document.getElementById("changeroleopaquebg").style.display = "block";
 }
 
@@ -289,7 +290,6 @@ $.ajax({
   }
 });
 
-// now staff not in the team are loaded into the <select> we are going to open the form
 document.getElementById("changeroleopaquebg").style.display = "none";
 }
 
@@ -358,7 +358,6 @@ $.ajax({
   }
 });
 
-// now staff not in the team are loaded into the <select> we are going to open the form
 document.getElementById("removestaffopaquebg").style.display = "none";
 }
 
@@ -382,11 +381,10 @@ $.ajax({
       var newtaskID = JSON.parse(response);
       var newtaskID_textbox = document.getElementById("new_taskID");
 
-      //we want to overwrite the select/reset it each time so we dont just add to what was already there
+      
       newtaskID_textbox.value = newtaskID;
 
 
-      //once the first ajax returns then load the second ajax
       $.ajax({
         type: "POST",
         url: "loadstaff_in_proj.php",
@@ -432,14 +430,12 @@ function isValidDateString(str) {
 // Split the string by hyphens
 var parts = str.split('-');
 
-// Check if there are exactly three parts
 if (parts.length !== 3) {
   return false;
 }
 
 // Check if each part is a valid integer
 for (var i = 0; i < 3; i++) {
-  // Parse the part as an integer
   var num = parseInt(parts[i], 10);
 
   // Check if the parsed number is a valid integer
@@ -448,7 +444,6 @@ for (var i = 0; i < 3; i++) {
   }
 }
 
-// Check if the year, month, and day are in the valid range
 var year = parseInt(parts[0], 10);
 var month = parseInt(parts[1], 10);
 var day = parseInt(parts[2], 10);
@@ -502,7 +497,6 @@ $.ajax({
   }
 });
 
-// now staff not in the team are loaded into the <select> we are going to open the form
 document.getElementById("addtaskopaquebg").style.display = "none";
 } else{
 alert("Invalid date entered");
@@ -803,8 +797,8 @@ while (switching) {
     switching = false;
     for (var i = 1; i < (rows.length - 1); i++) {
         var shouldSwitch = false;
-        var currentCell = rows[i].getElementsByTagName("td")[1]; // Change 1 to the index of the desired cell
-        var nextCell = rows[i + 1].getElementsByTagName("td")[1]; // Change 1 to the index of the desired cell
+        var currentCell = rows[i].getElementsByTagName("td")[1]; 
+        var nextCell = rows[i + 1].getElementsByTagName("td")[1]; 
         if (currentCell.innerHTML.toLowerCase() > nextCell.innerHTML.toLowerCase()) {
             shouldSwitch = true;
             break;
@@ -894,6 +888,7 @@ find_statusquantities(function(statusquantities) {
 });
 
 
+//finds the workload of each member of staff- then returns it and uses this array as the data for the workload chart
 function find_workload(callback) {
 $.ajax({
   type: "POST",
