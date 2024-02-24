@@ -299,11 +299,11 @@ function getUserTasks(){
 
 function populateTasksTable(){
     //replace sample content with user tasks
-    document.getElementById("taskTable").innerHTML = "";
     if (tasksData.length == 0) {
         document.getElementById("placeholder").style.display = "none";
     }
     else {
+        document.getElementById("taskTable").innerHTML = "";
         var header = document.createElement("tr");
         var heading1 = document.createElement("th");
         heading1.classList.add("details");
