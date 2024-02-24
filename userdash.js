@@ -300,17 +300,21 @@ function getUserTasks(){
 function populateTasksTable(){
     //replace sample content with user tasks
     document.getElementById("taskTable").innerHTML = "";
-    document.getElementById("placeholder").style.display = "none";
-    var header = document.createElement("tr");
-    var heading1 = document.createElement("th");
-    heading1.classList.add("details");
-    heading1.textContent = "Details";
-    var heading2 = document.createElement("th");
-    heading2.classList.add("status");
-    heading2.textContent = "Status";
-    header.appendChild(heading1);
-    header.appendChild(heading2);
-    document.getElementById("taskTable").appendChild(header);
+    if (tasksData.length == 0) {
+        document.getElementById("placeholder").style.display = "none";
+    }
+    else {
+        var header = document.createElement("tr");
+        var heading1 = document.createElement("th");
+        heading1.classList.add("details");
+        heading1.textContent = "Details";
+        var heading2 = document.createElement("th");
+        heading2.classList.add("status");
+        heading2.textContent = "Status";
+        header.appendChild(heading1);
+        header.appendChild(heading2);
+        document.getElementById("taskTable").appendChild(header);
+    }
     tasksData.forEach(function(task){
         // accessing variables 
         //var task_id = document.createElement("h5");
