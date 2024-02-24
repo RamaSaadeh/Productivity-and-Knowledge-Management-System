@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 
 
 // Execute SQL queries to fetch users data
-$sql1 = "SELECT user_id, name, email, role FROM users OFFSET 1";
+$sql1 = "SELECT user_id, name, email, role FROM users";
 $sql2 = "SELECT project_id, leader_id FROM projects;";
 $result1 = $conn->query($sql1);
 $result2 = $conn -> query($sql2);
