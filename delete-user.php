@@ -14,6 +14,42 @@ if ($conn->connect_error) {
 
 $user_id = intval($_POST['user_id']);
 
+//Posts
+$sql = "UPDATE Posts SET UserID = 0 WHERE UserID = ?;";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+
+//PostLikes
+$sql = "UPDATE PostLikes SET UserID = 0 WHERE UserID = ?;";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+
+//Comments
+$sql = "UPDATE Comments SET UserID = 0 WHERE UserID = ?;";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+
+//CommentLikes
+$sql = "UPDATE CommentLikes SET UserID = 0 WHERE UserID = ?;";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+
+//projects
+$sql = "UPDATE projects SET leader_id = 0 WHERE leader_id = ?;";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+
+//project_staff
+$sql = "DELETE FROM project_staff WHERE user_id = ?;";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+
+//task_staff
+$sql = "DELETE FROM task_staff WHERE user_id = ?;";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+
+
 // Prepare SQL statement
 $sql = "DELETE FROM users WHERE user_id = ?;";
 $stmt = $conn->prepare($sql);

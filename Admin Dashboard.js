@@ -124,7 +124,7 @@ function checkLogin() {
           leadingCell.textContent = item['leading'];
           
 
-        // create a edit user button
+        // create an edit user button
         var editCell = document.createElement("td");
         editCell.classList.add("editUser");
         var editButton = document.createElement("button");
