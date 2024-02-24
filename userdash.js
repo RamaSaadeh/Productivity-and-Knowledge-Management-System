@@ -315,7 +315,7 @@ function populateTasksTable(){
     }
     tasksData.forEach(function(task){
         // accessing variables 
-        //var task_id = document.createElement("h5");
+        var task_id = document.createElement("h5");
         //task_id.textContent = "Task ID #" + task['task_id'];
         var task_name = document.createElement("h4");
         task_name.textContent = task['task_name'];
@@ -334,7 +334,7 @@ function populateTasksTable(){
         // populating table cells
 
         var row = document.createElement("tr");
-        //row.setAttribute("id", (String(task['task_id']) + String(task['project_id'])) );
+        row.setAttribute("id", (String(task['task_id']) + String(task['project_id'])) );
         leftCell = document.createElement("td");
         leftCell.classList.add("details");
         rightCell = document.createElement("td");
