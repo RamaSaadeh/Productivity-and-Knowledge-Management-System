@@ -376,7 +376,6 @@ function populateTasksTable(){
             <br>`;  
         row.appendChild(rightCell);
         document.getElementById("taskTable").appendChild(row);
-        alert(status);
         switch (status) {
             case "Not Started":
                 document.getElementById("notStarted" + task_id + project_id).checked = true;
