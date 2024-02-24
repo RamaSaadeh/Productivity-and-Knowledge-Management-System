@@ -298,7 +298,8 @@ function getUserTasks(){
 
 
 function populateTasksTable(){
-    //replace sample content with user tasks
+    //replace sample content with user 
+    alert(tasksData.length);
     if (tasksData.length == 0) {
         document.getElementById("placeholder").style.display = "none";
     }
