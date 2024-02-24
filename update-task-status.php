@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 // Prepare and bind the update statement
 $sql = "UPDATE tasks SET status = ? WHERE task_id = ? AND project_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("iii", $status, $task_id, $project_id);
+$stmt->bind_param("sii", $status, $task_id, $project_id);
 
 // Execute the statement
 if ($stmt->execute()) {
