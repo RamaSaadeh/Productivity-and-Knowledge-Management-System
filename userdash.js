@@ -301,8 +301,6 @@ function populateTasksTable(){
     //replace sample content with user 
     if (tasksData.length != 0) {
         document.getElementById("placeholder").style.display = "none";
-    }
-    else {
         document.getElementById("taskTable").innerHTML = "";
         var header = document.createElement("tr");
         var heading1 = document.createElement("th");
