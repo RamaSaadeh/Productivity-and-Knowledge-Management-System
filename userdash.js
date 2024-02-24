@@ -375,9 +375,8 @@ function populateTasksTable(){
             <h5 id="submitted${task['task_id']}${task['project_id']}" style="color: #2fe617; display: none">Status updated</h5> 
             <br>`;  
         row.appendChild(rightCell);
-        alert(rightCell.innerHTML);
         document.getElementById("taskTable").appendChild(row);
-        alert("notStarted" + task_id + project_id);
+        alert(status);
         switch (status) {
             case "Not Started":
                 document.getElementById("notStarted" + task_id + project_id).checked = true;
