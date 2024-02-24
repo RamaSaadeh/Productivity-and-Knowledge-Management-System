@@ -300,6 +300,7 @@ function getUserTasks(){
 function populateTasksTable(){
     //replace sample content with user tasks
     document.getElementById("taskTable").innerHTML = "";
+    document.getElementById("placeholder").style.display = "none";
     var header = document.createElement("tr");
     var heading1 = document.createElement("th");
     heading1.classList.add("details");
