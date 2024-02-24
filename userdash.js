@@ -377,12 +377,16 @@ function populateTasksTable(){
         document.getElementById("taskTable").appendChild(row);
         switch (status) {
             case "Not Started":
+                document.getElementById("notStarted" + task[task_id] + task[project_id]).checked = true;
                 break;
             case "On Track":
+                document.getElementById("onTrack" + task[task_id] + task[project_id]).checked = true;
                 break;
             case "Completed":
+                document.getElementById("completed" + task[task_id] + task[project_id]).checked = true;
                 break;
             case "Overdue":
+                document.getElementById("overdue" + task[task_id] + task[project_id]).checked = true;
                 break;
         }  
 
@@ -440,7 +444,6 @@ function suggestTraining(taskId, projectId){
 
 
 function saved(taskId, projectId) {
-    alert(taskId);
     var uniqueId = String(taskId) + String(projectId);
     var statuses = {"On Track": document.getElementById("onTrack" + uniqueId).checked,
         "Completed": document.getElementById("completed" + uniqueId).checked,
