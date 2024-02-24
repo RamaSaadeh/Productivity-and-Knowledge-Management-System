@@ -354,36 +354,37 @@ function populateTasksTable(){
         
         rightCell.innerHTML = `
             <label class="container">Not Started
-            <input type="radio" id="notStarted${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}"`;
-        if (status == "Not Started") rightCell.innerHTML += ` checked`;
-        rightCell.innerHTML += `
-            ><span class="radio"></span>
+            <input type="radio" id="notStarted${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}">
+            <span class="radio"></span>
             </label>
             <label class="container">On Track
-                <input type="radio" id="onTrack${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}"`;
-        if (status == "On Track") rightCell.innerHTML += ` checked`;
-        rightCell.innerHTML += `
-            ><span class="radio"></span>
+                <input type="radio" id="onTrack${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}">
+                <span class="radio"></span>
             </label>
             <label class="container">Completed
-                <input type="radio" id="completed${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}"`;
-        if (status == "Completed") rightCell.innerHTML += ` checked`;
-        rightCell.innerHTML += `
-            ><span class="radio"></span>
+                <input type="radio" id="completed${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}">
+                <span class="radio"></span>
             </label>
             <label class="container">Overdue
-                <input type="radio" id="overdue${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}"`;
-        if (status == "Overdue") rightCell.innerHTML += ` checked`;
-        rightCell.innerHTML += `
-            ><span class="radio"></span>
+                <input type="radio" id="overdue${task['task_id']}${task['project_id']}" name="status${task['task_id']}${task['project_id']}">
+                <span class="radio"></span>
             </label>
             <br>
             <input type="submit" class="submitButton" value="Save" onclick="saved(${task['task_id']},${task['project_id']})">
             <h5 id="submitted${task['task_id']}${task['project_id']}" style="color: #2fe617; display: none">Status updated</h5> 
-            <br>`;   
+            <br>`;  
         row.appendChild(rightCell);
         document.getElementById("taskTable").appendChild(row);
-          
+        switch (status) {
+            case "Not Started":
+                break;
+            case "On Track":
+                break;
+            case "Completed":
+                break;
+            case "Overdue":
+                break;
+        }  
 
     });
 
@@ -439,6 +440,7 @@ function suggestTraining(taskId, projectId){
 
 
 function saved(taskId, projectId) {
+    alert(taskId, projectId);
     var uniqueId = String(taskId) + String(projectId);
     var statuses = {"On Track": document.getElementById("onTrack" + uniqueId).checked,
         "Completed": document.getElementById("completed" + uniqueId).checked,
