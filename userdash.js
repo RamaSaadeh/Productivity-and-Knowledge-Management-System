@@ -440,7 +440,7 @@ function suggestTraining(taskId, projectId){
 
 
 function saved(taskId, projectId) {
-    alert(taskId, projectId);
+    alert(taskId + projectId);
     var uniqueId = String(taskId) + String(projectId);
     var statuses = {"On Track": document.getElementById("onTrack" + uniqueId).checked,
         "Completed": document.getElementById("completed" + uniqueId).checked,
