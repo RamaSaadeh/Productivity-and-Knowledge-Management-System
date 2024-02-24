@@ -378,7 +378,7 @@ function populateTasksTable(){
         document.getElementById("taskTable").appendChild(row);
         switch (status) {
             case "Not Started":
-                document.getElementById("notStarted" + task_id] + project_id).checked = true;
+                document.getElementById("notStarted" + task_id + project_id).checked = true;
                 break;
             case "On Track":
                 document.getElementById("onTrack" + task_id + project_id).checked = true;
@@ -389,8 +389,7 @@ function populateTasksTable(){
             case "Overdue":
                 document.getElementById("overdue" + task_id + project_id).checked = true;
                 break;
-        }  
-
+        };
     });
 
     
