@@ -315,7 +315,8 @@ function populateTasksTable(){
     }
     tasksData.forEach(function(task){
         // accessing variables 
-        var task_id = document.createElement("h5");
+        var task_id = task['task_id'];
+        var project_id = task['project_id']
         //task_id.textContent = "Task ID #" + task['task_id'];
         var task_name = document.createElement("h4");
         task_name.textContent = task['task_name'];
@@ -377,16 +378,16 @@ function populateTasksTable(){
         document.getElementById("taskTable").appendChild(row);
         switch (status) {
             case "Not Started":
-                document.getElementById("notStarted" + task[task_id] + task[project_id]).checked = true;
+                document.getElementById("notStarted" + task_id] + project_id).checked = true;
                 break;
             case "On Track":
-                document.getElementById("onTrack" + task[task_id] + task[project_id]).checked = true;
+                document.getElementById("onTrack" + task_id + project_id).checked = true;
                 break;
             case "Completed":
-                document.getElementById("completed" + task[task_id] + task[project_id]).checked = true;
+                document.getElementById("completed" + task_id + project_id).checked = true;
                 break;
             case "Overdue":
-                document.getElementById("overdue" + task[task_id] + task[project_id]).checked = true;
+                document.getElementById("overdue" + task_id + project_id).checked = true;
                 break;
         }  
 
