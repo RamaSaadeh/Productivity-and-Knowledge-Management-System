@@ -77,6 +77,11 @@ function checkLogin() {
           })
           addOnDeleteFunc();
           console.log(max_item_id);
+          // format staff info as a bootstrap DataTable
+          $('#staffInfo').DataTable({
+            "paging": false , searching: false, info: false // disable pagination, search, page info
+          });
+        $('.dataTables_length').addClass('bs-select');
 
       },
       error: function(xhr, status, error) {
@@ -490,7 +495,7 @@ function newElement() {
         
     }
 
-
+/*
   // bootstrap for table sorting
   $(document).ready(function () {
     $('#staffInfo').DataTable({
@@ -498,7 +503,7 @@ function newElement() {
       });
     $('.dataTables_length').addClass('bs-select');
   });
-
+*/
      // change content when staff / to-do clicked
     
   function staffClicked(){
