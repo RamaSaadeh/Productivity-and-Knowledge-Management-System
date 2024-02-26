@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 
 // Execute SQL queries to fetch users data
 $sql1 = "SELECT user_id, name, email, role FROM users WHERE user_id > 0";
-$sql2 = "SELECT project_id, leader_id FROM projects;";
+$sql2 = "SELECT proj_name, leader_id FROM projects;";
 $result1 = $conn->query($sql1);
 $result2 = $conn -> query($sql2);
 
@@ -42,7 +42,7 @@ foreach($staffData as &$user){
     foreach ($teamsData as $team){
         
         if($team['leader_id'] == $user['user_id']){
-            $leading[] = $team['project_id'];
+            $leading[] = $team['proj_name'];
         }
     }
 
