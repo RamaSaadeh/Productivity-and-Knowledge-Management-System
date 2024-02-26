@@ -75,11 +75,7 @@ function checkLogin() {
                 li.appendChild(span);
                 document.getElementById("toDoUL").appendChild(li);
           })
-          // format staff info as a bootstrap DataTable
-          $('#staffInfo').DataTable({
-            "paging": false , searching: false, info: false // disable pagination, search, page info
-          });
-        $('.dataTables_length').addClass('bs-select');
+          
           addOnDeleteFunc();
           console.log(max_item_id);
 
@@ -164,6 +160,11 @@ function checkLogin() {
           // append new row to table
           tbody.appendChild(newRow);
         })
+    // format staff info as a bootstrap DataTable
+    $('#staffInfo').DataTable({
+        "paging": false , searching: false, info: false // disable pagination, search, page info
+    });
+    $('.dataTables_length').addClass('bs-select');
   }
 
   $(document).ready(function(){
