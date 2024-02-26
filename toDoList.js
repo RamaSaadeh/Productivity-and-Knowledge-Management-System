@@ -115,7 +115,7 @@ function addOnDeleteFunc(){
 
 
 
-// Add a "checked" symbol when clicking on a list item
+// Add a "checked" indicator when clicking on a list item
 // action when to do list item clicked
 var list = document.getElementById("toDoList").querySelector('ul');
 list.addEventListener('click', function(ev) {
