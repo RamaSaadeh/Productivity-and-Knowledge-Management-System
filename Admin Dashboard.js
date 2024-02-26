@@ -268,11 +268,12 @@ function update_userdetails(){
 function close_editUser(){
     document.getElementById("editprojopaquebg").style.display = "none";
 }
-
+/*
   // add editUser onclick function to each edit user button 
   document.querySelectorAll('.editUserBttn').forEach(function(button){
     button.onclick = editUser;
   });
+*/
 
   document.querySelectorAll('.deleteUserBttn').forEach(function(button){
     button.onclick = deleteUser;
