@@ -204,7 +204,7 @@ function checkLogin() {
     // Ask for confirmation with the data
     if (confirm('Permanently delete user ' + fullName + ' with ID ' + staffId + " from the system?")) {
         // Code to delete the user
-        alert("user deleted");
+        alert("User Removed");
         row.style.display="none";
         $.ajax({
           url: 'delete-user.php',
@@ -424,7 +424,6 @@ function newElement() {
     } else {
     // add new item to the start of the list 
       document.getElementById("toDoUL").insertAdjacentElement('afterbegin', li);
-      alert("please " + itemId);
       // update the todolist table using jQuery AJAX
       $.ajax({
         url: 'test_connection.php',
