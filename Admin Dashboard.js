@@ -122,7 +122,13 @@ function checkLogin() {
           emailCell.textContent = item['email'];
           var leadingCell = document.createElement("td");
           leadingCell.classList.add("teamLeading");
-          leadingCell.textContent = item['leading'];
+        // item['leading'] contains an array of project names - formatting this array
+          let teamsArray = item['leading'];
+          if (teamsArray.length > 0){
+            leadingCell.textContent = teamsArray.join(", ");
+          } else {
+            leadingCell.textContent = "";
+          }
           
 
         // create an edit user button
