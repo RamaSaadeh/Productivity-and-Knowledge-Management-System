@@ -1,8 +1,8 @@
 <?php
 include "db_config.php";
 
-$user_id = $_POST['user_id'];
-$item_id = $_POST['item_id'];
+$user_id = intval($_POST['user_id']);
+$item_id = intval($_POST['item_id']);
 $description = $_POST['description'];
 
 $conn = new mysqli($servername, $username, $dbpassword, $database);
@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 
 
 // Execute SQL queries to fetch users data
-$sql = "INSERT INTO todolist (user_id, item_id, description, checked) VALUES ('$user_id', '$item_id', '$description', 0);";
+$sql = "INSERT INTO todolist (user_id, item_id, description, checked) VALUES ($user_id, $item_id, '$description', 0);";
 $result = $conn->query($sql);
 
 /*
