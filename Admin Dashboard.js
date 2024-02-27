@@ -439,7 +439,7 @@ function newElement() {
       document.getElementById("toDoUL").insertAdjacentElement('afterbegin', li);
       // update the todolist table using jQuery AJAX
       $.ajax({
-        url: 'test_connection.php',
+        url: 'add-to-do-item.php',
         type: 'POST',
         data: {'item_id': itemId, 'user_id': user_id, 'description': inputValue},
         success: function(response) {
